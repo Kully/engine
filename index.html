@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Jeau d'Video</title>
+	<style type="text/css">
+		body {
+			background-color: #222;
+		}
+
+		canvas {
+			display: block;
+			position: relative;
+			top: 40px;
+			margin: 0 auto;
+			outline: 8px solid #4B644A;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+
+<script type="text/javascript">
+	const FPS = 60;
+	const CANVAS_WIDTH = 600;
+	const CANVAS_HEIGHT = 600;
+	const CANVAS_BKGD_COLOR = "#DDD"
+	
+	const canvas = document.getElementById("canvas");
+	canvas.width = CANVAS_WIDTH;
+	canvas.height = CANVAS_HEIGHT;
+	const ctx = canvas.getContext("2d");
+
+	const CONTROLLER = {
+		ArrowLeft: 0,
+		ArrowRight: 0
+	}
+
+	const CHARACTER = {
+		x: Math.floor(CANVAS_WIDTH/2),
+		y: 400,
+		width: 16,
+		height: 32
+	}
+
+	document.addEventListener("keydown", function(e) {
+		if(e.key === "ArrowLeft")
+		{
+			CONTROLLER["ArrowLeft"]	= 1;
+		}
+		if(e.key === "ArrowRight")
+		{
+			CONTROLLER["ArrowRight"] = 1;
+		}
+
+	});
+
+	document.addEventListener("keyup", function(e) {
+		if(e.key === "ArrowLeft")
+		{
+			CONTROLLER["ArrowLeft"]	= 0;
+		}
+		if(e.key === "ArrowRight")
+		{
+			CONTROLLER["ArrowRight"] = 0;
+		}
+	});
+
+	// game loop
+	setInterval(function(e) {
+		console.log("NEW FRAME");
+
+		// refresh the screen
+		ctx.fillStyle = CANVAS_BKGD_COLOR;
+		ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+		// update character
+		CHARACTER["x"] += -2 * CONTROLLER["ArrowLeft"] + 2 * CONTROLLER["ArrowRight"];
+
+		// draw ground
+		ctx.fillStyle = "#ADFCF9";
+		ctx.fillRect(
+			0,
+			400 + CHARACTER["height"],
+			CANVAS_WIDTH,
+			CANVAS_HEIGHT - 400 - CHARACTER["height"]
+		)
+
+		// draw character
+		ctx.fillStyle = "black";
+		ctx.fillRect(
+			CHARACTER["x"],
+			CHARACTER["y"],
+			CHARACTER["width"],
+			CHARACTER["height"]
+		)
+	}, 1000 / FPS)
+</script>
+
+</html>
