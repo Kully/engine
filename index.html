@@ -6,7 +6,7 @@
 	<title>Project Creed</title>
 	<style type="text/css">
 		body {
-			background-color: #222;
+			background-color: #1B1A17;
 		}
 
 		canvas {
@@ -14,7 +14,7 @@
 			position: relative;
 			top: 40px;
 			margin: 0 auto;
-			outline: 8px solid #4B644A;
+			outline: 8px solid #F0A500;
 		}
 	</style>
 </head>
@@ -27,12 +27,13 @@
 	const FPS = 60;
 	const CANVAS_WIDTH = 600;
 	const CANVAS_HEIGHT = 600;
-	const CANVAS_BKGD_COLOR = "#DDD"
+	const CANVAS_BKGD_COLOR = "#E45826";
+	const GROUND_COLOR = "#151D3B";
 	
 	const canvas = document.getElementById("canvas");
+	const ctx = canvas.getContext("2d");
 	canvas.width = CANVAS_WIDTH;
 	canvas.height = CANVAS_HEIGHT;
-	const ctx = canvas.getContext("2d");
 
 	const CONTROLLER = {
 		ArrowLeft: 0,
@@ -43,7 +44,9 @@
 		x: Math.floor(CANVAS_WIDTH/2),
 		y: 400,
 		width: 32,
-		height: 64
+		height: 64,
+		speed: 0,
+		color: "#FFFBE9",
 	}
 
 	document.addEventListener("keydown", function(e) {
@@ -71,8 +74,6 @@
 
 	// game loop
 	setInterval(function(e) {
-		console.log("NEW FRAME");
-
 		// refresh the screen
 		ctx.fillStyle = CANVAS_BKGD_COLOR;
 		ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -81,7 +82,7 @@
 		CHARACTER["x"] += -2 * CONTROLLER["ArrowLeft"] + 2 * CONTROLLER["ArrowRight"];
 
 		// draw ground
-		ctx.fillStyle = "#ADFCF9";
+		ctx.fillStyle = GROUND_COLOR;
 		ctx.fillRect(
 			0,
 			400 + CHARACTER["height"],
@@ -90,7 +91,7 @@
 		)
 
 		// draw character
-		ctx.fillStyle = "black";
+		ctx.fillStyle = CHARACTER["color"];
 		ctx.fillRect(
 			CHARACTER["x"],
 			CHARACTER["y"],
