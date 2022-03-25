@@ -16,7 +16,7 @@ import {
 	SCREEN_SCALE,
 	GRID_WIDTH_PX,
 	COLORS,
-} from "./constants.js"
+} from "./constants.js";
 
 
 function getValueFrom2DArray(array_2d, x, y)
