@@ -1,69 +1,22 @@
-const FPS = 60;
-const GRID_WIDTH_PX = 16;
-const SCREEN_SCALE = 1;
+"use strict";
 
-const COLORS = {
-	ground: "#151D3B",
-	background: "#E45826",
-	undefined: "#FF0000",
-}
+import {
+	LEVEL,
+	SPRITE_LOOKUP,
+} from "./data.js";
 
-// state variables
-const CONTROLLER = {
-	ArrowLeft: 0,
-	ArrowRight: 0,
-	ArrowUp: 0,
-	ArrowDown: 0,
-};
+import {
+	CAMERA,
+	CONTROLLER,
+	PLAYER,
+} from "./state.js";
 
-const CAMERA = {
-	gridXIndex: 0,
-	gridYIndex: 4,
-	xOffset: 0,
-	yOffset: 0,
-	width: 320,
-	height: 224,
-};
-
-const CHARACTER = {
-	x: Math.floor(CAMERA["width"] / 2),
-	y: 400,
-	width: 32,
-	height: 64,
-	speed: 0,
-	color: "#FFFBE9",
-};
-
-// level data
-const LEVEL = [
-	[2, 2, 0, 0, 0, 0, 0, 0, 0],
-	[2, 2, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 1, 0, 0, 0, 0, 0, 0],
-	[0, 1, 1, 0, 1, 0, 1, 1, 1],
-	[1, 1, 1, 1, 1, 1, 1, 1, 1],
-];
-const SPRITE_LOOKUP = {
-	0: [
-		"#fafafa", "#fafafa", "#fafafa", "#fafafa",
-		"#fafafa", "#fafafa", "#fafafa", "#fafafa",
-		"#fafafa", "#fafafa", "#fafafa", "#fafafa",
-		"#fafafa", "#fafafa", "#fafafa", "#fafafa",
-	],
-	1: [
-		"#E45826", "#E45826", "#E45826", "#E45826",
-		"#E45826", "#E45826", "#E45826", "#E45826",
-		"#E45826", "#E45826", "#E45826", "#E45826",
-		"#E45826", "#E45826", "#E45826", "#E45826",
-	],
-	2: [
-		"#00FF00", "#00FF00", "#00FF00", "#00FF00",
-		"#00FF00", "#00FF00", "#00FF00", "#00FF00",
-		"#00FF00", "#00FF00", "#00FF00", "#00FF00",
-		"#00FF00", "#00FF00", "#00FF00", "#00FF00",
-	]
-};
+import {
+	FPS,
+	SCREEN_SCALE,
+	GRID_WIDTH_PX,
+	COLORS,
+} from "./constants.js"
 
 
 function getValueFrom2DArray(array_2d, x, y)
@@ -73,15 +26,6 @@ function getValueFrom2DArray(array_2d, x, y)
 	return array_2d[y][x];
 }
 
-
-// initialize canvas
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = CAMERA["width"];
-canvas.height = CAMERA["height"];
-
-
-// event listeners
 document.addEventListener("keydown", function(e) {
 	if(e.key === "ArrowLeft")
 	{
@@ -121,8 +65,11 @@ document.addEventListener("keyup", function(e) {
 });
 
 
-ctx.fillStyle = COLORS["background"];
-ctx.fillRect(0, 0, CAMERA["width"], CAMERA["height"]);
+// initialize canvas
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = CAMERA["width"];
+canvas.height = CAMERA["height"];
 
 
 function draw_level()
@@ -157,24 +104,24 @@ function play_game(e)
 	ctx.fillRect(0, 0, CAMERA["width"], CAMERA["height"]);
 
 	// update character
-	CHARACTER["x"] += -2 * CONTROLLER["ArrowLeft"] + 2 * CONTROLLER["ArrowRight"];
+	PLAYER["x"] += -2 * CONTROLLER["ArrowLeft"] + 2 * CONTROLLER["ArrowRight"];
 
 	// draw ground
 	ctx.fillStyle = COLORS["ground"];
 	ctx.fillRect(
 		0,
-		400 + CHARACTER["height"],
+		400 + PLAYER["height"],
 		CAMERA["width"],
-		CAMERA["width"] - 400 - CHARACTER["height"]
+		CAMERA["width"] - 400 - PLAYER["height"]
 	)
 
 	// draw character
-	ctx.fillStyle = CHARACTER["color"];
+	ctx.fillStyle = PLAYER["color"];
 	ctx.fillRect(
-		CHARACTER["x"],
-		CHARACTER["y"],
-		CHARACTER["width"],
-		CHARACTER["height"],
+		PLAYER["x"],
+		PLAYER["y"],
+		PLAYER["width"],
+		PLAYER["height"],
 	)
 }
 
@@ -193,5 +140,6 @@ function free_camera_mode(e)
 	draw_level();
 }
 
-setInterval(free_camera_mode, 1000 / FPS);
 
+// setInterval(play_game, 1000 / FPS);
+setInterval(free_camera_mode, 1000 / FPS);
