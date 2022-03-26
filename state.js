@@ -9,7 +9,7 @@ export const CONTROLLER = {
 
 export const CAMERA = {
 	gridXIndex: 0,
-	gridYIndex: 4,
+	gridYIndex: 0,
 	xOffset: 0,
 	yOffset: 0,
 	width: 320,

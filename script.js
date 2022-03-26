@@ -3,6 +3,8 @@
 import {
 	LEVEL,
 	SPRITE_LOOKUP,
+	GRID_WIDTH_PX,
+	SPRITE_WIDTH,
 } from "./data.js";
 
 import {
@@ -14,14 +16,13 @@ import {
 import {
 	FPS,
 	SCREEN_SCALE,
-	GRID_WIDTH_PX,
 	COLORS,
 } from "./constants.js";
 
 
 function getValueFrom2DArray(array_2d, x, y)
 {
-	if(x < 0 || x >= array_2d.length || y < 0 || y >= array_2d.length)
+	if(x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
 		return undefined;
 	return array_2d[y][x];
 }
@@ -87,21 +88,27 @@ function draw_level()
 		// draw pixel
 		let pixel_color;
 		if(sprite_ptr === undefined || sprite_ptr === null)
+		{
 			pixel_color = COLORS["undefined"];
+		}
 		else
-			pixel_color = SPRITE_LOOKUP[sprite_ptr][0];
+		{
+			let color_x = Math.floor( (x%32) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
+			let color_y = Math.floor( (y%32) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
+			let color_idx = color_y * SPRITE_WIDTH + color_x;
+			pixel_color = SPRITE_LOOKUP[sprite_ptr][color_idx];
+		}
 
 		ctx.fillStyle = pixel_color;
 		ctx.fillRect(x, y, 1, 1);
-	}	
+	}
 }
 
 
 function play_game(e)
 {
 	// refresh the screen
-	ctx.fillStyle = COLORS["background"];
-	ctx.fillRect(0, 0, CAMERA["width"], CAMERA["height"]);
+	// ...
 
 	// update character
 	PLAYER["x"] += -2 * CONTROLLER["ArrowLeft"] + 2 * CONTROLLER["ArrowRight"];
@@ -127,10 +134,6 @@ function play_game(e)
 
 function free_camera_mode(e)
 {
-	// refresh the screen
-	ctx.fillStyle = COLORS["background"];
-	ctx.fillRect(0, 0, CAMERA["width"], CAMERA["height"]);
-
 	// update camera based on controls
 	CAMERA["gridXIndex"] -= CONTROLLER["ArrowLeft"]
 	CAMERA["gridXIndex"] += CONTROLLER["ArrowRight"];
