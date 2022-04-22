@@ -107,9 +107,6 @@ function draw_level()
 
 function play_game(e)
 {
-	// refresh the screen
-	// ...
-
 	// update character
 	PLAYER["x"] += -2 * CONTROLLER["ArrowLeft"] + 2 * CONTROLLER["ArrowRight"];
 
