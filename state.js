@@ -17,10 +17,12 @@ export const CAMERA = {
 };
 
 export const PLAYER = {
-	x: Math.floor(CAMERA["width"] / 2),
-	y: 400,
-	width: 32,
-	height: 64,
+	x: 50,
+	y: CAMERA["height"] - 20 - 32,
+	width: 16,
+	height: 32,
 	speed: 0,
-	color: "#FFFBE9",
+	default: "#FFFBE9",
+	walkFrameCounter: 0,
+	walkSpritePointer: 0,
 };

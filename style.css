@@ -9,3 +9,12 @@ canvas {
 	top: 40px;
 	margin: 0 auto;
 }
+
+.frame-controller {
+	width: 40px;
+	position: relative;
+}
+
+.title {
+	color: #CC704B;
+}
