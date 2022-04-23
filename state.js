@@ -12,7 +12,7 @@ export const CAMERA = {
 	gridYIndex: 2,
 	xOffset: 0,
 	yOffset: 0,
-	width: 320,
+	width: 900,  // 320 is the default, 900 for testing
 	height: 224,
 };
 

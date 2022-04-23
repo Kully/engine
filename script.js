@@ -33,30 +33,29 @@ let frameInput0 = document.getElementById("frame0");
 let frameInput1 = document.getElementById("frame1");
 let frameInput2 = document.getElementById("frame2");
 let frameInput3 = document.getElementById("frame3");
+const inputFields = [
+	frameInput0,
+	frameInput1,
+	frameInput2,
+	frameInput3,
+]
 
-const animationFrames = [4, 4, 5, 3];
-JAMES_WALK_CYCLE[0]["frameDuration"] = animationFrames[0];
-JAMES_WALK_CYCLE[1]["frameDuration"] = animationFrames[1];
-JAMES_WALK_CYCLE[2]["frameDuration"] = animationFrames[2];
-JAMES_WALK_CYCLE[3]["frameDuration"] = animationFrames[3];
-frameInput0.value = animationFrames[0];
-frameInput1.value = animationFrames[1];
-frameInput2.value = animationFrames[2];
-frameInput3.value = animationFrames[3];
+const animationFrames = [5, 5, 5, 5];
+for(let idx=0; idx<inputFields.length; idx+=1)
+{
+	// set the initial value
+	inputFields[idx].value = animationFrames[idx].toString();
+	JAMES_WALK_CYCLE[idx]["frameDuration"] = animationFrames[idx];
 
-frameInput0.addEventListener("change", (e) => {
-	console.log(parseInt(e.target.value));
-	JAMES_WALK_CYCLE[0]["frameDuration"] = parseInt(e.target.value);
-})
-frameInput1.addEventListener("change", (e) => {
-	JAMES_WALK_CYCLE[0]["frameDuration"] = parseInt(e.target.value);
-})
-frameInput2.addEventListener("change", (e) => {
-	JAMES_WALK_CYCLE[0]["frameDuration"] = parseInt(e.target.value);
-})
-frameInput3.addEventListener("change", (e) => {
-	JAMES_WALK_CYCLE[0]["frameDuration"] = parseInt(e.target.value);
-})
+	// hookup reactivity to the inputs
+	inputFields[idx].addEventListener("keyup", (e) => {
+		if(e.target.value !== "")
+		{
+			let val = parseInt(e.target.value);
+			JAMES_WALK_CYCLE[idx]["frameDuration"] = parseInt(e.target.value);
+		}
+	})
+}
 
 document.addEventListener("keydown", function(e) {
 	if(e.key === "ArrowLeft")
