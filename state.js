@@ -5,6 +5,7 @@ export const CONTROLLER = {
 	ArrowRight: 0,
 	ArrowUp: 0,
 	ArrowDown: 0,
+	lastKeyUp: "ArrowRight",
 };
 
 export const CAMERA = {
@@ -12,7 +13,7 @@ export const CAMERA = {
 	gridYIndex: 2,
 	xOffset: 0,
 	yOffset: 0,
-	width: 900,  // 320 is the default, 900 for testing
+	width: 900,
 	height: 224,
 };
 

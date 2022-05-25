@@ -56,10 +56,12 @@ document.addEventListener("keyup", function(e) {
 	if(e.key === "ArrowLeft")
 	{
 		CONTROLLER["ArrowLeft"]	= 0;
+		CONTROLLER["lastKeyUp"] = "ArrowLeft";
 	}
 	if(e.key === "ArrowRight")
 	{
 		CONTROLLER["ArrowRight"] = 0;
+		CONTROLLER["lastKeyUp"] = "ArrowRight";
 	}
 	if(e.key === "ArrowUp")
 	{
@@ -224,8 +226,27 @@ function test_controls_mode(e)
 	for(let i=0; i<spriteWidth; i+=1)
 	for(let j=0; j<spriteHeight; j+=1)
 	{
-		// ctx.fillStyle = spriteArray[(spriteWidth - 1 - i) + j*spriteWidth];
-		ctx.fillStyle = spriteArray[i + j*spriteWidth];
+		if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
+		{
+			ctx.fillStyle = spriteArray[(spriteWidth - 1 - i) + j*spriteWidth];
+		}
+		else
+		if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0)
+		{
+			if(CONTROLLER["lastKeyUp"] !== "ArrowRight")
+			{
+				ctx.fillStyle = spriteArray[(spriteWidth - 1 - i) + j*spriteWidth];
+			}
+			else
+			{
+				ctx.fillStyle = spriteArray[i + j*spriteWidth];
+			}
+		}
+		else
+		{
+			ctx.fillStyle = spriteArray[i + j*spriteWidth];
+		}
+
 		ctx.fillRect(
 			PLAYER["x"] + i*scale,
 			PLAYER["y"] - (scale-1)*spriteHeight + j*scale,
