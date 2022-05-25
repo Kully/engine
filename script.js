@@ -29,33 +29,9 @@ function getValueFrom2DArray(array_2d, x, y)
 	return array_2d[y][x];
 }
 
-let frameInput0 = document.getElementById("frame0");
-let frameInput1 = document.getElementById("frame1");
-let frameInput2 = document.getElementById("frame2");
-let frameInput3 = document.getElementById("frame3");
-const inputFields = [
-	frameInput0,
-	frameInput1,
-	frameInput2,
-	frameInput3,
-]
-
 const animationFrames = [5, 5, 5, 5];
-for(let idx=0; idx<inputFields.length; idx+=1)
-{
-	// set the initial value
-	inputFields[idx].value = animationFrames[idx].toString();
+for(let idx=0; idx<4; idx+=1)
 	JAMES_WALK_CYCLE[idx]["frameDuration"] = animationFrames[idx];
-
-	// hookup reactivity to the inputs
-	inputFields[idx].addEventListener("keyup", (e) => {
-		if(e.target.value !== "")
-		{
-			let val = parseInt(e.target.value);
-			JAMES_WALK_CYCLE[idx]["frameDuration"] = parseInt(e.target.value);
-		}
-	})
-}
 
 document.addEventListener("keydown", function(e) {
 	if(e.key === "ArrowLeft")
@@ -194,23 +170,23 @@ function test_controls_mode(e)
 	// determine player's speed and acceleration
 	if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
 	{
-		PLAYER["speed"] -= 0.5;
+		PLAYER["speed"] -= 1;
 	}
 	else
 	if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
 	{
-		PLAYER["speed"] += 0.5;
+		PLAYER["speed"] += 1;
 	}
 	else
 	{
 		if(PLAYER["speed"] < 0)
 		{
-			PLAYER["speed"] += 0.2;
+			PLAYER["speed"] += 1;
 		}
 		else
 		if(PLAYER["speed"] > 0)
 		{
-			PLAYER["speed"] -= 0.2;
+			PLAYER["speed"] -= 1;
 		}
 
 		if(Math.abs(PLAYER["speed"]) < 0.2)
@@ -220,7 +196,7 @@ function test_controls_mode(e)
 	}
 
 	// throttle the speed
-	let maxSpeed = 4;
+	let maxSpeed = 7;
 	if(PLAYER["speed"] > maxSpeed)
 		PLAYER["speed"] = maxSpeed;
 	if(PLAYER["speed"] < -maxSpeed)
@@ -257,7 +233,7 @@ function test_controls_mode(e)
 	}
 
 	// draw player to the screen
-	let scale = 5;
+	let scale = 4;
 	for(let i=0; i<spriteWidth; i+=1)
 	for(let j=0; j<spriteHeight; j+=1)
 	{
