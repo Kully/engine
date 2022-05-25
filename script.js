@@ -228,6 +228,7 @@ function test_controls_mode(e)
 
 	// move the player horizontally
 	PLAYER["x"] += PLAYER["speed"];
+	PLAYER["x"] = Math.round(PLAYER["x"]);
 
 	// decide which sprite to draw
 	let spriteArray = JAMES_STAND_CYCLE["stand"]
@@ -256,7 +257,7 @@ function test_controls_mode(e)
 	}
 
 	// draw player to the screen
-	let scale = 3;
+	let scale = 5;
 	for(let i=0; i<spriteWidth; i+=1)
 	for(let j=0; j<spriteHeight; j+=1)
 	{
