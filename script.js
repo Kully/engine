@@ -29,7 +29,7 @@ function getValueFrom2DArray(array_2d, x, y)
 	return array_2d[y][x];
 }
 
-const animationFrames = [5, 5, 5, 5];
+const animationFrames = [4, 4, 6, 4];
 for(let idx=0; idx<4; idx+=1)
 	JAMES_WALK_CYCLE[idx]["frameDuration"] = animationFrames[idx];
 
@@ -210,7 +210,7 @@ function test_controls_mode(e)
 	let spriteArray = JAMES_STAND_CYCLE["stand"]
 	let spriteWidth = 16;
 	let spriteHeight = 32;
-	if(CONTROLLER["ArrowRight"] === 1 || CONTROLLER["ArrowLeft"] === 1)
+	if(Math.abs(PLAYER["speed"]) > 0.05)
 	{
 		PLAYER["walkFrameCounter"] += 1;
 
