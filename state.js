@@ -8,12 +8,13 @@ export const CONTROLLER = {
 	lastKeyUp: "ArrowRight",
 };
 
+// screen dimensions for genesis game are 320 x 224
 export const CAMERA = {
 	gridXIndex: 0,
 	gridYIndex: 2,
 	xOffset: 0,
 	yOffset: 0,
-	width: 900,
+	width: 600,
 	height: 224,
 };
 

@@ -221,8 +221,18 @@ function test_controls_mode(e)
 		spriteArray = JAMES_STAND_CYCLE["stand"];
 	}
 
+	// level boundaries and collisions
+	let playerScale = 3;
+	if(PLAYER["x"] <= 0)
+	{
+		PLAYER["x"] = 0;
+	}
+	if(PLAYER["x"] + spriteWidth * playerScale >= CAMERA["width"])
+	{
+		PLAYER["x"] = CAMERA["width"] - spriteWidth * playerScale;
+	}
+
 	// draw player to the screen
-	let scale = 4;
 	for(let i=0; i<spriteWidth; i+=1)
 	for(let j=0; j<spriteHeight; j+=1)
 	{
@@ -248,10 +258,10 @@ function test_controls_mode(e)
 		}
 
 		ctx.fillRect(
-			PLAYER["x"] + i*scale,
-			PLAYER["y"] - (scale-1)*spriteHeight + j*scale,
-			scale,
-			scale,
+			PLAYER["x"] + i*playerScale,
+			PLAYER["y"] - (playerScale-1)*spriteHeight + j*playerScale,
+			playerScale,
+			playerScale,
 		);
 	}
 }
