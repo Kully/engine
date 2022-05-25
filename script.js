@@ -29,7 +29,7 @@ function getValueFrom2DArray(array_2d, x, y)
 	return array_2d[y][x];
 }
 
-const animationFrames = [4, 4, 6, 4];
+const animationFrames = [6, 6, 6, 6];
 for(let idx=0; idx<4; idx+=1)
 	JAMES_WALK_CYCLE[idx]["frameDuration"] = animationFrames[idx];
 
@@ -168,35 +168,22 @@ function test_controls_mode(e)
 	)
 
 	// determine player's speed and acceleration
+	let maxSpeed = 4;
 	if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
 	{
-		PLAYER["speed"] -= 1;
+		PLAYER["speed"] = -maxSpeed;
 	}
 	else
 	if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
 	{
-		PLAYER["speed"] += 1;
+		PLAYER["speed"] = maxSpeed;
 	}
 	else
 	{
-		if(PLAYER["speed"] < 0)
-		{
-			PLAYER["speed"] += 1;
-		}
-		else
-		if(PLAYER["speed"] > 0)
-		{
-			PLAYER["speed"] -= 1;
-		}
-
-		if(Math.abs(PLAYER["speed"]) < 0.2)
-		{
-			PLAYER["speed"] = 0;
-		}
+		PLAYER["speed"] = 0;
 	}
 
 	// throttle the speed
-	let maxSpeed = 7;
 	if(PLAYER["speed"] > maxSpeed)
 		PLAYER["speed"] = maxSpeed;
 	if(PLAYER["speed"] < -maxSpeed)
