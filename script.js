@@ -150,25 +150,6 @@ function free_camera_mode(e)
 
 function test_controls_mode(e)
 {
-	let groundHeight = 20;
-
-	ctx.fillStyle = "#CC704B";
-	ctx.fillRect(
-		0,
-		0,
-		CAMERA["width"],
-		CAMERA["height"],
-	);
-	
-	// draw ground
-	ctx.fillStyle = "#614124";
-	ctx.fillRect(
-		0,
-		CAMERA["height"] - groundHeight,
-		CAMERA["width"],
-		groundHeight,
-	)
-
 	// determine player's speed and acceleration
 	let maxSpeed = 4;
 	if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
@@ -221,7 +202,7 @@ function test_controls_mode(e)
 		spriteArray = JAMES_STAND_CYCLE["stand"];
 	}
 
-	// level boundaries and collisions
+	// compute boundaries and collisions
 	let playerScale = 3;
 	if(PLAYER["x"] <= 0)
 	{
@@ -232,7 +213,27 @@ function test_controls_mode(e)
 		PLAYER["x"] = CAMERA["width"] - spriteWidth * playerScale;
 	}
 
-	// draw player to the screen
+	// draw background
+	ctx.fillStyle = COLORS["background"];
+	ctx.fillRect(
+		0,
+		0,
+		CAMERA["width"],
+		CAMERA["height"],
+	);
+
+	// draw ground
+	let groundHeight = 20;
+	ctx.fillStyle = COLORS["ground"];
+	ctx.fillRect(
+		0,
+		CAMERA["height"] - groundHeight,
+		CAMERA["width"],
+		groundHeight,
+	)
+
+
+	// draw player
 	for(let i=0; i<spriteWidth; i+=1)
 	for(let j=0; j<spriteHeight; j+=1)
 	{
