@@ -142,7 +142,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 15,
 		height: 30,
-		frameDuration: 7,
+		frameDuration: 6,
 	},
 	{
 		sprite: [
@@ -179,7 +179,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 15,
 		height: 30,
-		frameDuration: 7,
+		frameDuration: 6,
 	},
 	{
 		sprite: [
@@ -218,7 +218,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 13,
 		height: 32,
-		frameDuration: 7,
+		frameDuration: 6,
 	},
 	{
 		sprite: [
@@ -258,7 +258,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 13,
 		height: 33,
-		frameDuration: 7,
+		frameDuration: 6,
 	},
 ]
 

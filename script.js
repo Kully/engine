@@ -29,10 +29,6 @@ function getValueFrom2DArray(array_2d, x, y)
 	return array_2d[y][x];
 }
 
-const animationFrames = [6, 6, 6, 6];
-for(let idx=0; idx<4; idx+=1)
-	JAMES_WALK_CYCLE[idx]["frameDuration"] = animationFrames[idx];
-
 document.addEventListener("keydown", function(e) {
 	if(e.key === "ArrowLeft")
 	{
