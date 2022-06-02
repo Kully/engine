@@ -147,7 +147,7 @@ function free_camera_mode(e)
 function test_controls_mode(e)
 {
 	// determine player's speed and acceleration
-	let maxSpeed = 4;
+	let maxSpeed = 5;
 	if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
 	{
 		PLAYER["speed"] = -maxSpeed;
@@ -176,6 +176,8 @@ function test_controls_mode(e)
 	let spriteArray = JAMES_STAND_CYCLE["stand"]
 	let spriteWidth = 16;
 	let spriteHeight = 32;
+	let xShift = 0;
+	let yShift = 0;
 	if(Math.abs(PLAYER["speed"]) > 0.05)
 	{
 		PLAYER["walkFrameCounter"] += 1;
@@ -191,6 +193,7 @@ function test_controls_mode(e)
 		spriteArray = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["sprite"];
 		spriteWidth = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["width"];
 		spriteHeight = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["height"];
+		yShift = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["yShift"];
 	}
 	else
 	{
@@ -256,7 +259,7 @@ function test_controls_mode(e)
 
 		ctx.fillRect(
 			PLAYER["x"] + i*playerScale,
-			PLAYER["y"] - (playerScale-1)*spriteHeight + j*playerScale,
+			PLAYER["y"] - (playerScale-1)*spriteHeight + j*playerScale + yShift*playerScale,
 			playerScale,
 			playerScale,
 		);
