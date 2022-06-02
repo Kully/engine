@@ -1,6 +1,7 @@
 /* Data Module */
 
 export const GRID_WIDTH_PX = 32;
+export const SPRITE_WIDTH = 8;
 
 export const LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

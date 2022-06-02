@@ -3,6 +3,7 @@
 import {
 	LEVEL,
 	SPRITE_LOOKUP,
+	SPRITE_WIDTH,
 	GRID_WIDTH_PX,
 	JAMES_STAND_CYCLE,
 	JAMES_WALK_CYCLE,
@@ -108,30 +109,6 @@ function draw_level()
 	}
 }
 
-
-function play_game(e)
-{
-	// update character
-	PLAYER["x"] += -2 * CONTROLLER["ArrowLeft"] + 2 * CONTROLLER["ArrowRight"];
-
-	// draw ground
-	ctx.fillStyle = COLORS["ground"];
-	ctx.fillRect(
-		0,
-		400 + PLAYER["height"],
-		CAMERA["width"],
-		CAMERA["width"] - 400 - PLAYER["height"]
-	)
-
-	// draw character
-	ctx.fillStyle = PLAYER["color"];
-	ctx.fillRect(
-		PLAYER["x"],
-		PLAYER["y"],
-		PLAYER["width"],
-		PLAYER["height"],
-	)
-}
 
 function free_camera_mode(e)
 {
@@ -266,6 +243,5 @@ function test_controls_mode(e)
 	}
 }
 
-// setInterval(play_game, 1000 / FPS);
 // setInterval(free_camera_mode, 1000 / FPS);
 setInterval(test_controls_mode, 1000 / FPS);
