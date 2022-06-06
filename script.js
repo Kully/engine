@@ -6,7 +6,7 @@ import {
     SPRITE_WIDTH,
     GRID_WIDTH_PX,
     JAMES_STAND_CYCLE,
-    JAMES_WALK_CYCLE,
+    JAMES_RUN_CYCLE,
 } from "./data.js";
 
 import {
@@ -160,17 +160,17 @@ function test_controls_mode(e)
         PLAYER["walkFrameCounter"] += 1;
 
         // decide if we advance to next sprite in animation
-        if(PLAYER["walkFrameCounter"] > JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["frameDuration"])
+        if(PLAYER["walkFrameCounter"] > JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["frameDuration"])
         {
             PLAYER["walkFrameCounter"] = 0;
             PLAYER["walkSpritePointer"] += 1;
-            if(PLAYER["walkSpritePointer"] >= JAMES_WALK_CYCLE.length)
+            if(PLAYER["walkSpritePointer"] >= JAMES_RUN_CYCLE.length)
                 PLAYER["walkSpritePointer"] = 0;
         }
-        spriteArray = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["sprite"];
-        spriteWidth = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["width"];
-        spriteHeight = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["height"];
-        yShift = JAMES_WALK_CYCLE[PLAYER["walkSpritePointer"]]["yShift"];
+        spriteArray = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["sprite"];
+        spriteWidth = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["width"];
+        spriteHeight = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["height"];
+        yShift = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["yShift"];
     }
     else
     {

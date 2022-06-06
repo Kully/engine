@@ -114,7 +114,7 @@ export const JAMES_STAND_CYCLE = [
 ];
 
 
-export const JAMES_WALK_CYCLE = [
+export const JAMES_RUN_CYCLE = [
 	{
 		sprite: [
 			"#00000000", "#00000000", "#00000000", "#483131FF", "#483131FF", "#483131FF", "#5A3D3DFF", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000",
@@ -147,7 +147,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 13,
 		height: 27,
-		frameDuration: 6,
+		frameDuration: 4,
 		xShift: 0,
 		yShift: 2,
 	},
@@ -188,7 +188,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 13,
 		height: 32,
-		frameDuration: 6,
+		frameDuration: 4,
 		xShift: 0,
 		yShift: 0,
 	},
@@ -223,7 +223,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 14,
 		height: 26,
-		frameDuration: 9,
+		frameDuration: 4,
 		xShift: 0,
 		yShift: -5,
 	},
@@ -259,7 +259,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 13,
 		height: 27,
-		frameDuration: 8,
+		frameDuration: 4,
 		xShift: 0,
 		yShift: 2,
 	},
@@ -300,7 +300,7 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 13,
 		height: 32,
-		frameDuration: 6,
+		frameDuration: 4,
 		xShift: 0,
 		yShift: 0,
 	},
@@ -335,14 +335,14 @@ export const JAMES_WALK_CYCLE = [
 		],
 		width: 14,
 		height: 26,
-		frameDuration: 5,
+		frameDuration: 4,
 		xShift: 0,
 		yShift: -5,
 	},
 ]
 
 
-export const OLD_JAMES_WALK_CYCLE = [
+export const JAMES_WALK_CYCLE = [
 	{
 		sprite: [
 			"#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#462C2DFF", "#5A3A3AFF", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000",
