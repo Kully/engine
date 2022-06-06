@@ -6,6 +6,7 @@ import {
     SPRITE_WIDTH,
     GRID_WIDTH_PX,
     JAMES_STAND_CYCLE,
+    JAMES_WALK_CYCLE,
     JAMES_RUN_CYCLE,
 } from "./data.js";
 
@@ -125,18 +126,34 @@ function test_controls_mode(e)
 {
     // determine player's speed and acceleration
     let maxSpeed = 5;
+    let accInc = 1;  // accelearation increment
+    let decInc = 0.5;  // decceleration increment
     if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
     {
-        PLAYER["speed"] = -maxSpeed;
+        // PLAYER["speed"] = -maxSpeed;
+        PLAYER["speed"] -= accInc;
     }
     else
     if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
     {
-        PLAYER["speed"] = maxSpeed;
+        // PLAYER["speed"] = maxSpeed;
+        PLAYER["speed"] += accInc;
     }
     else
     {
-        PLAYER["speed"] = 0;
+        if(PLAYER["speed"] > 0.4)
+        {
+            PLAYER["speed"] -= decInc;
+        }
+        else
+        if(PLAYER["speed"] < -0.4)
+        {
+            PLAYER["speed"] += decInc;
+        }
+        else
+        {
+            PLAYER["speed"] = 0;
+        }
     }
 
     // throttle the speed
