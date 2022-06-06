@@ -6,6 +6,8 @@ export const VALID_CONTROLLER_KEYS = [
     "ArrowUp",
     "ArrowDown",
     "z",
+    "x",
+    "c",
 ];
 
 export const CONTROLLER = {
