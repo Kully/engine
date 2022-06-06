@@ -130,13 +130,11 @@ function test_controls_mode(e)
     let decInc = 0.5;  // decceleration increment
     if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
     {
-        // PLAYER["speed"] = -maxSpeed;
         PLAYER["speed"] -= accInc;
     }
     else
     if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
     {
-        // PLAYER["speed"] = maxSpeed;
         PLAYER["speed"] += accInc;
     }
     else
