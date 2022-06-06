@@ -8,11 +8,13 @@ import {
     JAMES_STAND_CYCLE,
     JAMES_WALK_CYCLE,
     JAMES_RUN_CYCLE,
+    JAMES_JUMP_CYCLE,
 } from "./data.js";
 
 import {
     CAMERA,
     CONTROLLER,
+    VALID_CONTROLLER_KEYS,
     PLAYER,
 } from "./state.js";
 
@@ -32,45 +34,23 @@ function getValueFrom2DArray(array_2d, x, y)
 }
 
 document.addEventListener("keydown", function(e) {
-    if(e.key === "ArrowLeft")
+    for(let key of VALID_CONTROLLER_KEYS)
     {
-        CONTROLLER["ArrowLeft"] = 1;
-    }
-    if(e.key === "ArrowRight")
-    {
-        CONTROLLER["ArrowRight"] = 1;
-    }
-    if(e.key === "ArrowUp")
-    {
-        CONTROLLER["ArrowUp"] = 1;
-    }
-    if(e.key === "ArrowDown")
-    {
-        CONTROLLER["ArrowDown"] = 1;
+        if(e.key === key)       
+            CONTROLLER[key] = 1;
     }
 });
 
 document.addEventListener("keyup", function(e) {
-    if(e.key === "ArrowLeft")
+    for(let key of VALID_CONTROLLER_KEYS)
     {
-        CONTROLLER["ArrowLeft"] = 0;
-        CONTROLLER["lastKeyUp"] = "ArrowLeft";
-    }
-    if(e.key === "ArrowRight")
-    {
-        CONTROLLER["ArrowRight"] = 0;
-        CONTROLLER["lastKeyUp"] = "ArrowRight";
-    }
-    if(e.key === "ArrowUp")
-    {
-        CONTROLLER["ArrowUp"] = 0;
-    }
-    if(e.key === "ArrowDown")
-    {
-        CONTROLLER["ArrowDown"] = 0;
+        if(e.key === key)
+        {
+            CONTROLLER[key] = 0;
+            CONTROLLER["lastKeyUp"] = key;
+        }
     }
 });
-
 
 // initialize canvas
 const canvas = document.getElementById("canvas");

@@ -1,10 +1,19 @@
 /* State Module */
 
+export const VALID_CONTROLLER_KEYS = [
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowDown",
+    "z",
+];
+
 export const CONTROLLER = {
 	ArrowLeft: 0,
 	ArrowRight: 0,
 	ArrowUp: 0,
 	ArrowDown: 0,
+	KeyZ: 0,
 	lastKeyUp: "ArrowRight",
 };
 
