@@ -126,7 +126,7 @@ function test_controls_mode(e)
 {
     // determine player's speed and acceleration
     let maxSpeed = 5;
-    let accInc = 1;  // accelearation increment
+    let accInc = 0.5;  // accelearation increment
     let decInc = 0.5;  // decceleration increment
     if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
     {
@@ -170,22 +170,31 @@ function test_controls_mode(e)
     let spriteHeight = JAMES_STAND_CYCLE[0]["height"];
     let xShift = JAMES_STAND_CYCLE[0]["xShift"];
     let yShift = JAMES_STAND_CYCLE[0]["yShift"];
-    if(Math.abs(PLAYER["speed"]) > 0.05)
+
+    let animationArray = [JAMES_WALK_CYCLE, JAMES_RUN_CYCLE];
+    if(Math.abs(PLAYER["speed"]) > 0)
     {
+        // decide whether to show run or walk
+        let animationArray;
+        if(Math.abs(PLAYER["speed"]) <= 4)
+            animationArray = JAMES_RUN_CYCLE;
+        else
+            animationArray = JAMES_RUN_CYCLE;
+
         PLAYER["walkFrameCounter"] += 1;
 
         // decide if we advance to next sprite in animation
-        if(PLAYER["walkFrameCounter"] > JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["frameDuration"])
+        if(PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"])
         {
             PLAYER["walkFrameCounter"] = 0;
             PLAYER["walkSpritePointer"] += 1;
-            if(PLAYER["walkSpritePointer"] >= JAMES_RUN_CYCLE.length)
+            if(PLAYER["walkSpritePointer"] >= animationArray.length)
                 PLAYER["walkSpritePointer"] = 0;
         }
-        spriteArray = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["sprite"];
-        spriteWidth = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["width"];
-        spriteHeight = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["height"];
-        yShift = JAMES_RUN_CYCLE[PLAYER["walkSpritePointer"]]["yShift"];
+        spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
+        spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
+        spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
+        yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
     }
     else
     {
@@ -222,7 +231,6 @@ function test_controls_mode(e)
         CAMERA["width"],
         groundHeight,
     )
-
 
     // draw player
     for(let i=0; i<spriteWidth; i+=1)
