@@ -25,6 +25,19 @@ import {
 } from "./constants.js";
 
 
+// set animation speeds for walk and run
+JAMES_WALK_CYCLE[0]["frameDuration"] = 4;
+JAMES_WALK_CYCLE[1]["frameDuration"] = 4;
+JAMES_WALK_CYCLE[2]["frameDuration"] = 4;
+JAMES_WALK_CYCLE[3]["frameDuration"] = 4;
+
+JAMES_RUN_CYCLE[0]["frameDuration"] = 6;
+JAMES_RUN_CYCLE[1]["frameDuration"] = 8;
+JAMES_RUN_CYCLE[2]["frameDuration"] = 8;
+JAMES_RUN_CYCLE[3]["frameDuration"] = 6;
+JAMES_RUN_CYCLE[4]["frameDuration"] = 6;
+JAMES_RUN_CYCLE[5]["frameDuration"] = 6;
+
 
 function getValueFrom2DArray(array_2d, x, y)
 {
@@ -106,7 +119,7 @@ function test_controls_mode(e)
 {
     // determine player's speed and acceleration
     let maxSpeed = 5;
-    let accInc = 0.5;  // accelearation increment
+    let accInc = 0.2;  // accelearation increment
     let decInc = 0.5;  // decceleration increment
     if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
     {
@@ -155,7 +168,7 @@ function test_controls_mode(e)
     {
         // decide whether to walk or run
         let animationArray;
-        if(Math.abs(PLAYER["speed"]) <= 4)
+        if(Math.abs(PLAYER["speed"]) < maxSpeed)
         {
             animationArray = JAMES_WALK_CYCLE;
         }
