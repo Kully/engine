@@ -25,7 +25,12 @@ import {
 } from "./constants.js";
 
 
-// set animation speeds for walk and run
+// set animation speeds for animations
+JAMES_STAND_CYCLE[0]["frameDuration"] = 78;
+JAMES_STAND_CYCLE[1]["frameDuration"] = 7;
+JAMES_STAND_CYCLE[2]["frameDuration"] = 7;
+JAMES_STAND_CYCLE[3]["frameDuration"] = 7;
+
 JAMES_WALK_CYCLE[0]["frameDuration"] = 4;
 JAMES_WALK_CYCLE[1]["frameDuration"] = 4;
 JAMES_WALK_CYCLE[2]["frameDuration"] = 4;
@@ -164,10 +169,10 @@ function test_controls_mode(e)
     let xShift = JAMES_STAND_CYCLE[0]["xShift"];
     let yShift = JAMES_STAND_CYCLE[0]["yShift"];
 
+    let animationArray;
     if(Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"])
     {
         // decide whether to walk or run
-        let animationArray;
         if(Math.abs(PLAYER["speed"]) < maxSpeed)
         {
             animationArray = JAMES_WALK_CYCLE;
@@ -176,32 +181,32 @@ function test_controls_mode(e)
         {
             animationArray = JAMES_RUN_CYCLE;
         }
-
-        // point to a valid sprite if out of bounds
-        if(PLAYER["walkSpritePointer"] >= animationArray.length)
-        {
-            PLAYER["walkSpritePointer"] = 0;
-            PLAYER["walkFrameCounter"] = 0;
-        }
-
-        // decide whether to advance to next sprite in cycle
-        PLAYER["walkFrameCounter"] += 1;
-        if(PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"] - 1)
-        {
-            PLAYER["walkFrameCounter"] = 0;
-            PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
-        }
-
-        spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
-        spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
-        spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
-        yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
     }
     else
     {
-        PLAYER["walkFrameCounter"] = 0;
-        spriteArray = JAMES_STAND_CYCLE[0]["sprite"];
+        animationArray = JAMES_STAND_CYCLE;
     }
+
+    // point to a valid sprite if out of bounds
+    if(PLAYER["walkSpritePointer"] >= animationArray.length)
+    {
+        PLAYER["walkSpritePointer"] = 0;
+        PLAYER["walkFrameCounter"] = 0;
+    }
+
+    // decide whether to advance to next sprite in cycle
+    PLAYER["walkFrameCounter"] += 1;
+    if(PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"] - 1)
+    {
+        PLAYER["walkFrameCounter"] = 0;
+        PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
+    }
+
+    spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
+    spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
+    spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
+    yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
+
 
     // compute boundaries and collisions
     let playerScale = 3;
