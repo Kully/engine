@@ -151,15 +151,18 @@ function test_controls_mode(e)
     let xShift = JAMES_STAND_CYCLE[0]["xShift"];
     let yShift = JAMES_STAND_CYCLE[0]["yShift"];
 
-    let animationArray = [JAMES_WALK_CYCLE, JAMES_RUN_CYCLE];
-    if(Math.abs(PLAYER["speed"]) > 0)
+    if(Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"])
     {
         // decide whether to show run or walk
         let animationArray;
         if(Math.abs(PLAYER["speed"]) <= 4)
+        {
             animationArray = JAMES_RUN_CYCLE;
+        }
         else
+        {
             animationArray = JAMES_RUN_CYCLE;
+        }
 
         PLAYER["walkFrameCounter"] += 1;
 
