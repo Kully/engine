@@ -153,27 +153,32 @@ function test_controls_mode(e)
 
     if(Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"])
     {
-        // decide whether to show run or walk
+        // decide whether to walk or run
         let animationArray;
         if(Math.abs(PLAYER["speed"]) <= 4)
         {
-            animationArray = JAMES_RUN_CYCLE;
+            animationArray = JAMES_WALK_CYCLE;
         }
         else
         {
             animationArray = JAMES_RUN_CYCLE;
         }
 
-        PLAYER["walkFrameCounter"] += 1;
+        // point to a valid sprite if out of bounds
+        if(PLAYER["walkSpritePointer"] >= animationArray.length)
+        {
+            PLAYER["walkSpritePointer"] = 0;
+            PLAYER["walkFrameCounter"] = 0;
+        }
 
-        // decide if we advance to next sprite in animation
-        if(PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"])
+        // decide whether to advance to next sprite in cycle
+        PLAYER["walkFrameCounter"] += 1;
+        if(PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"] - 1)
         {
             PLAYER["walkFrameCounter"] = 0;
-            PLAYER["walkSpritePointer"] += 1;
-            if(PLAYER["walkSpritePointer"] >= animationArray.length)
-                PLAYER["walkSpritePointer"] = 0;
+            PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
         }
+
         spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
         spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
         spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
