@@ -26,10 +26,10 @@ import {
 
 
 // set animation speeds for animations
-JAMES_STAND_CYCLE[0]["frameDuration"] = 78;
-JAMES_STAND_CYCLE[1]["frameDuration"] = 7;
-JAMES_STAND_CYCLE[2]["frameDuration"] = 7;
-JAMES_STAND_CYCLE[3]["frameDuration"] = 7;
+JAMES_STAND_CYCLE[0]["frameDuration"] = 40;
+JAMES_STAND_CYCLE[1]["frameDuration"] = 5;
+JAMES_STAND_CYCLE[2]["frameDuration"] = 5;
+JAMES_STAND_CYCLE[3]["frameDuration"] = 5;
 
 JAMES_WALK_CYCLE[0]["frameDuration"] = 4;
 JAMES_WALK_CYCLE[1]["frameDuration"] = 4;
