@@ -9,6 +9,7 @@ import {
     JAMES_WALK_CYCLE,
     JAMES_RUN_CYCLE,
     JAMES_JUMP_CYCLE,
+    BULLET_SPRITE,
 } from "./data.js";
 
 import {
@@ -16,12 +17,14 @@ import {
     CONTROLLER,
     VALID_CONTROLLER_KEYS,
     PLAYER,
+    BULLET_MANAGER,
 } from "./state.js";
 
 import {
     FPS,
     SCREEN_SCALE,
     COLORS,
+    MAX_BULLETS_ON_SCREEN,
 } from "./constants.js";
 
 
@@ -68,6 +71,12 @@ document.addEventListener("keyup", function(e) {
             CONTROLLER["lastKeyUp"] = key;
         }
     }
+
+    if(e.key === "ArrowLeft" || e.key === "ArrowRight")
+    {
+        CONTROLLER["lastLeftOrRight"] = e.key;
+    }
+
 });
 
 // initialize canvas
@@ -187,26 +196,22 @@ function test_controls_mode(e)
         animationArray = JAMES_STAND_CYCLE;
     }
 
-    // point to a valid sprite if out of bounds
+    // determine which sprite in cycle to draw
     if(PLAYER["walkSpritePointer"] >= animationArray.length)
     {
         PLAYER["walkSpritePointer"] = 0;
         PLAYER["walkFrameCounter"] = 0;
     }
-
-    // decide whether to advance to next sprite in cycle
     PLAYER["walkFrameCounter"] += 1;
     if(PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"] - 1)
     {
         PLAYER["walkFrameCounter"] = 0;
         PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
     }
-
     spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
     spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
     spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
     yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
-
 
     // compute boundaries and collisions
     let playerScale = 3;
@@ -239,19 +244,22 @@ function test_controls_mode(e)
     )
 
     // draw player
+    let playerFacingLeft = 0;
     for(let i=0; i<spriteWidth; i+=1)
     for(let j=0; j<spriteHeight; j+=1)
     {
         if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
         {
             ctx.fillStyle = spriteArray[(spriteWidth - 1 - i) + j*spriteWidth];
+            playerFacingLeft = 1;
         }
         else
         if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0)
         {
-            if(CONTROLLER["lastKeyUp"] !== "ArrowRight")
+            if(CONTROLLER["lastLeftOrRight"] !== "ArrowRight")
             {
                 ctx.fillStyle = spriteArray[(spriteWidth - 1 - i) + j*spriteWidth];
+                playerFacingLeft = 1;
             }
             else
             {
@@ -269,6 +277,66 @@ function test_controls_mode(e)
             playerScale,
             playerScale,
         );
+    }
+
+
+    // add bullet to the screen
+    if(CONTROLLER["z"] === 1 && BULLET_MANAGER["instances"].length < 1)
+    {
+        let velo;
+        let bulletX;
+        if(playerFacingLeft === 1)
+        {
+            velo = -7;
+            bulletX = PLAYER["x"];
+        }
+        else
+        {
+            bulletX = PLAYER["x"] + JAMES_STAND_CYCLE[0]["width"] * playerScale
+            velo = 7;
+        }
+
+        let bullet_obj = {
+            x: bulletX,
+            y: PLAYER["y"] - 38,
+            velocity: velo,
+        };
+        BULLET_MANAGER["instances"].push(bullet_obj);
+    };
+    // remove bullet if out of bounds
+    if(
+        BULLET_MANAGER["instances"].length > 0 &&
+            (BULLET_MANAGER["instances"][0]["x"] > CAMERA["width"] || BULLET_MANAGER["instances"][0]["x"] < 0)
+    )
+    {
+        BULLET_MANAGER["instances"] = [];
+    }
+
+    if(BULLET_MANAGER["instances"].length > 0)
+    {
+        for(let idx=0; idx<BULLET_MANAGER["instances"].length; idx+=1)
+        {
+            BULLET_MANAGER["instances"][idx]["x"] += BULLET_MANAGER["instances"][idx]["velocity"];
+        }
+
+        for(let i=0; i<BULLET_SPRITE["width"]; i+=1)
+        for(let j=0; j<BULLET_SPRITE["height"]; j+=1)
+        {
+            if(BULLET_MANAGER["instances"][0]["velocity"] < 0)
+            {
+                ctx.fillStyle = BULLET_SPRITE["sprite"][(BULLET_SPRITE["width"] - 1 - i) + j*BULLET_SPRITE["width"]];
+            }
+            else
+            {
+                ctx.fillStyle = BULLET_SPRITE["sprite"][i + j*BULLET_SPRITE["width"]];
+            }
+            ctx.fillRect(
+                BULLET_MANAGER["instances"][0]["x"]+ i*playerScale,
+                BULLET_MANAGER["instances"][0]["y"]+ j*playerScale,
+                playerScale,
+                playerScale,
+            );
+        }
     }
 }
 

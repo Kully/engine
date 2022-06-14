@@ -6,8 +6,6 @@ export const VALID_CONTROLLER_KEYS = [
     "ArrowUp",
     "ArrowDown",
     "z",
-    "x",
-    "c",
 ];
 
 export const CONTROLLER = {
@@ -15,8 +13,9 @@ export const CONTROLLER = {
 	ArrowRight: 0,
 	ArrowUp: 0,
 	ArrowDown: 0,
-	KeyZ: 0,
+	z: 0,
 	lastKeyUp: "ArrowRight",
+	lastLeftOrRight: "ArrowRight",
 };
 
 // screen dimensions for genesis game are 320 x 224
@@ -39,3 +38,10 @@ export const PLAYER = {
 	walkFrameCounter: 0,
 	walkSpritePointer: 0,
 };
+
+export const BULLET_MANAGER = {
+	instances: [],
+	bulleyDelayFrames: 30,
+	bulletDelayCounter: 0,
+	maxOnScreen: 2,
+}

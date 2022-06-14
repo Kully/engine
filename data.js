@@ -15,6 +15,16 @@ export const LEVEL = [
 	[4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
 ];
 
+export const BULLET_SPRITE = {
+	sprite: [
+		"#FF0000FF", "#FF0000FF", "#00000000",
+		"#FF0000FF", "#FF0000FF", "#FF0000FF",
+		"#FF0000FF", "#FF0000FF", "#00000000",
+	],
+	width: 3,
+	height: 3,
+}
+
 export const SPRITE_LOOKUP = {
 	0: [
 		"#151D3B", "#151D3B", "#151D3B", "#151D3B", "#151D3B", "#151D3B", "#151D3B", "#151D3B",
