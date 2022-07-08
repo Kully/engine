@@ -437,6 +437,7 @@ export const JAMES_RUN_CYCLE = [
 		frameDuration: 6,
 		xShift: 0,
 		yShift: 2,
+		// yShift: 0,
 	},
 	{
 		sprite: [
@@ -512,7 +513,8 @@ export const JAMES_RUN_CYCLE = [
 		height: 26,
 		frameDuration: 6,
 		xShift: 0,
-		yShift: -5,
+		// yShift: -5,
+		yShift: -2,
 	},
 ]
 
