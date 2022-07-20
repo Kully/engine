@@ -1,5 +1,7 @@
 /* State Module */
 
+import {GRID_WIDTH_PX} from "./data.js";
+
 export const VALID_CONTROLLER_KEYS = [
     "ArrowLeft",
     "ArrowRight",
@@ -18,18 +20,15 @@ export const CONTROLLER = {
 	lastLeftOrRight: "ArrowRight",
 };
 
+// 1920x1080
 export const CAMERA = {
-	gridXIndex: 0,
-	gridYIndex: 2,
-	xOffset: 0,
-	yOffset: 0,
-	width: 1920/2,
-	height: 1080/2,
+	width: 960,
+	height: 540,
 };
 
 export const PLAYER = {
-	x: 50,
-	y: CAMERA["height"] - 20 - 32,
+	x: GRID_WIDTH_PX*7,
+	y: GRID_WIDTH_PX*6,
 	width: 16,
 	height: 32,
 	speed: 0,
