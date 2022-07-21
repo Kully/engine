@@ -27,16 +27,16 @@ import {
 } from "./constants.js";
 
 
-// set animation speeds for animations
+// set animation speeds
 JAMES_STAND_CYCLE[0]["frameDuration"] = 20;
 JAMES_STAND_CYCLE[1]["frameDuration"] = 5;
 JAMES_STAND_CYCLE[2]["frameDuration"] = 5;
 JAMES_STAND_CYCLE[3]["frameDuration"] = 5;
 
-JAMES_WALK_CYCLE[0]["frameDuration"] = 4;
-JAMES_WALK_CYCLE[1]["frameDuration"] = 4;
-JAMES_WALK_CYCLE[2]["frameDuration"] = 4;
-JAMES_WALK_CYCLE[3]["frameDuration"] = 4;
+JAMES_WALK_CYCLE[0]["frameDuration"] = 5;
+JAMES_WALK_CYCLE[1]["frameDuration"] = 5;
+JAMES_WALK_CYCLE[2]["frameDuration"] = 7;
+JAMES_WALK_CYCLE[3]["frameDuration"] = 7;
 
 JAMES_RUN_CYCLE[0]["frameDuration"] = 6;
 JAMES_RUN_CYCLE[1]["frameDuration"] = 6;
@@ -97,10 +97,11 @@ let gridYIndex = 2;
 let xOffset = 0;
 let yOffset = 0;
 
-// params for player speed
-const maxSpeed = 3;
-const accInc = 3;
-const decInc = 3;
+// player parameters
+const playerScale = 4;
+const maxSpeed = 2;
+const accInc = 2;
+const decInc = 2;
 
 function draw_level()
 {
@@ -180,7 +181,6 @@ function translatePlayer()
 function drawPlayer(spriteArray, spriteWidth, spriteHeight, yShift)
 {
     let playerFacingLeft = 0;
-    let playerScale = 2;
     for(let i=0; i<spriteWidth; i+=1)
     for(let j=0; j<spriteHeight; j+=1)
     {
@@ -208,10 +208,10 @@ function drawPlayer(spriteArray, spriteWidth, spriteHeight, yShift)
             pixelColor = spriteArray[i + j*spriteWidth];
         }
 
-        let x = PLAYER["x"] + i*playerScale;
-        let y = PLAYER["y"] - spriteHeight*playerScale + (j + yShift)*playerScale;
-        x = Math.floor(x);
-        y = Math.floor(y);
+        let x = PLAYER["x"] + i * playerScale;
+        let y = PLAYER["y"] + (j - spriteHeight + yShift) * playerScale;
+        // x = Math.floor(x);
+        // y = Math.floor(y);
 
         ctx2.fillStyle = pixelColor;
         ctx2.fillRect(

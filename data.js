@@ -244,7 +244,7 @@ export const JAMES_STAND_CYCLE = [
 		height: 31,
 		frameDuration: 10,
 		xShift: 0,
-		yShift: 1/3,
+		yShift: 0,
 	},
 	{
 		sprite: [
@@ -284,7 +284,7 @@ export const JAMES_STAND_CYCLE = [
 		height: 31,
 		frameDuration: 10,
 		xShift: 0,
-		yShift: 1/3,
+		yShift: 0,
 	},
 ];
 
@@ -368,7 +368,7 @@ export const JAMES_RUN_CYCLE = [
 		height: 27,
 		frameDuration: 6,
 		xShift: 0,
-		yShift: 2,
+		yShift: 0,
 	},
 	{
 		sprite: [
@@ -480,8 +480,7 @@ export const JAMES_RUN_CYCLE = [
 		height: 27,
 		frameDuration: 6,
 		xShift: 0,
-		yShift: 2,
-		// yShift: 0,
+		yShift: 0,
 	},
 	{
 		sprite: [
@@ -557,8 +556,7 @@ export const JAMES_RUN_CYCLE = [
 		height: 26,
 		frameDuration: 6,
 		xShift: 0,
-		// yShift: -5,
-		yShift: -2,
+		yShift: -5,
 	},
 ]
 
@@ -601,7 +599,7 @@ export const JAMES_WALK_CYCLE = [
 		height: 30,
 		frameDuration: 6,
 		xShift: 0,
-		yShift: 1,
+		yShift: 0,
 	},
 	{
 		sprite: [
@@ -640,7 +638,7 @@ export const JAMES_WALK_CYCLE = [
 		height: 30,
 		frameDuration: 6,
 		xShift: 0,
-		yShift: 1,
+		yShift: 0,
 	},
 	{
 		sprite: [
