@@ -4,20 +4,14 @@ body {
 }
 
 canvas {
-	display: block;
-	position: relative;
+	z-index: 1;
+	position: absolute;
 	top: 250px;
-	margin: 0 auto;
+	left: 450px;
 	transform-origin: 0% 0%;
-	/*transform:  scale(2, 2);*/
-	/*transform: rotate(30deg);*/
 }
 
-.frame-controller {
-	width: 40px;
-	position: relative;
-}
-
-.title {
-	color: #CC704B;
+canvas#canvas-mg {
+	z-index: 2;
+	position: absolute;
 }
