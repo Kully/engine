@@ -20,13 +20,19 @@ export const CONTROLLER = {
 	lastLeftOrRight: "ArrowRight",
 };
 
-// 1920x1080
+// 1920x1080 = 1080p
 export const CAMERA = {
 	width: 960,
 	height: 540,
+	gridXIndex: 0,
+	gridYIndex: 0,
+	xOffset: 0,
+	yOffset: 0,
 };
 
 export const PLAYER = {
+	levelGridX: 1,
+	levelGridY: 1,
 	x: GRID_WIDTH_PX*7,
 	y: GRID_WIDTH_PX*6,
 	width: 16,

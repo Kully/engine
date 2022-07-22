@@ -35,8 +35,8 @@ JAMES_STAND_CYCLE[3]["frameDuration"] = 5;
 
 JAMES_WALK_CYCLE[0]["frameDuration"] = 5;
 JAMES_WALK_CYCLE[1]["frameDuration"] = 5;
-JAMES_WALK_CYCLE[2]["frameDuration"] = 7;
-JAMES_WALK_CYCLE[3]["frameDuration"] = 7;
+JAMES_WALK_CYCLE[2]["frameDuration"] = 6;
+JAMES_WALK_CYCLE[3]["frameDuration"] = 6;
 
 JAMES_RUN_CYCLE[0]["frameDuration"] = 6;
 JAMES_RUN_CYCLE[1]["frameDuration"] = 6;
@@ -78,12 +78,11 @@ document.addEventListener("keyup", function(e) {
 
 });
 
-
 // init canvas for background layer
 const canvas = document.getElementById("canvas-bg");
-const ctx = canvas.getContext("2d", {alpha: false});
-canvas.width = CAMERA["width"]/2;
-canvas.height = CAMERA["height"]/2;
+const ctx = canvas.getContext("2d");
+canvas.width = CAMERA["width"];
+canvas.height = CAMERA["height"];
 
 // init canvas for middleground layer
 const canvas2 = document.getElementById("canvas-mg");
@@ -91,28 +90,22 @@ const ctx2 = canvas2.getContext("2d");
 canvas2.width = canvas.width;
 canvas2.height = canvas.height;
 
-// determine initial camera frame
-let gridXIndex = 0;
-let gridYIndex = 2;
-let xOffset = 0;
-let yOffset = 0;
-
 // player parameters
-const playerScale = 4;
+const playerScale = 2;
 const maxSpeed = 2;
 const accInc = 2;
 const decInc = 2;
 
-function draw_level()
+function drawLevel()
 {
     for(let x=0; x<canvas.width; x+=1)
     for(let y=0; y<canvas.height; y+=1)
     {
         // deterine which sprite block we are drawing
-        let jump_in_x = Math.floor((xOffset + x) / GRID_WIDTH_PX);
-        let jump_in_y = Math.floor((yOffset + y) / GRID_WIDTH_PX);
-        let sprite_x = gridXIndex + jump_in_x;
-        let sprite_y = gridYIndex + jump_in_y;
+        let jump_in_x = Math.floor((CAMERA["xOffset"] + x) / GRID_WIDTH_PX);
+        let jump_in_y = Math.floor((CAMERA["yOffset"] + y) / GRID_WIDTH_PX);
+        let sprite_x = CAMERA["gridXIndex"] + jump_in_x;
+        let sprite_y = CAMERA["gridYIndex"] + jump_in_y;
         let sprite_ptr = getValueFrom2DArray(LEVEL, sprite_x, sprite_y);
 
         // draw pixel
@@ -123,14 +116,18 @@ function draw_level()
         }
         else
         {
-            let color_x = Math.floor( ((x+xOffset)%GRID_WIDTH_PX) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
-            let color_y = Math.floor( ((y+yOffset)%GRID_WIDTH_PX) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
+            let color_x = Math.floor( ((x+CAMERA["xOffset"])%GRID_WIDTH_PX) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
+            let color_y = Math.floor( ((y+CAMERA["yOffset"])%GRID_WIDTH_PX) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
             let color_idx = color_y * SPRITE_WIDTH + color_x;
 
             pixelColor = SPRITE_LOOKUP[sprite_ptr][color_idx];
         }
-        ctx.fillStyle = pixelColor;
-        ctx.fillRect(x, y, 1, 1);
+
+        if((pixelColor.endsWith("FF") && pixelColor.length === 9) || pixelColor.length === 7)
+        {
+            ctx.fillStyle = pixelColor;
+            ctx.fillRect(x, y, 1, 1);
+        }
     }
 }
 
@@ -210,9 +207,6 @@ function drawPlayer(spriteArray, spriteWidth, spriteHeight, yShift)
 
         let x = PLAYER["x"] + i * playerScale;
         let y = PLAYER["y"] + (j - spriteHeight + yShift) * playerScale;
-        // x = Math.floor(x);
-        // y = Math.floor(y);
-
         ctx2.fillStyle = pixelColor;
         ctx2.fillRect(
             x,
@@ -243,7 +237,7 @@ function findAnimationCycle()
     let animationArray;
     if(Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"])
     {
-        if(Math.abs(PLAYER["speed"]) < maxSpeed)
+        if(Math.abs(PLAYER["speed"]) < 1000)
             animationArray = JAMES_WALK_CYCLE;
         else
             animationArray = JAMES_RUN_CYCLE;
@@ -291,5 +285,5 @@ function gameLoop(e)
 }
 
 
-draw_level();
+drawLevel();
 setInterval(gameLoop, 1000 / FPS);

@@ -1,17 +1,19 @@
 body {
 	background-color: #888;
 	color: #CCC;
+	margin: 0;
+	padding: 0;
 }
 
 canvas {
-	z-index: 1;
+	z-index: 0;
 	position: absolute;
-	top: 250px;
-	left: 450px;
+	top: 100px;
+	left: 100px;
 	transform-origin: 0% 0%;
 }
 
 canvas#canvas-mg {
-	z-index: 2;
+	z-index: 1;
 	position: absolute;
 }
