@@ -31,8 +31,6 @@ export const CAMERA = {
 };
 
 export const PLAYER = {
-	levelGridX: 1,
-	levelGridY: 1,
 	x: GRID_WIDTH_PX*7,
 	y: GRID_WIDTH_PX*6,
 	width: 16,

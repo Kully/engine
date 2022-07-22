@@ -257,15 +257,19 @@ function gameLoop(e)
     translatePlayer();
 
     // handle boundaries
-    let leftBoundary = 6*GRID_WIDTH_PX;
-    let rightBoundary = 12*GRID_WIDTH_PX - 13;
-    if(PLAYER["x"] <= leftBoundary)
+    let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
+    let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
+
+    let spritePtrInsidePlayer = LEVEL[playerGridY - 1][Math.floor(playerGridX)];
+    let spritePtrRightPlayer = LEVEL[playerGridY - 1][Math.floor( (PLAYER["x"]+ playerScale*PLAYER["width"]) / GRID_WIDTH_PX )];
+
+    if(SPRITE_LOOKUP[spritePtrInsidePlayer]["hitbox"] === true)
     {
-        PLAYER["x"] = leftBoundary;
+        PLAYER["x"] = Math.floor(playerGridX + 1) * GRID_WIDTH_PX;
     }
-    if(PLAYER["x"]+PLAYER["width"] >= rightBoundary)
+    if(SPRITE_LOOKUP[spritePtrRightPlayer]["hitbox"] === true)
     {
-        PLAYER["x"] = rightBoundary - PLAYER["width"];
+        PLAYER["x"] = Math.floor(playerGridX) * GRID_WIDTH_PX;
     }
 
     let animationArray = findAnimationCycle();
@@ -283,7 +287,6 @@ function gameLoop(e)
         yShift,
     );
 }
-
 
 drawLevel();
 setInterval(gameLoop, 1000 / FPS);
