@@ -120,7 +120,7 @@ function drawLevel()
             let color_y = Math.floor( ((y+CAMERA["yOffset"])%GRID_WIDTH_PX) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
             let color_idx = color_y * SPRITE_WIDTH + color_x;
 
-            pixelColor = SPRITE_LOOKUP[sprite_ptr][color_idx];
+            pixelColor = SPRITE_LOOKUP[sprite_ptr]["sprite"][color_idx];
         }
 
         if((pixelColor.endsWith("FF") && pixelColor.length === 9) || pixelColor.length === 7)
