@@ -1,3 +1,3 @@
-# Project Creed
+# Neptune
 
-A project between Daniel and Adam.
+The renaissance of an old post-gaming project.
