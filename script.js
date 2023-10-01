@@ -5,10 +5,9 @@ import {
     SPRITE_LOOKUP,
     SPRITE_WIDTH,
     GRID_WIDTH_PX,
-    JAMES_STAND_CYCLE,
-    JAMES_WALK_CYCLE,
-    JAMES_JUMP_CYCLE,
-    BULLET_SPRITE,
+    STAND_CYCLE,
+    WALK_CYCLE,
+    JUMP_CYCLE,
 } from "./data.js";
 
 import {
@@ -22,7 +21,6 @@ import {
 import {
     FPS,
     COLORS,
-    MAX_BULLETS_ON_SCREEN,
 } from "./constants.js";
 
 
@@ -217,11 +215,11 @@ function findAnimationCycle()
     let animationArray;
     if(Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"])
     {
-    	animationArray = JAMES_WALK_CYCLE;
+    	animationArray = WALK_CYCLE;
     }
     else
     {
-        animationArray = JAMES_STAND_CYCLE;
+        animationArray = STAND_CYCLE;
     }
     
     return animationArray;
