@@ -1,26 +1,49 @@
 /* State Module */
 
+import {GRID_WIDTH_PX} from "./data.js";
+
+export const VALID_CONTROLLER_KEYS = [
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowDown",
+    "z",
+];
+
 export const CONTROLLER = {
 	ArrowLeft: 0,
 	ArrowRight: 0,
 	ArrowUp: 0,
 	ArrowDown: 0,
+	z: 0,
+	lastKeyUp: "ArrowRight",
+	lastLeftOrRight: "ArrowRight",
 };
 
+// 1920x1080 = 1080p
 export const CAMERA = {
+	width: 960,
+	height: 540,
 	gridXIndex: 0,
-	gridYIndex: 2,
+	gridYIndex: 0,
 	xOffset: 0,
 	yOffset: 0,
-	width: 320,
-	height: 224,
 };
 
 export const PLAYER = {
-	x: Math.floor(CAMERA["width"] / 2),
-	y: 400,
-	width: 32,
-	height: 64,
+	x: GRID_WIDTH_PX*7,
+	y: GRID_WIDTH_PX*6,
+	width: 16,
+	height: 32,
 	speed: 0,
-	color: "#FFFBE9",
+	default: "#FFFBE9",
+	walkFrameCounter: 0,
+	walkSpritePointer: 0,
 };
+
+export const BULLET_MANAGER = {
+	instances: [],
+	bulleyDelayFrames: 30,
+	bulletDelayCounter: 0,
+	maxOnScreen: 2,
+}
