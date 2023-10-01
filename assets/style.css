@@ -1,6 +1,5 @@
 body {
-	background-color: #888;
-	color: #CCC;
+	background-color: #111;
 	margin: 0;
 	padding: 0;
 }
@@ -8,9 +7,8 @@ body {
 canvas {
 	z-index: 0;
 	position: absolute;
-	top: 100px;
-	left: 100px;
-	transform-origin: 0% 0%;
+	top: calc(50vh - 540px / 2);
+	left: calc(50% - 960px / 2);
 }
 
 canvas#canvas-mg {
