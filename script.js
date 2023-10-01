@@ -7,7 +7,6 @@ import {
     GRID_WIDTH_PX,
     JAMES_STAND_CYCLE,
     JAMES_WALK_CYCLE,
-    JAMES_RUN_CYCLE,
     JAMES_JUMP_CYCLE,
     BULLET_SPRITE,
 } from "./data.js";
@@ -25,26 +24,6 @@ import {
     COLORS,
     MAX_BULLETS_ON_SCREEN,
 } from "./constants.js";
-
-
-// set animation speeds
-JAMES_STAND_CYCLE[0]["frameDuration"] = 20;
-JAMES_STAND_CYCLE[1]["frameDuration"] = 5;
-JAMES_STAND_CYCLE[2]["frameDuration"] = 5;
-JAMES_STAND_CYCLE[3]["frameDuration"] = 5;
-
-JAMES_WALK_CYCLE[0]["frameDuration"] = 5;
-JAMES_WALK_CYCLE[1]["frameDuration"] = 5;
-JAMES_WALK_CYCLE[2]["frameDuration"] = 6;
-JAMES_WALK_CYCLE[3]["frameDuration"] = 6;
-
-JAMES_RUN_CYCLE[0]["frameDuration"] = 6;
-JAMES_RUN_CYCLE[1]["frameDuration"] = 6;
-JAMES_RUN_CYCLE[2]["frameDuration"] = 6;
-JAMES_RUN_CYCLE[3]["frameDuration"] = 6;
-JAMES_RUN_CYCLE[4]["frameDuration"] = 6;
-JAMES_RUN_CYCLE[5]["frameDuration"] = 6;
-
 
 function getValueFrom2DArray(array_2d, x, y)
 {
@@ -237,10 +216,7 @@ function findAnimationCycle()
     let animationArray;
     if(Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"])
     {
-        if(Math.abs(PLAYER["speed"]) < 1000)
-            animationArray = JAMES_WALK_CYCLE;
-        else
-            animationArray = JAMES_RUN_CYCLE;
+    	animationArray = JAMES_WALK_CYCLE;
     }
     else
     {
