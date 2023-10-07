@@ -25,16 +25,12 @@ import {
 } from "./constants.js";
 
 
-function validatePixelColor(entry, COLOR_ARRAY)
+function validatePixelColor(color, COLOR_ARRAY)
 {
-    if(entry.toString().startsWith("#"))
-    {
-        return entry;
-    }
+    if(color.toString().startsWith("#"))
+        return color;
     else
-    {
-        return COLOR_ARRAY[entry];
-    }
+        return COLOR_ARRAY[color];
 }
 
 function getValueFrom2DArray(array_2d, x, y)
