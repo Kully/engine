@@ -8,6 +8,7 @@ import {
     STAND_CYCLE,
     WALK_CYCLE,
     JUMP_CYCLE,
+    SCALE,
 } from "./data.js";
 
 import {
@@ -15,7 +16,6 @@ import {
     CONTROLLER,
     VALID_CONTROLLER_KEYS,
     PLAYER,
-    BULLET_MANAGER,
 } from "./state.js";
 
 import {
@@ -69,10 +69,10 @@ canvas2.width = canvas.width;
 canvas2.height = canvas.height;
 
 // player parameters
-const playerScale = 2;
-const maxSpeed = 2;
-const accInc = 2;
-const decInc = 2;
+const playerScale = SCALE;
+const maxSpeed = SCALE;
+const accInc = SCALE;
+const decInc = SCALE;
 
 function drawLevel()
 {

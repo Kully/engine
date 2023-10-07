@@ -31,19 +31,12 @@ export const CAMERA = {
 };
 
 export const PLAYER = {
-	x: GRID_WIDTH_PX*7,
-	y: GRID_WIDTH_PX*6,
+	x: GRID_WIDTH_PX*1,
+	y: GRID_WIDTH_PX*3,
 	width: 16,
-	height: 32,
+	height: 16,
 	speed: 0,
 	default: "#FFFBE9",
 	walkFrameCounter: 0,
 	walkSpritePointer: 0,
 };
-
-export const BULLET_MANAGER = {
-	instances: [],
-	bulleyDelayFrames: 30,
-	bulletDelayCounter: 0,
-	maxOnScreen: 2,
-}
