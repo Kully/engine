@@ -9,6 +9,7 @@ import {
     WALK_CYCLE,
     JUMP_CYCLE,
     SCALE,
+    COLOR_ARRAY,
 } from "./data.js";
 
 import {
@@ -23,6 +24,18 @@ import {
     COLORS,
 } from "./constants.js";
 
+
+function validatePixelColor(entry, COLOR_ARRAY)
+{
+    if(entry.toString().startsWith("#"))
+    {
+        return entry;
+    }
+    else
+    {
+        return COLOR_ARRAY[entry];
+    }
+}
 
 function getValueFrom2DArray(array_2d, x, y)
 {
@@ -99,6 +112,7 @@ function drawLevel()
             let color_idx = color_y * SPRITE_WIDTH + color_x;
 
             pixelColor = SPRITE_LOOKUP[sprite_ptr]["sprite"][color_idx];
+            pixelColor = validatePixelColor(pixelColor, COLOR_ARRAY);
         }
 
         if((pixelColor.endsWith("FF") && pixelColor.length === 9) || pixelColor.length === 7)
@@ -182,6 +196,7 @@ function drawPlayer(spriteArray, spriteWidth, spriteHeight, yShift)
         {
             pixelColor = spriteArray[i + j*spriteWidth];
         }
+        pixelColor = validatePixelColor(pixelColor, COLOR_ARRAY);
 
         let x = PLAYER["x"] + i * playerScale;
         let y = PLAYER["y"] + (j - spriteHeight + yShift) * playerScale;
