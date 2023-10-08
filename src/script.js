@@ -245,6 +245,7 @@ function gameLoop(e)
     // handle boundaries
     let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
     let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
+    playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
 
     // deal with boundary on your left
     let curr_tile = Math.floor(playerGridX);
@@ -252,6 +253,7 @@ function gameLoop(e)
     if(SPRITE_LOOKUP[sprite_to_left]["hitbox"] === true)
     {
         PLAYER["x"] = (curr_tile + 1) * GRID_WIDTH_PX;
+        PLAYER["x"] -= CAMERA["xOffset"];
     }
 
     // deal with boundary on your right
@@ -260,6 +262,7 @@ function gameLoop(e)
     if(SPRITE_LOOKUP[sprite_to_right]["hitbox"] === true)
     {
         PLAYER["x"] = (curr_tile) * GRID_WIDTH_PX;
+        PLAYER["x"] -= CAMERA["xOffset"];
     }
 
     let animationArray = findAnimationCycle();
