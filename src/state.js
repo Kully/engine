@@ -31,7 +31,7 @@ export const CAMERA = {
 };
 
 export const PLAYER = {
-	x: GRID_WIDTH_PX*1,
+	x: GRID_WIDTH_PX*(6-CAMERA["gridXIndex"]),
 	y: GRID_WIDTH_PX*3,
 	width: 16,
 	height: 16,
