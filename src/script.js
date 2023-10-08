@@ -246,16 +246,20 @@ function gameLoop(e)
     let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
     let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
 
-    let spritePtrInsidePlayer = LEVEL[playerGridY - 1][Math.floor(playerGridX)];
-    let spritePtrRightPlayer = LEVEL[playerGridY - 1][Math.floor( (PLAYER["x"]+ playerScale*PLAYER["width"]) / GRID_WIDTH_PX )];
-
-    if(SPRITE_LOOKUP[spritePtrInsidePlayer]["hitbox"] === true)
+    // deal with boundary on your left
+    let curr_tile = Math.floor(playerGridX);
+    let sprite_to_left = LEVEL[playerGridY - 1][curr_tile + CAMERA["gridXIndex"] ]
+    if(SPRITE_LOOKUP[sprite_to_left]["hitbox"] === true)
     {
-        PLAYER["x"] = Math.floor(playerGridX + 1) * GRID_WIDTH_PX;
+        PLAYER["x"] = (curr_tile + 1) * GRID_WIDTH_PX;
     }
-    if(SPRITE_LOOKUP[spritePtrRightPlayer]["hitbox"] === true)
+
+    // deal with boundary on your right
+    let right_tile = Math.ceil(playerGridX);
+    let sprite_to_right = LEVEL[playerGridY - 1][right_tile + CAMERA["gridXIndex"]];
+    if(SPRITE_LOOKUP[sprite_to_right]["hitbox"] === true)
     {
-        PLAYER["x"] = Math.floor(playerGridX) * GRID_WIDTH_PX;
+        PLAYER["x"] = (curr_tile) * GRID_WIDTH_PX;
     }
 
     let animationArray = findAnimationCycle();
