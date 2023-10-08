@@ -248,7 +248,7 @@ function gameLoop(e)
 
     // deal with boundary on your left
     let curr_tile = Math.floor(playerGridX);
-    let sprite_to_left = LEVEL[playerGridY - 1][curr_tile + CAMERA["gridXIndex"] ]
+    let sprite_to_left = LEVEL[playerGridY - 1][curr_tile + CAMERA["gridXIndex"]]
     if(SPRITE_LOOKUP[sprite_to_left]["hitbox"] === true)
     {
         PLAYER["x"] = (curr_tile + 1) * GRID_WIDTH_PX;
