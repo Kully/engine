@@ -24,15 +24,17 @@ export const CONTROLLER = {
 export const CAMERA = {
 	width: 960,
 	height: 540,
-	gridXIndex: 3,
+	gridXIndex: 0,
 	gridYIndex: 0,
-	xOffset: 99,
+	xOffset: 0,
 	yOffset: 0,
+	velocityX: 1,
+	velocityY: 0,
 };
 
 export const PLAYER = {
-	x: GRID_WIDTH_PX*(6-CAMERA["gridXIndex"]) - CAMERA["xOffset"],
-	y: GRID_WIDTH_PX*3,
+	x: GRID_WIDTH_PX*(9-CAMERA["gridXIndex"]) - CAMERA["xOffset"],
+	y: GRID_WIDTH_PX*(6-CAMERA["gridYIndex"]) - CAMERA["yOffset"],
 	width: 16,
 	height: 16,
 	speed: 0,

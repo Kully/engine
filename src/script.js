@@ -239,6 +239,11 @@ function findAnimationCycle()
 
 function gameLoop(e)
 {
+
+    CAMERA["xOffset"] += CAMERA["velocityX"];
+    PLAYER["x"] -= CAMERA["velocityX"];
+    drawLevel();
+
     updatePlayerSpeed();
     translatePlayer();
 
@@ -281,5 +286,4 @@ function gameLoop(e)
     );
 }
 
-drawLevel();
 setInterval(gameLoop, 1000 / FPS);
