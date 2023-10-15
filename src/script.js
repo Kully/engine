@@ -66,13 +66,13 @@ document.addEventListener("keyup", function(e) {
 });
 
 // init canvas for background layer
-const canvas = document.getElementById("canvas-bg");
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = CAMERA["width"];
 canvas.height = CAMERA["height"];
 
 // init canvas for middleground layer
-const canvas2 = document.getElementById("canvas-mg");
+const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
 canvas2.width = canvas.width;
 canvas2.height = canvas.height;
