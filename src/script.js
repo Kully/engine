@@ -1,17 +1,27 @@
 "use strict";
 
 import {
+    FPS,
+    COLORS,
+} from "./constants.js";
+
+import {
     LEVEL,
     SPRITE_LOOKUP,
     SPRITE_WIDTH,
     GRID_WIDTH_PX,
     STAND_CYCLE,
     WALK_CYCLE,
-    JUMP_CYCLE,
     SCALE,
     SCALE2,
     COLOR_ARRAY,
 } from "./data.js";
+
+import {
+    hexToRgb,
+    validatePixelColor,
+    getValueFrom2DArray,
+} from "./helpers.js";
 
 import {
     CAMERA,
@@ -19,15 +29,6 @@ import {
     VALID_CONTROLLER_KEYS,
     PLAYER,
 } from "./state.js";
-
-import {
-    FPS,
-    COLORS,
-} from "./constants.js";
-
-import {
-    hexToRgb
-} from "./helpers.js";
 
 
 document.addEventListener("keydown", function(e) {
@@ -92,21 +93,6 @@ const playerScale = SCALE;
 const maxSpeed = SCALE;
 const accInc = SCALE;
 const decInc = SCALE;
-
-function validatePixelColor(color, COLOR_ARRAY)
-{
-    if(color.toString().startsWith("#"))
-        return color;
-    else
-        return COLOR_ARRAY[color];
-}
-
-function getValueFrom2DArray(array_2d, x, y)
-{
-    if(x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
-        return undefined;
-    return array_2d[y][x];
-}
 
 function drawLevel()
 {
