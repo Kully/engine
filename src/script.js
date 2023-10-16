@@ -9,6 +9,7 @@ import {
     WALK_CYCLE,
     JUMP_CYCLE,
     SCALE,
+    SCALE2,
     COLOR_ARRAY,
 } from "./data.js";
 
@@ -24,21 +25,10 @@ import {
     COLORS,
 } from "./constants.js";
 
+import {
+    hexToRgb
+} from "./helpers.js";
 
-function validatePixelColor(color, COLOR_ARRAY)
-{
-    if(color.toString().startsWith("#"))
-        return color;
-    else
-        return COLOR_ARRAY[color];
-}
-
-function getValueFrom2DArray(array_2d, x, y)
-{
-    if(x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
-        return undefined;
-    return array_2d[y][x];
-}
 
 document.addEventListener("keydown", function(e) {
     for(let key of VALID_CONTROLLER_KEYS)
@@ -62,20 +52,40 @@ document.addEventListener("keyup", function(e) {
     {
         CONTROLLER["lastLeftOrRight"] = e.key;
     }
-
 });
 
+
 // init canvas for background layer
-const canvas = document.getElementById("canvas-bg");
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = CAMERA["width"];
 canvas.height = CAMERA["height"];
 
 // init canvas for middleground layer
-const canvas2 = document.getElementById("canvas-mg");
+const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
 canvas2.width = canvas.width;
 canvas2.height = canvas.height;
+
+// init canvas that holds sprite data to easily transfer
+const canvasSprites = document.getElementById("canvas-sprites");
+const ctxSprites = canvasSprites.getContext("2d", {willReadFrequently: true});
+
+let levelSpriteCount = Object.keys(SPRITE_LOOKUP).length
+canvasSprites.width = SCALE2 * SCALE * SPRITE_WIDTH * levelSpriteCount
+canvasSprites.height = SCALE2 * SCALE * SPRITE_WIDTH;
+
+
+let spriteSlotLookup = {
+    4: 0,
+    8: 1,
+    5: 2,
+    7: 3,
+    0: 4,
+}
+for(let ptr in spriteSlotLookup)
+    saveSpriteToHiddenCanvas(ptr, SCALE2*SCALE, spriteSlotLookup[ptr]);
+
 
 // player parameters
 const playerScale = SCALE;
@@ -83,69 +93,95 @@ const maxSpeed = SCALE;
 const accInc = SCALE;
 const decInc = SCALE;
 
+function validatePixelColor(color, COLOR_ARRAY)
+{
+    if(color.toString().startsWith("#"))
+        return color;
+    else
+        return COLOR_ARRAY[color];
+}
+
+function getValueFrom2DArray(array_2d, x, y)
+{
+    if(x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
+        return undefined;
+    return array_2d[y][x];
+}
+
 function drawLevel()
 {
-    for(let x=0; x<canvas.width; x+=1)
-    for(let y=0; y<canvas.height; y+=1)
+    let xTiles = canvas.width/(SPRITE_WIDTH*SCALE*SCALE2);
+    let yTiles = canvas.height/(SPRITE_WIDTH*SCALE*SCALE2);
+    for(let x=0; x<xTiles+1; x+=1)
+    for(let y=0; y<yTiles+1; y+=1)
     {
-        // deterine which sprite block we are drawing
-        let jump_in_x = Math.floor((CAMERA["xOffset"] + x) / GRID_WIDTH_PX);
-        let jump_in_y = Math.floor((CAMERA["yOffset"] + y) / GRID_WIDTH_PX);
-        let sprite_x = CAMERA["gridXIndex"] + jump_in_x;
-        let sprite_y = CAMERA["gridYIndex"] + jump_in_y;
-        let sprite_ptr = getValueFrom2DArray(LEVEL, sprite_x, sprite_y);
-
-        // draw pixel
-        let pixelColor;
-        if(sprite_ptr === undefined || sprite_ptr === null)
-        {
-            pixelColor = COLORS["undefined"];
-        }
-        else
-        {
-            let color_x = Math.floor( ((x+CAMERA["xOffset"])%GRID_WIDTH_PX) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
-            let color_y = Math.floor( ((y+CAMERA["yOffset"])%GRID_WIDTH_PX) / (GRID_WIDTH_PX / SPRITE_WIDTH) );
-            let color_idx = color_y * SPRITE_WIDTH + color_x;
-
-            pixelColor = SPRITE_LOOKUP[sprite_ptr]["sprite"][color_idx];
-            pixelColor = validatePixelColor(pixelColor, COLOR_ARRAY);
+        let spritePtr = getValueFrom2DArray(LEVEL, x, y)
+        if(spritePtr === undefined) {
+            spritePtr = 0;
         }
 
-        if((pixelColor.endsWith("FF") && pixelColor.length === 9) || pixelColor.length === 7)
-        {
-            ctx.fillStyle = pixelColor;
-            ctx.fillRect(x, y, 1, 1);
-        }
+        let savedData = getSpriteFromHiddenCanvas(spritePtr);
+        let tileX = x;
+        let tileY = y;
+        ctx.putImageData(
+            savedData,
+            -1 * CAMERA["xOffset"] + tileX * (SCALE2 * SCALE * SPRITE_WIDTH),
+            -1 * CAMERA["yOffset"] + tileY * SCALE * SCALE2 * SPRITE_WIDTH,
+        );
     }
 }
 
+function saveSpriteToHiddenCanvas(spritePtr, scale, slotX)
+{
+    let spriteData = SPRITE_LOOKUP[spritePtr]["sprite"];
+    for(let i=0; i < spriteData.length; i+=1)
+    {
+        let imageData = ctxSprites.createImageData(2*SCALE, 2*SCALE);
+        let colorPtr = spriteData[i];
+        let hex = COLOR_ARRAY[colorPtr];
+        let rgbArray = hexToRgb(hex);
+
+        for(let j=0; j<SPRITE_WIDTH*SPRITE_WIDTH; j+=1)
+        {
+            imageData.data[4*j + 0] = rgbArray[0];
+            imageData.data[4*j + 1] = rgbArray[1];
+            imageData.data[4*j + 2] = rgbArray[2];
+            imageData.data[4*j + 3] = rgbArray[3];
+        }
+        let x = SCALE*SPRITE_WIDTH*slotX + SCALE*(i % SPRITE_WIDTH);
+        let y = 0 + SCALE*(Math.floor(i / SPRITE_WIDTH));
+        ctxSprites.putImageData(imageData, SCALE2*x, SCALE2*y);
+    }
+}
+
+function getSpriteFromHiddenCanvas(spritePtr)
+{
+    let slotX = spriteSlotLookup[spritePtr]
+
+    let left = SCALE2 * slotX*SCALE*SPRITE_WIDTH;
+    let top = 0*SCALE*SPRITE_WIDTH;
+    let width = SCALE2*SCALE*SPRITE_WIDTH;
+    let height = SCALE2*SCALE*SPRITE_WIDTH;
+    let savedData = ctxSprites.getImageData(left, top, width, height);
+    return savedData;
+}
 
 function updatePlayerSpeed()
 {
     if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
-    {
         PLAYER["speed"] -= accInc;
-    }
     else
     if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
-    {
         PLAYER["speed"] += accInc;
-    }
     else
     {
         if(PLAYER["speed"] > 0.4)
-        {
             PLAYER["speed"] -= decInc;
-        }
         else
         if(PLAYER["speed"] < -0.4)
-        {
             PLAYER["speed"] += decInc;
-        }
         else
-        {
             PLAYER["speed"] = 0;
-        }
     }
 
     // throttle the speed
@@ -239,23 +275,35 @@ function findAnimationCycle()
 
 function gameLoop(e)
 {
+    CAMERA["xOffset"] += CAMERA["velocityX"];
+    PLAYER["x"] -= CAMERA["velocityX"];
+
+    drawLevel();
+
     updatePlayerSpeed();
     translatePlayer();
 
     // handle boundaries
     let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
     let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
+    playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
 
-    let spritePtrInsidePlayer = LEVEL[playerGridY - 1][Math.floor(playerGridX)];
-    let spritePtrRightPlayer = LEVEL[playerGridY - 1][Math.floor( (PLAYER["x"]+ playerScale*PLAYER["width"]) / GRID_WIDTH_PX )];
-
-    if(SPRITE_LOOKUP[spritePtrInsidePlayer]["hitbox"] === true)
+    // deal with boundary on your left
+    let curr_tile = Math.floor(playerGridX);
+    let sprite_to_left = LEVEL[playerGridY - 1][curr_tile + CAMERA["gridXIndex"]]
+    if(SPRITE_LOOKUP[sprite_to_left]["hitbox"] === true)
     {
-        PLAYER["x"] = Math.floor(playerGridX + 1) * GRID_WIDTH_PX;
+        PLAYER["x"] = (curr_tile + 1) * GRID_WIDTH_PX;
+        PLAYER["x"] -= CAMERA["xOffset"];
     }
-    if(SPRITE_LOOKUP[spritePtrRightPlayer]["hitbox"] === true)
+
+    // deal with boundary on your right
+    let right_tile = Math.ceil(playerGridX);
+    let sprite_to_right = LEVEL[playerGridY - 1][right_tile + CAMERA["gridXIndex"]];
+    if(SPRITE_LOOKUP[sprite_to_right]["hitbox"] === true)
     {
-        PLAYER["x"] = Math.floor(playerGridX) * GRID_WIDTH_PX;
+        PLAYER["x"] = (curr_tile) * GRID_WIDTH_PX;
+        PLAYER["x"] -= CAMERA["xOffset"];
     }
 
     let animationArray = findAnimationCycle();
@@ -274,5 +322,4 @@ function gameLoop(e)
     );
 }
 
-drawLevel();
 setInterval(gameLoop, 1000 / FPS);
