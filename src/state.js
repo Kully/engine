@@ -2,6 +2,8 @@
 
 import {GRID_WIDTH_PX} from "./data.js";
 
+export const FPS = 60;
+
 export const VALID_CONTROLLER_KEYS = [
     "ArrowLeft",
     "ArrowRight",
@@ -9,7 +11,6 @@ export const VALID_CONTROLLER_KEYS = [
     "ArrowDown",
     "z",
 ];
-
 export const CONTROLLER = {
 	ArrowLeft: 0,
 	ArrowRight: 0,
@@ -20,7 +21,6 @@ export const CONTROLLER = {
 	lastLeftOrRight: "ArrowRight",
 };
 
-// 1920x1080 = 1080p
 export const CAMERA = {
 	width: 960,
 	height: 540,

@@ -1,11 +1,6 @@
 "use strict";
 
 import {
-    FPS,
-    COLORS,
-} from "./constants.js";
-
-import {
     LEVEL,
     SPRITE_LOOKUP,
     SPRITE_WIDTH,
@@ -26,6 +21,7 @@ import {
 import {
     CAMERA,
     CONTROLLER,
+    FPS,
     VALID_CONTROLLER_KEYS,
     PLAYER,
 } from "./state.js";

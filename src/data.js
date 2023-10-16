@@ -1,11 +1,9 @@
 /* Data Module */
 
 export const SCALE = 4
-export const SPRITE_WIDTH = 8;
 export const SCALE2 = 2;
-
-// TODO: GRID_WIDTH_PX := SCALE * SCALE2 * SPRITE_WIDTH;
-export const GRID_WIDTH_PX = 16*SCALE;
+export const SPRITE_WIDTH = 8;
+export const GRID_WIDTH_PX = SCALE * SCALE2 * SPRITE_WIDTH;
 
 export const LEVEL = [
 	[4,4,4,7,0,0,0,0,0,0,0,0,4,0,4,0,4,4,4,7],
