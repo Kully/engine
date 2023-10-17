@@ -28,7 +28,7 @@ export const CAMERA = {
 	gridYIndex: 0,
 	xOffset: 0,
 	yOffset: 0,
-	velocityX: 2,
+	velocityX: 0,
 	velocityY: 0,
 };
 
