@@ -262,13 +262,29 @@ function findAnimationCycle()
 }
 
 
+let rightThresh = Math.floor(canvas.width * 0.5);
+let leftThresh = Math.floor(canvas.width * 0.4)
+
 function gameLoop(e)
 {
     CAMERA["xOffset"] += CAMERA["velocityX"];
     PLAYER["x"] -= CAMERA["velocityX"];
 
-    drawLevel();
+    if(PLAYER["x"] > rightThresh && PLAYER["speed"] > 2)
+    {
+        let delta = Math.abs(PLAYER["x"] - rightThresh);
+        CAMERA["xOffset"] += delta;
+        PLAYER["x"] = rightThresh;
+    }
+    else
+    if((PLAYER["x"]+PLAYER["width"]) < leftThresh && PLAYER["speed"] < -2)
+    {
+        let delta = Math.abs(PLAYER["x"]+PLAYER["width"] - leftThresh);
+        CAMERA["xOffset"] -= delta;
+        PLAYER["x"] = leftThresh - PLAYER["width"];
+    }
 
+    drawLevel();
     updatePlayerSpeed();
     translatePlayer();
 
