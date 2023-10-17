@@ -262,26 +262,25 @@ function findAnimationCycle()
 }
 
 
-let rightThresh = Math.floor(canvas.width * 0.5);
-let leftThresh = Math.floor(canvas.width * 0.4)
 
 function gameLoop(e)
 {
     CAMERA["xOffset"] += CAMERA["velocityX"];
     PLAYER["x"] -= CAMERA["velocityX"];
 
-    if(PLAYER["x"] > rightThresh && PLAYER["speed"] > 2)
+    // follow player with the camera
+    if(PLAYER["x"] > CAMERA["rightThresh"] && PLAYER["speed"] > 2)
     {
-        let delta = Math.abs(PLAYER["x"] - rightThresh);
+        let delta = Math.abs(PLAYER["x"] - CAMERA["rightThresh"]);
         CAMERA["xOffset"] += delta;
-        PLAYER["x"] = rightThresh;
+        PLAYER["x"] = CAMERA["rightThresh"];
     }
     else
-    if((PLAYER["x"]+PLAYER["width"]) < leftThresh && PLAYER["speed"] < -2)
+    if((PLAYER["x"]+PLAYER["width"]) < CAMERA["leftThresh"] && PLAYER["speed"] < -2)
     {
-        let delta = Math.abs(PLAYER["x"]+PLAYER["width"] - leftThresh);
+        let delta = Math.abs(PLAYER["x"]+PLAYER["width"] - CAMERA["leftThresh"]);
         CAMERA["xOffset"] -= delta;
-        PLAYER["x"] = leftThresh - PLAYER["width"];
+        PLAYER["x"] = CAMERA["leftThresh"] - PLAYER["width"];
     }
 
     drawLevel();

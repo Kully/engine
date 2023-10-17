@@ -30,6 +30,8 @@ export const CAMERA = {
 	yOffset: 0,
 	velocityX: 0,
 	velocityY: 0,
+	leftThresh: Math.floor(960 * 0.4),
+	rightThresh: Math.floor(960 * 0.5),
 };
 
 export const PLAYER = {
