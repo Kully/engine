@@ -30,11 +30,15 @@ export const CAMERA = {
 	yOffset: 0,
 	velocityX: 0,
 	velocityY: 0,
+	leftThresh: Math.floor(960 * 0.4),
+	rightThresh: Math.floor(960 * 0.5),
 };
 
+let PLAYER_TILE_X = 6;
+let PLAYER_TILE_Y = 8;
 export const PLAYER = {
-	x: GRID_WIDTH_PX*(9-CAMERA["gridXIndex"]) - CAMERA["xOffset"],
-	y: GRID_WIDTH_PX*(6-CAMERA["gridYIndex"]) - CAMERA["yOffset"],
+	x: GRID_WIDTH_PX * (PLAYER_TILE_X - CAMERA["gridXIndex"]) - CAMERA["xOffset"],
+	y: GRID_WIDTH_PX * (PLAYER_TILE_Y - CAMERA["gridYIndex"]) - CAMERA["yOffset"],
 	width: 16,
 	height: 16,
 	speed: 0,

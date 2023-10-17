@@ -97,7 +97,14 @@ function drawLevel()
     for(let x=0; x<xTiles+1; x+=1)
     for(let y=0; y<yTiles+1; y+=1)
     {
-        let spritePtr = getValueFrom2DArray(LEVEL, x, y)
+        let shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
+        let shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
+
+        let spritePtr = getValueFrom2DArray(
+            LEVEL,
+            x + shiftXPtr,
+            y + shiftYPtr,
+        );
         if(spritePtr === undefined) {
             spritePtr = 0;
         }
@@ -107,8 +114,8 @@ function drawLevel()
         let tileY = y;
         ctx.putImageData(
             savedData,
-            -1 * CAMERA["xOffset"] + tileX * (SCALE2 * SCALE * SPRITE_WIDTH),
-            -1 * CAMERA["yOffset"] + tileY * SCALE * SCALE2 * SPRITE_WIDTH,
+            -1 * (CAMERA["xOffset"] % GRID_WIDTH_PX) + tileX * GRID_WIDTH_PX,
+            -1 * (CAMERA["yOffset"] % GRID_WIDTH_PX) + tileY * GRID_WIDTH_PX,
         );
     }
 }
@@ -255,13 +262,28 @@ function findAnimationCycle()
 }
 
 
+
 function gameLoop(e)
 {
     CAMERA["xOffset"] += CAMERA["velocityX"];
     PLAYER["x"] -= CAMERA["velocityX"];
 
-    drawLevel();
+    // follow player with the camera
+    if(PLAYER["x"] > CAMERA["rightThresh"] && PLAYER["speed"] > 2)
+    {
+        let delta = Math.abs(PLAYER["x"] - CAMERA["rightThresh"]);
+        CAMERA["xOffset"] += delta;
+        PLAYER["x"] = CAMERA["rightThresh"];
+    }
+    else
+    if((PLAYER["x"]+PLAYER["width"]) < CAMERA["leftThresh"] && PLAYER["speed"] < -2)
+    {
+        let delta = Math.abs(PLAYER["x"]+PLAYER["width"] - CAMERA["leftThresh"]);
+        CAMERA["xOffset"] -= delta;
+        PLAYER["x"] = CAMERA["leftThresh"] - PLAYER["width"];
+    }
 
+    drawLevel();
     updatePlayerSpeed();
     translatePlayer();
 
