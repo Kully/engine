@@ -10,6 +10,7 @@ export const VALID_CONTROLLER_KEYS = [
     "ArrowUp",
     "ArrowDown",
     "z",
+    "Shift",
 ];
 export const CONTROLLER = {
 	ArrowLeft: 0,
@@ -34,7 +35,7 @@ export const CAMERA = {
 	rightThresh: Math.floor(960 * 0.5),
 };
 
-let PLAYER_TILE_X = 6;
+let PLAYER_TILE_X = 8;
 let PLAYER_TILE_Y = 8;
 export const PLAYER = {
 	x: GRID_WIDTH_PX * (PLAYER_TILE_X - CAMERA["gridXIndex"]) - CAMERA["xOffset"],

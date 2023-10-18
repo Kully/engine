@@ -6,7 +6,10 @@ import {
     SPRITE_WIDTH,
     GRID_WIDTH_PX,
     STAND_CYCLE,
+    SKID_CYCLE,
     WALK_CYCLE,
+    WALK_CYCLE_FRAMES_SLOW,
+    WALK_CYCLE_FRAMES_FAST,
     SCALE,
     SCALE2,
     COLOR_ARRAY,
@@ -84,11 +87,6 @@ for(let ptr in spriteSlotLookup)
     saveSpriteToHiddenCanvas(ptr, SCALE2*SCALE, spriteSlotLookup[ptr]);
 
 
-// player parameters
-const playerScale = SCALE;
-const maxSpeed = SCALE;
-const accInc = SCALE;
-const decInc = SCALE;
 
 function drawLevel()
 {
@@ -157,6 +155,24 @@ function getSpriteFromHiddenCanvas(spritePtr)
 
 function updatePlayerSpeed()
 {
+    let maxSpeed = SCALE;
+    let accInc = SCALE;
+    let decInc = SCALE;
+    let walk_frame_arr
+    if(CONTROLLER["Shift"] == 1)
+    {
+        maxSpeed = 2 * SCALE;
+        walk_frame_arr = WALK_CYCLE_FRAMES_FAST;
+    }
+    else
+    {
+        walk_frame_arr = WALK_CYCLE_FRAMES_SLOW;
+    }
+    WALK_CYCLE[0]["frameDuration"] = walk_frame_arr[0]
+    WALK_CYCLE[1]["frameDuration"] = walk_frame_arr[1]
+    WALK_CYCLE[2]["frameDuration"] = walk_frame_arr[2]
+    WALK_CYCLE[3]["frameDuration"] = walk_frame_arr[3]
+
     if(CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
         PLAYER["speed"] -= accInc;
     else
@@ -164,10 +180,10 @@ function updatePlayerSpeed()
         PLAYER["speed"] += accInc;
     else
     {
-        if(PLAYER["speed"] > 0.4)
+        if(PLAYER["speed"] > 0.25)
             PLAYER["speed"] -= decInc;
         else
-        if(PLAYER["speed"] < -0.4)
+        if(PLAYER["speed"] < -0.25)
             PLAYER["speed"] += decInc;
         else
             PLAYER["speed"] = 0;
@@ -219,14 +235,14 @@ function drawPlayer(spriteArray, spriteWidth, spriteHeight, yShift)
         }
         pixelColor = validatePixelColor(pixelColor, COLOR_ARRAY);
 
-        let x = PLAYER["x"] + i * playerScale;
-        let y = PLAYER["y"] + (j - spriteHeight + yShift) * playerScale;
+        let x = PLAYER["x"] + i * SCALE;
+        let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
         ctx2.fillStyle = pixelColor;
         ctx2.fillRect(
             x,
             y,
-            playerScale,
-            playerScale,
+            SCALE,
+            SCALE,
         );
     }
 }
@@ -251,7 +267,19 @@ function findAnimationCycle()
     let animationArray;
     if(Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"])
     {
-    	animationArray = WALK_CYCLE;
+        if(PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["Shift"])
+        {
+            animationArray = SKID_CYCLE;
+        }
+        else
+        if(PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["Shift"])
+        {
+            animationArray = SKID_CYCLE;
+        }
+        else
+        {
+            animationArray = WALK_CYCLE;
+        }
     }
     else
     {
@@ -266,7 +294,6 @@ function findAnimationCycle()
 function gameLoop(e)
 {
     CAMERA["xOffset"] += CAMERA["velocityX"];
-    PLAYER["x"] -= CAMERA["velocityX"];
 
     // follow player with the camera
     if(PLAYER["x"] > CAMERA["rightThresh"] && PLAYER["speed"] > 2)
