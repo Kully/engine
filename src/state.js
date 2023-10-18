@@ -29,8 +29,6 @@ export const CAMERA = {
 	gridYIndex: 0,
 	xOffset: 0,
 	yOffset: 0,
-	velocityX: 0,
-	velocityY: 0,
 	leftThresh: Math.floor(960 * 0.4),
 	rightThresh: Math.floor(960 * 0.5),
 };

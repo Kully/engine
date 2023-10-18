@@ -87,7 +87,6 @@ for(let ptr in spriteSlotLookup)
     saveSpriteToHiddenCanvas(ptr, SCALE2*SCALE, spriteSlotLookup[ptr]);
 
 
-
 function drawLevel()
 {
     let xTiles = canvas.width/(SPRITE_WIDTH*SCALE*SCALE2);
@@ -188,7 +187,6 @@ function updatePlayerSpeed()
         else
             PLAYER["speed"] = 0;
     }
-
     // throttle the speed
     if(PLAYER["speed"] > maxSpeed)
         PLAYER["speed"] = maxSpeed;
@@ -204,8 +202,13 @@ function translatePlayer()
     PLAYER["x"] = Math.round(PLAYER["x"]);
 }
 
-function drawPlayer(spriteArray, spriteWidth, spriteHeight, yShift)
+function drawPlayer(animationArray)
 {
+    let spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
+    let spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
+    let spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
+    let yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
+
     let playerFacingLeft = 0;
     for(let i=0; i<spriteWidth; i+=1)
     for(let j=0; j<spriteHeight; j+=1)
@@ -247,7 +250,7 @@ function drawPlayer(spriteArray, spriteWidth, spriteHeight, yShift)
     }
 }
 
-function updateSpritePointers(animationArray)
+function updatePlayerPointers(animationArray)
 {
     if(PLAYER["walkSpritePointer"] >= animationArray.length)
     {
@@ -290,12 +293,8 @@ function findAnimationCycle()
 }
 
 
-
-function gameLoop(e)
+function followPlayerWithCamera()
 {
-    CAMERA["xOffset"] += CAMERA["velocityX"];
-
-    // follow player with the camera
     if(PLAYER["x"] > CAMERA["rightThresh"] && PLAYER["speed"] > 2)
     {
         let delta = Math.abs(PLAYER["x"] - CAMERA["rightThresh"]);
@@ -309,11 +308,10 @@ function gameLoop(e)
         CAMERA["xOffset"] -= delta;
         PLAYER["x"] = CAMERA["leftThresh"] - PLAYER["width"];
     }
+}
 
-    drawLevel();
-    updatePlayerSpeed();
-    translatePlayer();
-
+function handleBoundaryCollision()
+{
     // handle boundaries
     let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
     let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
@@ -336,21 +334,26 @@ function gameLoop(e)
         PLAYER["x"] = (curr_tile) * GRID_WIDTH_PX;
         PLAYER["x"] -= CAMERA["xOffset"];
     }
-
-    let animationArray = findAnimationCycle();
-    updateSpritePointers(animationArray);
-    let spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
-    let spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
-    let spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
-    let yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
-
-    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-    drawPlayer(
-        spriteArray,
-        spriteWidth,
-        spriteHeight,
-        yShift,
-    );
 }
 
+function clearPlayerCanvas(canvas)
+{
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+}
+
+
+function gameLoop(e)
+{
+    followPlayerWithCamera();
+    updatePlayerSpeed();
+    translatePlayer();
+    handleBoundaryCollision();
+
+    let animationArray = findAnimationCycle();
+    updatePlayerPointers(animationArray);
+
+    clearPlayerCanvas();
+    drawLevel();
+    drawPlayer(animationArray);
+}
 setInterval(gameLoop, 1000 / FPS);
