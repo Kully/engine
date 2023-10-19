@@ -155,8 +155,8 @@ function getSpriteFromHiddenCanvas(spritePtr)
 function updatePlayerSpeed()
 {
     let maxSpeed = SCALE;
-    let accInc = SCALE;
-    let decInc = SCALE;
+    let accInc = 0.5;
+    let decInc = 0.25;
     let walk_frame_arr
     if(CONTROLLER["Shift"] == 1)
     {
