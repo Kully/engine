@@ -1,16 +1,18 @@
 /* State Module */
 
-import {GRID_WIDTH_PX} from "./data.js";
+import {
+	GRID_WIDTH_PX
+} from "./data.js";
 
 export const FPS = 60;
 
 export const VALID_CONTROLLER_KEYS = [
-    "ArrowLeft",
-    "ArrowRight",
-    "ArrowUp",
-    "ArrowDown",
-    "z",
-    "Shift",
+	"ArrowLeft",
+	"ArrowRight",
+	"ArrowUp",
+	"ArrowDown",
+	"z",
+	"Shift",
 ];
 export const CONTROLLER = {
 	ArrowLeft: 0,
