@@ -276,18 +276,20 @@ function handleBoundaryCollision() {
 	let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
 	playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
 
+	let yTileCurrent = Math.floor(playerGridY);
+
 	// deal with boundary on your left
-	let curr_tile = Math.floor(playerGridX);
-	let sprite_to_left = LEVEL[playerGridY - 1][curr_tile + CAMERA["gridXIndex"]]
-	if (SPRITE_LOOKUP[sprite_to_left]["hitbox"] === true) {
-		PLAYER["x"] = (curr_tile + 1) * GRID_WIDTH_PX;
+	let xTileToYourLeft = Math.floor(playerGridX);
+	let spriteToLeft = LEVEL[yTileCurrent - 1][xTileToYourLeft + CAMERA["gridXIndex"]];
+	if (SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
+		PLAYER["x"] = (xTileToYourLeft + 1) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
 
 	// deal with boundary on your right
-	let right_tile = Math.ceil(playerGridX);
-	let sprite_to_right = LEVEL[playerGridY - 1][right_tile + CAMERA["gridXIndex"]];
-	if (SPRITE_LOOKUP[sprite_to_right]["hitbox"] === true) {
+	let xTileToYourRight = Math.ceil(playerGridX);
+	let spiteToRight = LEVEL[yTileCurrent - 1][xTileToYourRight + CAMERA["gridXIndex"]];
+	if (SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
 		PLAYER["x"] = (curr_tile) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
