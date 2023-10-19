@@ -297,6 +297,27 @@ function clearPlayerCanvas(canvas) {
 	ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 }
 
+function clearLevelCanvas() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+
+function preScreenShake(maxPixels) {
+	const dx = Math.floor(Math.random() * maxPixels);
+	const dy = Math.floor(Math.random() * maxPixels);
+
+	ctx.save();
+	ctx2.save();
+
+	ctx.translate(dx, dy);
+	ctx2.translate(dx, dy);
+}
+
+function postScreenShake() {
+	ctx.restore();
+	ctx2.restore();
+}
+
 
 function gameLoop(e) {
 	followPlayerWithCamera();
@@ -308,7 +329,9 @@ function gameLoop(e) {
 	updatePlayerPointers(animationArray);
 
 	clearPlayerCanvas();
+	clearLevelCanvas();
 	drawLevel();
 	drawPlayer(animationArray);
 }
+
 setInterval(gameLoop, 1000 / FPS);
