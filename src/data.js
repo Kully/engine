@@ -44,6 +44,28 @@ export const COLOR_ARRAY = [
 	"#f1c7c2",
 ];
 
+
+export const DARK_PALETTE = [
+	"#00000000",
+	"#002137",  // background
+	"#0b525b",
+	"#065a60",
+	"#002137",
+	"#231955",
+	"#065a60",  // player outfit
+	"#020202",  // near black
+	"#001523",
+	"#272640",
+	"#065a60",
+	"#0b525b",
+	"#797d62",
+	"#272640",
+	"#272640",
+	"#8198A9",
+	"#272640",
+	"#f1dca7",  // player skin
+]
+
 export const SPRITE_LOOKUP = {
 	0: {
 		sprite: [

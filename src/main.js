@@ -12,7 +12,7 @@ import {
     WALK_CYCLE_FRAMES_FAST,
     SCALE,
     SCALE2,
-    COLOR_ARRAY,
+    DARK_PALETTE,
 } from "./data.js";
 
 import {
@@ -124,7 +124,7 @@ function saveSpriteToHiddenCanvas(spritePtr, scale, slotX)
     {
         let imageData = ctxSprites.createImageData(2*SCALE, 2*SCALE);
         let colorPtr = spriteData[i];
-        let hex = COLOR_ARRAY[colorPtr];
+        let hex = DARK_PALETTE[colorPtr];
         let rgbArray = hexToRgb(hex);
 
         for(let j=0; j<SPRITE_WIDTH*SPRITE_WIDTH; j+=1)
@@ -236,7 +236,7 @@ function drawPlayer(animationArray)
         {
             pixelColor = spriteArray[i + j*spriteWidth];
         }
-        pixelColor = validatePixelColor(pixelColor, COLOR_ARRAY);
+        pixelColor = validatePixelColor(pixelColor, DARK_PALETTE);
 
         let x = PLAYER["x"] + i * SCALE;
         let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;

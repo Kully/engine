@@ -6,12 +6,12 @@ export function hexToRgb(hex) {
     return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16), 255] : null;
 }
 
-export function validatePixelColor(color, COLOR_ARRAY)
+export function validatePixelColor(color, DARK_PALETTE)
 {
     if(color.toString().startsWith("#"))
         return color;
     else
-        return COLOR_ARRAY[color];
+        return DARK_PALETTE[color];
 }
 
 export function getValueFrom2DArray(array_2d, x, y)
