@@ -144,7 +144,7 @@ function getSpriteFromHiddenCanvas(spritePtr) {
 	return savedData;
 }
 
-function updatePlayerSpeed() {
+function updateHorizontalSpeed() {
 	let maxSpeed = SCALE;
 	let accInc = 0.5;
 	let decInc = 0.25;
@@ -181,11 +181,39 @@ function updatePlayerSpeed() {
 		PLAYER["speed"] = -maxSpeed;
 }
 
+function updateVerticalSpeed() {
+	if (CONTROLLER["z"] === 0 && isPlayerStanding()) {
+		PLAYER["canJump"] = true;
+		PLAYER["speedY"] = 0;
+	}
+	if (CONTROLLER["z"] === 0 && !isPlayerStanding()) {
+		PLAYER["canJump"] = false;
+	}
+
+	if (CONTROLLER["z"] === 1) {
+		let ySpeed = -0.5 * SCALE;
+		if (PLAYER["canJump"])
+			PLAYER["speedY"] = ySpeed;
+	} else {
+		let ySpeed = 0.5 * SCALE;
+		PLAYER["speedY"] = ySpeed;
+	}
+}
+
+function updatePlayerSpeed() {
+	updateHorizontalSpeed();
+	updateVerticalSpeed();
+}
+
 
 function translatePlayer() {
 	// move the player horizontally
 	PLAYER["x"] += PLAYER["speed"];
 	PLAYER["x"] = Math.round(PLAYER["x"]);
+
+	// move the player vertically
+	PLAYER["y"] += PLAYER["speedY"];
+	PLAYER["y"] = Math.round(PLAYER["y"]);
 }
 
 function drawPlayer(animationArray) {

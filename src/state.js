@@ -30,11 +30,12 @@ export const CAMERA = {
 	gridXIndex: 0,
 	gridYIndex: 0,
 	xOffset: 0,
-	yOffset: 0,
+	yOffset: 300,
 	leftThresh: Math.floor(960 * 0.4),
 	rightThresh: Math.floor(960 * 0.5),
 };
 
+// TODO: Make sure that PLAYER["width"] is correct
 let PLAYER_TILE_X = 8;
 let PLAYER_TILE_Y = 8;
 export const PLAYER = {
@@ -43,6 +44,8 @@ export const PLAYER = {
 	width: 16,
 	height: 16,
 	speed: 0,
+	speedY: 0,
+	canJump: true,
 	default: "#FFFBE9",
 	walkFrameCounter: 0,
 	walkSpritePointer: 0,
