@@ -12,7 +12,7 @@ export const VALID_CONTROLLER_KEYS = [
 	"ArrowUp",
 	"ArrowDown",
 	"z",
-	"Shift",
+	"x",
 ];
 export const CONTROLLER = {
 	ArrowLeft: 0,

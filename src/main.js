@@ -149,7 +149,7 @@ function updateHorizontalSpeed() {
 	let accInc = 0.5;
 	let decInc = 0.25;
 	let walk_frame_arr;
-	if (CONTROLLER["Shift"] == 1) {
+	if (CONTROLLER["z"] == 1) {
 		maxSpeed = 2 * SCALE;
 		walk_frame_arr = WALK_CYCLE_FRAMES_FAST;
 	} else {
@@ -182,15 +182,15 @@ function updateHorizontalSpeed() {
 }
 
 function updateVerticalSpeed() {
-	if (CONTROLLER["z"] === 0 && isPlayerStanding()) {
+	if (CONTROLLER["x"] === 0 && isPlayerStanding()) {
 		PLAYER["canJump"] = true;
 		PLAYER["speedY"] = 0;
 	}
-	if (CONTROLLER["z"] === 0 && !isPlayerStanding()) {
+	if (CONTROLLER["x"] === 0 && !isPlayerStanding()) {
 		PLAYER["canJump"] = false;
 	}
 
-	if (CONTROLLER["z"] === 1) {
+	if (CONTROLLER["x"] === 1) {
 		let ySpeed = -0.5 * SCALE;
 		if (PLAYER["canJump"])
 			PLAYER["speedY"] = ySpeed;
@@ -269,10 +269,10 @@ function updatePlayerPointers(animationArray) {
 function findAnimationCycle() {
 	let animationArray;
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
-		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["Shift"]) {
+		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["z"]) {
 			animationArray = SKID_CYCLE;
 		} else
-		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["Shift"]) {
+		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["z"]) {
 			animationArray = SKID_CYCLE;
 		} else {
 			animationArray = WALK_CYCLE;
