@@ -148,7 +148,7 @@ function updatePlayerSpeed() {
 	let maxSpeed = SCALE;
 	let accInc = 0.5;
 	let decInc = 0.25;
-	let walk_frame_arr
+	let walk_frame_arr;
 	if (CONTROLLER["Shift"] == 1) {
 		maxSpeed = 2 * SCALE;
 		walk_frame_arr = WALK_CYCLE_FRAMES_FAST;
@@ -275,11 +275,13 @@ function handleBoundaryCollision() {
 	let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
 	let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
 	playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
-
+	playerGridY += CAMERA["yOffset"] / GRID_WIDTH_PX;
 	let yTileCurrent = Math.floor(playerGridY);
 
-	// deal with boundary on your left
 	let xTileToYourLeft = Math.floor(playerGridX);
+	let xTileToYourRight = Math.ceil(playerGridX);
+
+	// deal with boundary on your left
 	let spriteToLeft = LEVEL[yTileCurrent - 1][xTileToYourLeft + CAMERA["gridXIndex"]];
 	if (SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
 		PLAYER["x"] = (xTileToYourLeft + 1) * GRID_WIDTH_PX;
@@ -287,10 +289,9 @@ function handleBoundaryCollision() {
 	}
 
 	// deal with boundary on your right
-	let xTileToYourRight = Math.ceil(playerGridX);
 	let spiteToRight = LEVEL[yTileCurrent - 1][xTileToYourRight + CAMERA["gridXIndex"]];
 	if (SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
-		PLAYER["x"] = (curr_tile) * GRID_WIDTH_PX;
+		PLAYER["x"] = (xTileToYourLeft) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
 }
