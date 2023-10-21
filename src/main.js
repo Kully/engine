@@ -8,6 +8,7 @@ import {
 	STAND_CYCLE,
 	SKID_CYCLE,
 	WALK_CYCLE,
+	JUMP_CYCLE,
 	WALK_CYCLE_FRAMES_SLOW,
 	WALK_CYCLE_FRAMES_FAST,
 	SCALE,
@@ -268,6 +269,9 @@ function updatePlayerPointers(animationArray) {
 
 function findAnimationCycle() {
 	let animationArray;
+	if (!isPlayerStanding()) {
+		animationArray = JUMP_CYCLE;
+	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
 		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["z"]) {
 			animationArray = SKID_CYCLE;
