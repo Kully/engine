@@ -330,6 +330,16 @@ function handleXBoundaryCollision() {
 	}
 }
 
+function handleYBoundaryCollision() {
+	let spritePtr = getSpritePtrPlayerStandingIn();
+
+	// if you are stuck in a wall, zip up to the top
+	if (SPRITE_LOOKUP[spritePtr]["hitbox"] === true) {
+		let playerGridFloatY = getPlayerGridY();
+		PLAYER["y"] = Math.floor(playerGridFloatY) * GRID_WIDTH_PX - CAMERA["yOffset"];
+	}
+}
+
 function clearPlayerCanvas(canvas) {
 	ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 }
@@ -384,16 +394,6 @@ function getSpritePtrPlayerStandingIn() {
 
 	let spritePtr = getValueFrom2DArray(LEVEL, x, y);
 	return spritePtr;
-}
-
-function handleYBoundaryCollision() {
-	let spritePtr = getSpritePtrPlayerStandingIn();
-
-	// if you are stuck in a wall, zip up to the top
-	if (SPRITE_LOOKUP[spritePtr]["hitbox"] === true) {
-		let playerGridFloatY = getPlayerGridY();
-		PLAYER["y"] = Math.floor(playerGridFloatY) * GRID_WIDTH_PX - CAMERA["yOffset"];
-	}
 }
 
 
