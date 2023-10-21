@@ -20,6 +20,7 @@ export const CONTROLLER = {
 	ArrowUp: 0,
 	ArrowDown: 0,
 	z: 0,
+	x: 0,
 	lastKeyUp: "ArrowRight",
 	lastLeftOrRight: "ArrowRight",
 };

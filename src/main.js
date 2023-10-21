@@ -183,15 +183,18 @@ function updateHorizontalSpeed() {
 }
 
 function updateVerticalSpeed() {
+
 	if (isPlayerStanding()) {
 		PLAYER["canJump"] = true;
-		PLAYER["speedY"] = 0;
+
+		if (CONTROLLER["x"] === 0)
+			PLAYER["speedY"] = 0;
 	} else {
 		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + 0.65, 13);
 	}
 
-	if (CONTROLLER["x"] === 0 && !isPlayerStanding()) {
-		PLAYER["canJump"] = false;
+	if (CONTROLLER["x"] === 1 && PLAYER["canJump"]) {
+		PLAYER["speedY"] -= 0.75;
 	}
 }
 
@@ -284,28 +287,20 @@ function findAnimationCycle() {
 
 
 function followPlayerWithCamera() {
-	if (PLAYER["x"] > CAMERA["rightThresh"] && PLAYER["speed"] > 0) {
-		let delta = Math.abs(PLAYER["x"] - CAMERA["rightThresh"]);
-		CAMERA["xOffset"] += delta;
-		PLAYER["x"] = CAMERA["rightThresh"];
-	} else
-	if ((PLAYER["x"] + PLAYER["width"]) < CAMERA["leftThresh"] && PLAYER["speed"] < 0) {
-		let delta = Math.abs(PLAYER["x"] + PLAYER["width"] - CAMERA["leftThresh"]);
-		CAMERA["xOffset"] -= delta;
-		PLAYER["x"] = CAMERA["leftThresh"] - PLAYER["width"];
+	function _moveCamera(variable, lowThresh, highThresh, speedVar) {
+		if (PLAYER[variable] > CAMERA[highThresh] && PLAYER[speedVar] > 0) {
+			let delta = Math.abs(PLAYER[variable] - CAMERA[highThresh]);
+			CAMERA[variable + "Offset"] += delta;
+			PLAYER[variable] = CAMERA[highThresh];
+		} else
+		if ((PLAYER[variable]) < CAMERA[lowThresh] && PLAYER[speedVar] < 0) {
+			let delta = Math.abs(PLAYER[variable] - CAMERA[lowThresh]);
+			CAMERA[variable + "Offset"] -= delta;
+			PLAYER[variable] = CAMERA[lowThresh];
+		}
 	}
-
-	// vertically track the player
-	if (PLAYER["y"] > CAMERA["downThresh"] && PLAYER["speedY"] > 0) {
-		let delta = Math.abs(PLAYER["y"] - CAMERA["downThresh"]);
-		CAMERA["yOffset"] += delta;
-		PLAYER["y"] = CAMERA["downThresh"];
-	} else
-	if ((PLAYER["y"] + PLAYER["height"]) < CAMERA["upThresh"] && PLAYER["speedY"] < 0) {
-		let delta = Math.abs(PLAYER["x"] + PLAYER["height"] - CAMERA["upThresh"]);
-		CAMERA["yOffset"] -= delta;
-		PLAYER["y"] = CAMERA["upThresh"] - PLAYER["height"];
-	}
+	_moveCamera("x", "leftThresh", "rightThresh", "speed");
+	_moveCamera("y", "upThresh", "downThresh", "speedY");
 }
 
 function handleXBoundaryCollision() {
