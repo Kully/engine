@@ -183,19 +183,19 @@ function updateHorizontalSpeed() {
 }
 
 function updateVerticalSpeed() {
-
 	if (isPlayerStanding()) {
-		PLAYER["canJump"] = true;
-
-		if (CONTROLLER["x"] === 0)
-			PLAYER["speedY"] = 0;
-
-		if (CONTROLLER["x"] === 1) {
-			PLAYER["speedY"] -= 10;
-		}
-
-	} else {
+		PLAYER["speedY"] = 0;
+	}
+	if (CONTROLLER["x"] === 0 & isPlayerStanding()) {
+		PLAYER["jumpJuice"] = 1;
+	} else
+	if (!isPlayerStanding()) {
+		PLAYER["jumpJuice"] -= 1;
 		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + 0.65, 13);
+	}
+
+	if (CONTROLLER["x"] === 1 && PLAYER["jumpJuice"] > 0 && isPlayerStanding()) {
+		PLAYER["speedY"] -= 10;
 	}
 }
 
