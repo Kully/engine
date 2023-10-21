@@ -12,7 +12,7 @@ export const VALID_CONTROLLER_KEYS = [
 	"ArrowUp",
 	"ArrowDown",
 	"z",
-	"Shift",
+	"x",
 ];
 export const CONTROLLER = {
 	ArrowLeft: 0,
@@ -20,21 +20,27 @@ export const CONTROLLER = {
 	ArrowUp: 0,
 	ArrowDown: 0,
 	z: 0,
+	x: 0,
 	lastKeyUp: "ArrowRight",
 	lastLeftOrRight: "ArrowRight",
 };
 
+const SCREEN_WIDTH_PX = 960;
+const SCREEN_HEIGHT_PX = 540;
 export const CAMERA = {
-	width: 960,
-	height: 540,
+	width: SCREEN_WIDTH_PX,
+	height: SCREEN_HEIGHT_PX,
 	gridXIndex: 0,
 	gridYIndex: 0,
 	xOffset: 0,
-	yOffset: 0,
-	leftThresh: Math.floor(960 * 0.4),
-	rightThresh: Math.floor(960 * 0.5),
+	yOffset: 300,
+	leftThresh: Math.floor(SCREEN_WIDTH_PX * 0.4),
+	rightThresh: Math.floor(SCREEN_WIDTH_PX * 0.5),
+	upThresh: Math.floor(SCREEN_HEIGHT_PX * 0.4),
+	downThresh: Math.floor(SCREEN_HEIGHT_PX * 0.5),
 };
 
+// TODO: Make sure that PLAYER["width"] is correct
 let PLAYER_TILE_X = 8;
 let PLAYER_TILE_Y = 8;
 export const PLAYER = {
@@ -43,7 +49,9 @@ export const PLAYER = {
 	width: 16,
 	height: 16,
 	speed: 0,
-	default: "#FFFBE9",
+	speedY: 0,
+	canJump: true,
+	jumpJuice: 1,
 	walkFrameCounter: 0,
 	walkSpritePointer: 0,
 };

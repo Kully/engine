@@ -8,6 +8,7 @@ import {
 	STAND_CYCLE,
 	SKID_CYCLE,
 	WALK_CYCLE,
+	JUMP_CYCLE,
 	WALK_CYCLE_FRAMES_SLOW,
 	WALK_CYCLE_FRAMES_FAST,
 	SCALE,
@@ -144,12 +145,12 @@ function getSpriteFromHiddenCanvas(spritePtr) {
 	return savedData;
 }
 
-function updatePlayerSpeed() {
+function updateHorizontalSpeed() {
 	let maxSpeed = SCALE;
 	let accInc = 0.5;
 	let decInc = 0.25;
-	let walk_frame_arr
-	if (CONTROLLER["Shift"] == 1) {
+	let walk_frame_arr;
+	if (CONTROLLER["z"] == 1) {
 		maxSpeed = 2 * SCALE;
 		walk_frame_arr = WALK_CYCLE_FRAMES_FAST;
 	} else {
@@ -181,11 +182,37 @@ function updatePlayerSpeed() {
 		PLAYER["speed"] = -maxSpeed;
 }
 
+function updateVerticalSpeed() {
+	if (isPlayerStanding()) {
+		PLAYER["speedY"] = 0;
+	}
+	if (CONTROLLER["x"] === 0 & isPlayerStanding()) {
+		PLAYER["jumpJuice"] = 1;
+	} else
+	if (!isPlayerStanding()) {
+		PLAYER["jumpJuice"] -= 1;
+		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + 0.65, 13);
+	}
+
+	if (CONTROLLER["x"] === 1 && PLAYER["jumpJuice"] > 0 && isPlayerStanding()) {
+		PLAYER["speedY"] -= 10;
+	}
+}
+
+function updatePlayerSpeed() {
+	updateHorizontalSpeed();
+	updateVerticalSpeed();
+}
+
 
 function translatePlayer() {
 	// move the player horizontally
 	PLAYER["x"] += PLAYER["speed"];
 	PLAYER["x"] = Math.round(PLAYER["x"]);
+
+	// move the player vertically
+	PLAYER["y"] += PLAYER["speedY"];
+	PLAYER["y"] = Math.round(PLAYER["y"]);
 }
 
 function drawPlayer(animationArray) {
@@ -240,11 +267,14 @@ function updatePlayerPointers(animationArray) {
 
 function findAnimationCycle() {
 	let animationArray;
+	if (!isPlayerStanding()) {
+		animationArray = JUMP_CYCLE;
+	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
-		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["Shift"]) {
+		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["z"]) {
 			animationArray = SKID_CYCLE;
 		} else
-		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["Shift"]) {
+		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["z"]) {
 			animationArray = SKID_CYCLE;
 		} else {
 			animationArray = WALK_CYCLE;
@@ -258,37 +288,44 @@ function findAnimationCycle() {
 
 
 function followPlayerWithCamera() {
-	if (PLAYER["x"] > CAMERA["rightThresh"] && PLAYER["speed"] > 0) {
-		let delta = Math.abs(PLAYER["x"] - CAMERA["rightThresh"]);
-		CAMERA["xOffset"] += delta;
-		PLAYER["x"] = CAMERA["rightThresh"];
-	} else
-	if ((PLAYER["x"] + PLAYER["width"]) < CAMERA["leftThresh"] && PLAYER["speed"] < 0) {
-		let delta = Math.abs(PLAYER["x"] + PLAYER["width"] - CAMERA["leftThresh"]);
-		CAMERA["xOffset"] -= delta;
-		PLAYER["x"] = CAMERA["leftThresh"] - PLAYER["width"];
+	function _moveCamera(variable, lowThresh, highThresh, speedVar) {
+		if (PLAYER[variable] > CAMERA[highThresh] && PLAYER[speedVar] > 0) {
+			let delta = Math.abs(PLAYER[variable] - CAMERA[highThresh]);
+			CAMERA[variable + "Offset"] += delta;
+			PLAYER[variable] = CAMERA[highThresh];
+		} else
+		if ((PLAYER[variable]) < CAMERA[lowThresh] && PLAYER[speedVar] < 0) {
+			let delta = Math.abs(PLAYER[variable] - CAMERA[lowThresh]);
+			CAMERA[variable + "Offset"] -= delta;
+			PLAYER[variable] = CAMERA[lowThresh];
+		}
 	}
+	_moveCamera("x", "leftThresh", "rightThresh", "speed");
+	_moveCamera("y", "upThresh", "downThresh", "speedY");
 }
 
-function handleBoundaryCollision() {
+function handleXBoundaryCollision() {
 	// handle boundaries
 	let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
 	let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
 	playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
+	playerGridY += CAMERA["yOffset"] / GRID_WIDTH_PX;
+	let yTileCurrent = Math.floor(playerGridY);
+
+	let xTileToYourLeft = Math.floor(playerGridX);
+	let xTileToYourRight = Math.ceil(playerGridX);
 
 	// deal with boundary on your left
-	let curr_tile = Math.floor(playerGridX);
-	let sprite_to_left = LEVEL[playerGridY - 1][curr_tile + CAMERA["gridXIndex"]]
-	if (SPRITE_LOOKUP[sprite_to_left]["hitbox"] === true) {
-		PLAYER["x"] = (curr_tile + 1) * GRID_WIDTH_PX;
+	let spriteToLeft = LEVEL[yTileCurrent - 1][xTileToYourLeft + CAMERA["gridXIndex"]];
+	if (SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
+		PLAYER["x"] = (xTileToYourLeft + 1) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
 
 	// deal with boundary on your right
-	let right_tile = Math.ceil(playerGridX);
-	let sprite_to_right = LEVEL[playerGridY - 1][right_tile + CAMERA["gridXIndex"]];
-	if (SPRITE_LOOKUP[sprite_to_right]["hitbox"] === true) {
-		PLAYER["x"] = (curr_tile) * GRID_WIDTH_PX;
+	let spiteToRight = LEVEL[yTileCurrent - 1][xTileToYourRight + CAMERA["gridXIndex"]];
+	if (SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
+		PLAYER["x"] = (xTileToYourLeft) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
 }
@@ -319,11 +356,54 @@ function postScreenShake() {
 }
 
 
+function getPlayerGridX() {
+	return (PLAYER["x"] + CAMERA["xOffset"]) / GRID_WIDTH_PX;
+}
+
+function getPlayerGridY() {
+	return (PLAYER["y"] + CAMERA["yOffset"]) / GRID_WIDTH_PX;
+}
+
+function isPlayerStanding() {
+	let spritePtr = getSpritePtrPlayerStandingIn();
+	let isBoundaryBelowYou = (SPRITE_LOOKUP[spritePtr]["hitbox"] === true);
+
+	let playerGridFloatY = getPlayerGridY();
+	if (isBoundaryBelowYou && Number.isInteger(playerGridFloatY))
+		return true;
+	return false;
+}
+
+function getSpritePtrPlayerStandingIn() {
+
+	let playerGridFloatX = getPlayerGridX();
+	let playerGridFloatY = getPlayerGridY();
+
+	let x = Math.round(playerGridFloatX);
+	let y = Math.floor(playerGridFloatY);
+
+	let spritePtr = getValueFrom2DArray(LEVEL, x, y);
+	return spritePtr;
+}
+
+function handleYBoundaryCollision() {
+	let spritePtr = getSpritePtrPlayerStandingIn();
+
+	// if you are stuck in a wall, zip up to the top
+	if (SPRITE_LOOKUP[spritePtr]["hitbox"] === true) {
+		let playerGridFloatY = getPlayerGridY();
+		PLAYER["y"] = Math.floor(playerGridFloatY) * GRID_WIDTH_PX - CAMERA["yOffset"];
+	}
+}
+
+
 function gameLoop(e) {
 	followPlayerWithCamera();
 	updatePlayerSpeed();
 	translatePlayer();
-	handleBoundaryCollision();
+
+	handleXBoundaryCollision();
+	handleYBoundaryCollision();
 
 	let animationArray = findAnimationCycle();
 	updatePlayerPointers(animationArray);
