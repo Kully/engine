@@ -31,23 +31,42 @@ import {
 } from "./state.js";
 
 
+// document.addEventListener("keydown", function(e) {
+// 	for (let key of VALID_CONTROLLER_KEYS) {
+// 		console.log(e.code);
+// 		if (e.key === key)
+// 			CONTROLLER[key] = 1;
+// 	}
+// });
+
+// document.addEventListener("keyup", function(e) {
+// 	for (let key of VALID_CONTROLLER_KEYS) {
+// 		if (e.key === key) {
+// 			CONTROLLER[key] = 0;
+// 			CONTROLLER["lastKeyUp"] = key;
+// 		}
+// 	}
+
+// 	if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+// 		CONTROLLER["lastLeftOrRight"] = e.key;
+// 	}
+// });
 document.addEventListener("keydown", function(e) {
 	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.key === key)
+		if (e.code === key)
 			CONTROLLER[key] = 1;
 	}
 });
 
 document.addEventListener("keyup", function(e) {
 	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.key === key) {
+		if (e.code === key) {
 			CONTROLLER[key] = 0;
 			CONTROLLER["lastKeyUp"] = key;
 		}
 	}
-
-	if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-		CONTROLLER["lastLeftOrRight"] = e.key;
+	if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
+		CONTROLLER["lastLeftOrRight"] = e.code;
 	}
 });
 
@@ -150,7 +169,7 @@ function updateHorizontalSpeed() {
 	let accInc = 0.5;
 	let decInc = 0.25;
 	let walk_frame_arr;
-	if (CONTROLLER["z"] == 1) {
+	if (CONTROLLER["KeyZ"] == 1) {
 		maxSpeed = 2 * SCALE;
 		walk_frame_arr = WALK_CYCLE_FRAMES_FAST;
 	} else {
@@ -186,7 +205,7 @@ function updateVerticalSpeed() {
 	if (isPlayerStanding()) {
 		PLAYER["speedY"] = 0;
 	}
-	if (CONTROLLER["x"] === 0 & isPlayerStanding()) {
+	if (CONTROLLER["KeyX"] === 0 & isPlayerStanding()) {
 		PLAYER["jumpJuice"] = 1;
 	} else
 	if (!isPlayerStanding()) {
@@ -194,7 +213,7 @@ function updateVerticalSpeed() {
 		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + 0.65, 13);
 	}
 
-	if (CONTROLLER["x"] === 1 && PLAYER["jumpJuice"] > 0 && isPlayerStanding()) {
+	if (CONTROLLER["KeyX"] === 1 && PLAYER["jumpJuice"] > 0 && isPlayerStanding()) {
 		PLAYER["speedY"] -= 10;
 	}
 }
@@ -271,10 +290,10 @@ function findAnimationCycle() {
 		animationArray = JUMP_CYCLE;
 	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
-		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["z"]) {
+		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
 			animationArray = SKID_CYCLE;
 		} else
-		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["z"]) {
+		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
 			animationArray = SKID_CYCLE;
 		} else {
 			animationArray = WALK_CYCLE;
