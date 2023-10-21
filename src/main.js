@@ -300,6 +300,18 @@ function followPlayerWithCamera() {
 		CAMERA["xOffset"] -= delta;
 		PLAYER["x"] = CAMERA["leftThresh"] - PLAYER["width"];
 	}
+
+	// vertically track the player
+	if (PLAYER["y"] > CAMERA["downThresh"] && PLAYER["speedY"] > 0) {
+		let delta = Math.abs(PLAYER["y"] - CAMERA["downThresh"]);
+		CAMERA["yOffset"] += delta;
+		PLAYER["y"] = CAMERA["downThresh"];
+	} else
+	if ((PLAYER["y"] + PLAYER["height"]) < CAMERA["upThresh"] && PLAYER["speedY"] < 0) {
+		let delta = Math.abs(PLAYER["x"] + PLAYER["height"] - CAMERA["upThresh"]);
+		CAMERA["yOffset"] -= delta;
+		PLAYER["y"] = CAMERA["upThresh"] - PLAYER["height"];
+	}
 }
 
 function handleXBoundaryCollision() {

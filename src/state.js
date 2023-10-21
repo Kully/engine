@@ -24,15 +24,19 @@ export const CONTROLLER = {
 	lastLeftOrRight: "ArrowRight",
 };
 
+const SCREEN_WIDTH_PX = 960;
+const SCREEN_HEIGHT_PX = 540;
 export const CAMERA = {
-	width: 960,
-	height: 540,
+	width: SCREEN_WIDTH_PX,
+	height: SCREEN_HEIGHT_PX,
 	gridXIndex: 0,
 	gridYIndex: 0,
 	xOffset: 0,
 	yOffset: 300,
-	leftThresh: Math.floor(960 * 0.4),
-	rightThresh: Math.floor(960 * 0.5),
+	leftThresh: Math.floor(SCREEN_WIDTH_PX * 0.4),
+	rightThresh: Math.floor(SCREEN_WIDTH_PX * 0.5),
+	upThresh: Math.floor(SCREEN_HEIGHT_PX * 0.4),
+	downThresh: Math.floor(SCREEN_HEIGHT_PX * 0.5),
 };
 
 // TODO: Make sure that PLAYER["width"] is correct
@@ -46,7 +50,6 @@ export const PLAYER = {
 	speed: 0,
 	speedY: 0,
 	canJump: true,
-	default: "#FFFBE9",
 	walkFrameCounter: 0,
 	walkSpritePointer: 0,
 };
