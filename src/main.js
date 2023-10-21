@@ -31,26 +31,6 @@ import {
 } from "./state.js";
 
 
-// document.addEventListener("keydown", function(e) {
-// 	for (let key of VALID_CONTROLLER_KEYS) {
-// 		console.log(e.code);
-// 		if (e.key === key)
-// 			CONTROLLER[key] = 1;
-// 	}
-// });
-
-// document.addEventListener("keyup", function(e) {
-// 	for (let key of VALID_CONTROLLER_KEYS) {
-// 		if (e.key === key) {
-// 			CONTROLLER[key] = 0;
-// 			CONTROLLER["lastKeyUp"] = key;
-// 		}
-// 	}
-
-// 	if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-// 		CONTROLLER["lastLeftOrRight"] = e.key;
-// 	}
-// });
 document.addEventListener("keydown", function(e) {
 	for (let key of VALID_CONTROLLER_KEYS) {
 		if (e.code === key)
