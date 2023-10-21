@@ -314,16 +314,16 @@ function handleXBoundaryCollision() {
 
 	let xTileToYourLeft = Math.floor(playerGridX);
 	let xTileToYourRight = Math.ceil(playerGridX);
-
+	let xTileCurrent = Math.round(playerGridX);
 	// deal with boundary on your left
-	let spriteToLeft = LEVEL[yTileCurrent - 1][xTileToYourLeft + CAMERA["gridXIndex"]];
+	let spriteToLeft = LEVEL[yTileCurrent - 1][xTileToYourLeft];
 	if (SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
 		PLAYER["x"] = (xTileToYourLeft + 1) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
 
 	// deal with boundary on your right
-	let spiteToRight = LEVEL[yTileCurrent - 1][xTileToYourRight + CAMERA["gridXIndex"]];
+	let spiteToRight = LEVEL[yTileCurrent - 1][xTileToYourRight];
 	if (SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
 		PLAYER["x"] = (xTileToYourLeft) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
@@ -331,12 +331,23 @@ function handleXBoundaryCollision() {
 }
 
 function handleYBoundaryCollision() {
-	let spritePtr = getSpritePtrPlayerStandingIn();
-
-	// if you are stuck in a wall, zip up to the top
-	if (SPRITE_LOOKUP[spritePtr]["hitbox"] === true) {
+	let currentSpritePtr = getSpritePtrPlayerInside();
+	if (SPRITE_LOOKUP[currentSpritePtr]["hitbox"] === true) {
 		let playerGridFloatY = getPlayerGridY();
 		PLAYER["y"] = Math.floor(playerGridFloatY) * GRID_WIDTH_PX - CAMERA["yOffset"];
+	}
+
+	let playerGridFloatY = getPlayerGridY();
+	let a = (PLAYER["y"] + CAMERA["yOffset"]) / GRID_WIDTH_PX;
+	let y = Math.floor(a) - 1;
+
+	let playerGridFloatX = getPlayerGridX();
+	let x = Math.round(playerGridFloatX);
+
+	let spritePtr = getValueFrom2DArray(LEVEL, x, y);
+	if(SPRITE_LOOKUP[spritePtr]["hitbox"] === true)
+	{
+		PLAYER["y"] = Math.floor(playerGridFloatY + 1) * GRID_WIDTH_PX - CAMERA["yOffset"];
 	}
 }
 
@@ -375,7 +386,7 @@ function getPlayerGridY() {
 }
 
 function isPlayerStanding() {
-	let spritePtr = getSpritePtrPlayerStandingIn();
+	let spritePtr = getSpritePtrPlayerInside();
 	let isBoundaryBelowYou = (SPRITE_LOOKUP[spritePtr]["hitbox"] === true);
 
 	let playerGridFloatY = getPlayerGridY();
@@ -384,7 +395,7 @@ function isPlayerStanding() {
 	return false;
 }
 
-function getSpritePtrPlayerStandingIn() {
+function getSpritePtrPlayerInside() {
 
 	let playerGridFloatX = getPlayerGridX();
 	let playerGridFloatY = getPlayerGridY();
@@ -402,8 +413,8 @@ function gameLoop(e) {
 	updatePlayerSpeed();
 	translatePlayer();
 
-	handleXBoundaryCollision();
 	handleYBoundaryCollision();
+	handleXBoundaryCollision();
 
 	let animationArray = findAnimationCycle();
 	updatePlayerPointers(animationArray);
