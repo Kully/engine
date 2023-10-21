@@ -189,12 +189,13 @@ function updateVerticalSpeed() {
 
 		if (CONTROLLER["x"] === 0)
 			PLAYER["speedY"] = 0;
+
+		if (CONTROLLER["x"] === 1) {
+			PLAYER["speedY"] -= 10;
+		}
+
 	} else {
 		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + 0.65, 13);
-	}
-
-	if (CONTROLLER["x"] === 1 && PLAYER["canJump"]) {
-		PLAYER["speedY"] -= 0.75;
 	}
 }
 
