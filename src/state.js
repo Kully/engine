@@ -30,8 +30,6 @@ const SCREEN_HEIGHT_PX = 540;
 export const CAMERA = {
 	width: SCREEN_WIDTH_PX,
 	height: SCREEN_HEIGHT_PX,
-	gridXIndex: 0,
-	gridYIndex: 0,
 	xOffset: 0,
 	yOffset: 300,
 	leftThresh: Math.floor(SCREEN_WIDTH_PX * 0.4),
