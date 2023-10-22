@@ -148,7 +148,7 @@ function updateHorizontalSpeed() {
 	let decInc = 0.25;
 	let walk_frame_arr;
 	if (CONTROLLER["KeyZ"] == 1) {
-		maxSpeed = 2 * SCALE;
+		maxSpeed = 1.6 * SCALE;
 		walk_frame_arr = WALK_CYCLE_FRAMES_FAST;
 	} else {
 		walk_frame_arr = WALK_CYCLE_FRAMES_SLOW;
