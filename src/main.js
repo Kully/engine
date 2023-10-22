@@ -321,7 +321,7 @@ function handleXBoundaryCollision() {
 
 	// deal with boundary on your right
 	let spiteToRight = LEVEL[yTileCurrent - 1][xTileToYourRight];
-	if (SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
+	if (spiteToRight === undefined || SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
 		PLAYER["x"] = (xTileToYourLeft) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
