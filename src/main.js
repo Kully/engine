@@ -70,8 +70,8 @@ const ctxSprites = canvasSprites.getContext("2d", {
 });
 
 let levelSpriteCount = Object.keys(SPRITE_LOOKUP).length
-canvasSprites.width = SCALE2 * SCALE * SPRITE_WIDTH * levelSpriteCount
-canvasSprites.height = SCALE2 * SCALE * SPRITE_WIDTH;
+canvasSprites.width = levelSpriteCount * GRID_WIDTH_PX;
+canvasSprites.height = GRID_WIDTH_PX;
 
 
 let spriteSlotLookup = {
@@ -82,12 +82,11 @@ let spriteSlotLookup = {
 	0: 4,
 }
 for (let ptr in spriteSlotLookup)
-	saveSpriteToHiddenCanvas(ptr, SCALE2 * SCALE, spriteSlotLookup[ptr]);
-
+	saveSpriteToHiddenCanvas(ptr, GRID_WIDTH_PX/SPRITE_WIDTH, spriteSlotLookup[ptr]);
 
 function drawLevel() {
-	let xTiles = canvas.width / (SPRITE_WIDTH * SCALE * SCALE2);
-	let yTiles = canvas.height / (SPRITE_WIDTH * SCALE * SCALE2);
+	let xTiles = canvas.width / GRID_WIDTH_PX;
+	let yTiles = canvas.height / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
 		for (let y = 0; y < yTiles + 1; y += 1) {
 			let shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
@@ -135,11 +134,10 @@ function saveSpriteToHiddenCanvas(spritePtr, scale, slotX) {
 
 function getSpriteFromHiddenCanvas(spritePtr) {
 	let slotX = spriteSlotLookup[spritePtr]
-
-	let left = SCALE2 * slotX * SCALE * SPRITE_WIDTH;
-	let top = 0 * SCALE * SPRITE_WIDTH;
-	let width = SCALE2 * SCALE * SPRITE_WIDTH;
-	let height = SCALE2 * SCALE * SPRITE_WIDTH;
+	let left = GRID_WIDTH_PX * slotX;
+	let top = 0;
+	let width = GRID_WIDTH_PX;
+	let height = GRID_WIDTH_PX;
 	let savedData = ctxSprites.getImageData(left, top, width, height);
 	return savedData;
 }
