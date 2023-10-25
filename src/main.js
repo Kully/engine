@@ -14,10 +14,6 @@ import {
 } from "./constants.js";
 
 import {
-	LEVEL,
-} from "./levels.js";
-
-import {
 	SPRITE_LOOKUP,
 	STAND_CYCLE,
 	SKID_CYCLE,
@@ -32,6 +28,10 @@ import {
 	validatePixelColor,
 	getValueFrom2DArray,
 } from "./helpers.js";
+
+import {
+	LEVEL,
+} from "./levels.js";
 
 import {
 	CAMERA,
