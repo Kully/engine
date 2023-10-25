@@ -1,4 +1,4 @@
-/* State Module */
+/* State */
 
 import {
 	GRID_WIDTH_PX,

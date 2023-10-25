@@ -15,6 +15,9 @@ import {
 
 import {
 	LEVEL,
+} from "./levels.js";
+
+import {
 	SPRITE_LOOKUP,
 	STAND_CYCLE,
 	SKID_CYCLE,
