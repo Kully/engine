@@ -14,16 +14,6 @@ import {
 } from "./constants.js";
 
 import {
-	SPRITE_LOOKUP,
-	STAND_CYCLE,
-	SKID_CYCLE,
-	WALK_CYCLE,
-	JUMP_CYCLE,
-	WALK_CYCLE_FRAMES_SLOW,
-	WALK_CYCLE_FRAMES_FAST,
-} from "./data.js";
-
-import {
 	hexToRgb,
 	validatePixelColor,
 	getValueFrom2DArray,
@@ -32,6 +22,16 @@ import {
 import {
 	LEVEL,
 } from "./levels.js";
+
+import {
+	SPRITE_LOOKUP,
+	STAND_CYCLE,
+	SKID_CYCLE,
+	WALK_CYCLE,
+	JUMP_CYCLE,
+	WALK_CYCLE_FRAMES_SLOW,
+	WALK_CYCLE_FRAMES_FAST,
+} from "./sprites.js";
 
 import {
 	CAMERA,
