@@ -1,6 +1,10 @@
 "use strict";
 
 import {
+	DARK_PALETTE,
+} from "./colors.js";
+
+import {
 	SPRITE_WIDTH,
 	GRID_WIDTH_PX,
 	SCALE,
@@ -18,7 +22,6 @@ import {
 	JUMP_CYCLE,
 	WALK_CYCLE_FRAMES_SLOW,
 	WALK_CYCLE_FRAMES_FAST,
-	DARK_PALETTE,
 } from "./data.js";
 
 import {
