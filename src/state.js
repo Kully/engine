@@ -1,19 +1,21 @@
 /* State Module */
 
 import {
-	GRID_WIDTH_PX
-} from "./data.js";
+	GRID_WIDTH_PX,
+	SCREEN_WIDTH_PX,
+	SCREEN_HEIGHT_PX,
+} from "./constants.js";
 
-export const FPS = 60;
+// export const FPS = 60;
 
-export const VALID_CONTROLLER_KEYS = [
-	"ArrowLeft",
-	"ArrowRight",
-	"ArrowUp",
-	"ArrowDown",
-	"KeyZ",
-	"KeyX",
-];
+// export const VALID_CONTROLLER_KEYS = [
+// 	"ArrowLeft",
+// 	"ArrowRight",
+// 	"ArrowUp",
+// 	"ArrowDown",
+// 	"KeyZ",
+// 	"KeyX",
+// ];
 export const CONTROLLER = {
 	ArrowLeft: 0,
 	ArrowRight: 0,
@@ -25,8 +27,8 @@ export const CONTROLLER = {
 	lastLeftOrRight: "ArrowRight",
 };
 
-const SCREEN_WIDTH_PX = 960;
-const SCREEN_HEIGHT_PX = 540;
+// const SCREEN_WIDTH_PX = 960;
+// const SCREEN_HEIGHT_PX = 540;
 export const CAMERA = {
 	width: SCREEN_WIDTH_PX,
 	height: SCREEN_HEIGHT_PX,

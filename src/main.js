@@ -1,18 +1,23 @@
 "use strict";
 
 import {
-	LEVEL,
-	SPRITE_LOOKUP,
 	SPRITE_WIDTH,
 	GRID_WIDTH_PX,
+	SCALE,
+	SCALE2,
+	FPS,
+	VALID_CONTROLLER_KEYS,
+} from "./constants.js";
+
+import {
+	LEVEL,
+	SPRITE_LOOKUP,
 	STAND_CYCLE,
 	SKID_CYCLE,
 	WALK_CYCLE,
 	JUMP_CYCLE,
 	WALK_CYCLE_FRAMES_SLOW,
 	WALK_CYCLE_FRAMES_FAST,
-	SCALE,
-	SCALE2,
 	DARK_PALETTE,
 } from "./data.js";
 
@@ -25,8 +30,6 @@ import {
 import {
 	CAMERA,
 	CONTROLLER,
-	FPS,
-	VALID_CONTROLLER_KEYS,
 	PLAYER,
 } from "./state.js";
 
@@ -82,7 +85,7 @@ let spriteSlotLookup = {
 	0: 4,
 }
 for (let ptr in spriteSlotLookup)
-	saveSpriteToHiddenCanvas(ptr, GRID_WIDTH_PX/SPRITE_WIDTH, spriteSlotLookup[ptr]);
+	saveSpriteToHiddenCanvas(ptr, GRID_WIDTH_PX / SPRITE_WIDTH, spriteSlotLookup[ptr]);
 
 function drawLevel() {
 	let xTiles = canvas.width / GRID_WIDTH_PX;
@@ -342,8 +345,7 @@ function handleYBoundaryCollision() {
 	let x = Math.round(playerGridFloatX);
 
 	let spritePtr = getValueFrom2DArray(LEVEL, x, y);
-	if(SPRITE_LOOKUP[spritePtr]["hitbox"] === true)
-	{
+	if (SPRITE_LOOKUP[spritePtr]["hitbox"] === true) {
 		PLAYER["y"] = Math.floor(playerGridFloatY + 1) * GRID_WIDTH_PX - CAMERA["yOffset"];
 	}
 }
