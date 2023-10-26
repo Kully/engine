@@ -1,0 +1,24 @@
+body {
+	background-color: #111;
+	margin: 0;
+	padding: 0;
+}
+
+canvas {
+	z-index: 0;
+	position: absolute;
+	top: calc(50vh - 540px / 2);
+	left: calc(50% - 960px / 2);
+}
+
+canvas#canvas-mg {
+	z-index: 1;
+	position: absolute;
+}
+
+canvas#canvas-sprites {
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	left: 0;
+}
