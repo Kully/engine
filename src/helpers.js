@@ -18,3 +18,10 @@ export function getValueFrom2DArray(array_2d, x, y) {
 		return undefined;
 	return array_2d[y][x];
 }
+
+export function putValueTo2DArray(array_2d, x, y, val) {
+	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
+		return undefined;
+	array_2d[y][x] = val;
+	return array_2d
+}
