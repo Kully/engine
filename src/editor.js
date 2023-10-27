@@ -229,15 +229,6 @@ function getSpriteFromHiddenCanvas(spritePtr) {
 	return savedData;
 }
 
-function clearPlayerCanvas(canvas) {
-	ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-}
-
-function clearLevelCanvas() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-
 function gameLoop()
 {
 	if(CONTROLLER["ArrowLeft"])
