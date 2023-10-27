@@ -19,6 +19,8 @@ import {
 	getValueFrom2DArray,
 	putValueTo2DArray,
 	isValidIndex,
+	getSpriteFromHiddenCanvas,
+	saveSpriteToHiddenCanvas,
 } from "./helpers.js";
 
 import {
@@ -42,14 +44,14 @@ import {
 } from "./state.js";
 
 let TEMP_LEVEL = [
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 let CLICKED_SPRITE = undefined;
 let MOUSEDOWN = false;
@@ -62,7 +64,7 @@ copyBtn.addEventListener("click", function(e) {
 		stringyLevel += "    [";
 		for (let x = 0; x < TEMP_LEVEL[y].length; x += 1) {
 			stringyLevel += TEMP_LEVEL[y][x];
-			if(x != TEMP_LEVEL[y].length - 1)
+			if (x != TEMP_LEVEL[y].length - 1)
 				stringyLevel += ", ";
 		}
 		stringyLevel += "],";
@@ -112,16 +114,20 @@ canvasSprites.height = GRID_WIDTH_PX;
 let spriteSlotLookup = {};
 let slotSpriteLookup = {};
 let keys = Object.keys(SPRITE_LOOKUP);
-for (let i=0; i<keys.length; i+=1)
-{
-	if (keys[i] != 1)
-	{
+for (let i = 0; i < keys.length; i += 1) {
+	if (keys[i] != 1) {
 		spriteSlotLookup[keys[i]] = i;
 		slotSpriteLookup[i] = keys[i];
 	}
 }
-for (let ptr in spriteSlotLookup)
-	saveSpriteToHiddenCanvas(ptr, GRID_WIDTH_PX / SPRITE_WIDTH, spriteSlotLookup[ptr]);
+for (let ptr in spriteSlotLookup) {
+	saveSpriteToHiddenCanvas(
+		ctxSprites,
+		ptr,
+		GRID_WIDTH_PX / SPRITE_WIDTH,
+		spriteSlotLookup[ptr]
+	);
+}
 
 
 // select a sprite you want to paint with
@@ -146,8 +152,7 @@ canvas.addEventListener("mousedown", function(e) {
 	let xLevel = xTile + CAMERA["xOffset"] / GRID_WIDTH_PX;
 	let yLevel = yTile + CAMERA["yOffset"] / GRID_WIDTH_PX;
 
-	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel))
-	{
+	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel)) {
 		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
 	}
 })
@@ -161,8 +166,7 @@ canvas.addEventListener("mousemove", function(e) {
 	let xLevel = xTile + CAMERA["xOffset"] / GRID_WIDTH_PX;
 	let yLevel = yTile + CAMERA["yOffset"] / GRID_WIDTH_PX;
 
-	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN)
-	{
+	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN) {
 		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
 	}
 })
@@ -188,7 +192,11 @@ function drawLevel() {
 				spritePtr = 10;
 			}
 
-			let savedData = getSpriteFromHiddenCanvas(spritePtr);
+			let savedData = getSpriteFromHiddenCanvas(
+				ctxSprites,
+				spritePtr,
+				spriteSlotLookup,
+			);
 			let tileX = x;
 			let tileY = y;
 			ctx.putImageData(
@@ -199,45 +207,14 @@ function drawLevel() {
 		}
 }
 
-function saveSpriteToHiddenCanvas(spritePtr, scale, slotX) {
-	let spriteData = SPRITE_LOOKUP[spritePtr]["sprite"];
-	for (let i = 0; i < spriteData.length; i += 1) {
-		let imageData = ctxSprites.createImageData(2 * SCALE, 2 * SCALE);
-		let colorPtr = spriteData[i];
-		let hex = DARK_PALETTE[colorPtr];
-		let rgbArray = hexToRgb(hex);
-
-		for (let j = 0; j < SPRITE_WIDTH * SPRITE_WIDTH; j += 1) {
-			imageData.data[4 * j + 0] = rgbArray[0];
-			imageData.data[4 * j + 1] = rgbArray[1];
-			imageData.data[4 * j + 2] = rgbArray[2];
-			imageData.data[4 * j + 3] = rgbArray[3];
-		}
-		let x = SCALE * SPRITE_WIDTH * slotX + SCALE * (i % SPRITE_WIDTH);
-		let y = 0 + SCALE * (Math.floor(i / SPRITE_WIDTH));
-		ctxSprites.putImageData(imageData, SCALE2 * x, SCALE2 * y);
-	}
-}
-
-function getSpriteFromHiddenCanvas(spritePtr) {
-	let slotX = spriteSlotLookup[spritePtr]
-	let left = GRID_WIDTH_PX * slotX;
-	let top = 0;
-	let width = GRID_WIDTH_PX;
-	let height = GRID_WIDTH_PX;
-	let savedData = ctxSprites.getImageData(left, top, width, height);
-	return savedData;
-}
-
-function gameLoop()
-{
-	if(CONTROLLER["ArrowLeft"])
+function gameLoop() {
+	if (CONTROLLER["ArrowLeft"])
 		CAMERA["xOffset"] -= GRID_WIDTH_PX;
-	if(CONTROLLER["ArrowRight"])
+	if (CONTROLLER["ArrowRight"])
 		CAMERA["xOffset"] += GRID_WIDTH_PX;
-	if(CONTROLLER["ArrowUp"])
+	if (CONTROLLER["ArrowUp"])
 		CAMERA["yOffset"] -= GRID_WIDTH_PX;
-	if(CONTROLLER["ArrowDown"])
+	if (CONTROLLER["ArrowDown"])
 		CAMERA["yOffset"] += GRID_WIDTH_PX;
 	drawLevel();
 }
