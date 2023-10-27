@@ -12,6 +12,8 @@ import {
 	isValidIndex,
 	getSpriteFromHiddenCanvas,
 	saveSpriteToHiddenCanvas,
+	createHiddenSpriteLookups,
+	drawLevel,
 } from "./helpers.js";
 
 import {
@@ -103,89 +105,32 @@ function updateCanvasOnMouseMove(e) {
 }
 
 
-
 let copyBtn = document.getElementById("copy-to-clipboard");
-
-// init canvas for background layer
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = CAMERA["width"];
-canvas.height = CAMERA["height"];
-
-// init canvas that holds sprite data to easily transfer
 const canvasSprites = document.getElementById("canvas-sprites");
+
+const ctx = canvas.getContext("2d");
 const ctxSprites = canvasSprites.getContext("2d", {
 	willReadFrequently: true
 });
 
+canvas.width = CAMERA["width"];
+canvas.height = CAMERA["height"];
 
-// place sprites in sprite gallery
-let levelSpriteCount = Object.keys(SPRITE_LOOKUP).length
-canvasSprites.width = levelSpriteCount * GRID_WIDTH_PX;
-canvasSprites.height = GRID_WIDTH_PX;
-let spriteSlotLookup = {};
-let slotSpriteLookup = {};
-let keys = Object.keys(SPRITE_LOOKUP);
-for (let i = 0; i < keys.length; i += 1) {
-	if (keys[i] != 1) {
-		spriteSlotLookup[keys[i]] = i;
-		slotSpriteLookup[i] = keys[i];
-	}
-}
-for (let ptr in spriteSlotLookup) {
-	saveSpriteToHiddenCanvas(
-		ctxSprites,
-		ptr,
-		GRID_WIDTH_PX / SPRITE_WIDTH,
-		spriteSlotLookup[ptr]
-	);
-}
+let lookups = createHiddenSpriteLookups(canvasSprites, ctxSprites);
+let spriteSlotLookup = lookups[0];
+let slotSpriteLookup = lookups[1];
 
 
 copyBtn.addEventListener("click", copyLevelToClipboard);
-
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
-
 canvasSprites.addEventListener("mousedown", selectSpriteToPaintWith);
 canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
 canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
 canvas.addEventListener("mouseup", function(e) {
 	MOUSEDOWN = false;
 })
-
-
-function drawLevel() {
-	let xTiles = canvas.width / GRID_WIDTH_PX;
-	let yTiles = canvas.height / GRID_WIDTH_PX;
-	for (let x = 0; x < xTiles + 1; x += 1)
-		for (let y = 0; y < yTiles + 1; y += 1) {
-			let shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
-			let shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
-
-			let spritePtr = getValueFrom2DArray(
-				TEMP_LEVEL,
-				x + shiftXPtr,
-				y + shiftYPtr,
-			);
-			if (spritePtr === undefined) {
-				spritePtr = 10;
-			}
-
-			let savedData = getSpriteFromHiddenCanvas(
-				ctxSprites,
-				spritePtr,
-				spriteSlotLookup,
-			);
-			let tileX = x;
-			let tileY = y;
-			ctx.putImageData(
-				savedData,
-				-1 * (CAMERA["xOffset"] % GRID_WIDTH_PX) + tileX * GRID_WIDTH_PX,
-				-1 * (CAMERA["yOffset"] % GRID_WIDTH_PX) + tileY * GRID_WIDTH_PX,
-			);
-		}
-}
 
 function gameLoop() {
 	if (CONTROLLER["ArrowLeft"])
@@ -196,7 +141,7 @@ function gameLoop() {
 		CAMERA["yOffset"] -= GRID_WIDTH_PX;
 	if (CONTROLLER["ArrowDown"])
 		CAMERA["yOffset"] += GRID_WIDTH_PX;
-	drawLevel();
+	drawLevel(ctx, ctxSprites, TEMP_LEVEL, spriteSlotLookup);
 }
 
-setInterval(gameLoop, 1000 / 20);
+setInterval(gameLoop, 1000 / FPS);

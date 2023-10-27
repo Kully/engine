@@ -1,6 +1,5 @@
 /* Helper Functions */
 
-
 import {
 	DARK_PALETTE,
 } from "./colors.js";
@@ -11,6 +10,12 @@ import {
 	SCALE2,
 	SPRITE_WIDTH,
 } from "./constants.js";
+
+import {
+	CAMERA,
+	CONTROLLER,
+	PLAYER,
+} from "./state.js";
 
 import {
 	SPRITE_LOOKUP,
@@ -50,8 +55,9 @@ export function putValueTo2DArray(array_2d, x, y, val) {
 }
 
 
-
-// Other Functions
+export function clearCanvas(canvas, ctx) {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 export function getSpriteFromHiddenCanvas(ctxSprites, spritePtr, spriteSlotLookup) {
 	let slotX = spriteSlotLookup[spritePtr]
@@ -81,4 +87,99 @@ export function saveSpriteToHiddenCanvas(ctxSprites, spritePtr, scale, slotX) {
 		let y = 0 + SCALE * (Math.floor(i / SPRITE_WIDTH));
 		ctxSprites.putImageData(imageData, SCALE2 * x, SCALE2 * y);
 	}
+}
+
+
+export function createHiddenSpriteLookups(canvasSprites, ctxSprites) {
+	let levelSpriteCount = Object.keys(SPRITE_LOOKUP).length
+	canvasSprites.width = levelSpriteCount * GRID_WIDTH_PX;
+	canvasSprites.height = GRID_WIDTH_PX;
+	let spriteSlotLookup = {};
+	let slotSpriteLookup = {};
+	let keys = Object.keys(SPRITE_LOOKUP);
+	for (let i = 0; i < keys.length; i += 1) {
+		if (keys[i] != 1) {
+			spriteSlotLookup[keys[i]] = i;
+			slotSpriteLookup[i] = keys[i];
+		}
+	}
+	for (let ptr in spriteSlotLookup) {
+		saveSpriteToHiddenCanvas(
+			ctxSprites,
+			ptr,
+			GRID_WIDTH_PX / SPRITE_WIDTH,
+			spriteSlotLookup[ptr]
+		);
+	}
+	return [spriteSlotLookup, slotSpriteLookup];
+}
+
+export function drawLevel(ctx, ctxSprites, level, spriteSlotLookup) {
+	let xTiles = canvas.width / GRID_WIDTH_PX;
+	let yTiles = canvas.height / GRID_WIDTH_PX;
+	for (let x = 0; x < xTiles + 1; x += 1)
+		for (let y = 0; y < yTiles + 1; y += 1) {
+			let shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
+			let shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
+
+			let spritePtr = getValueFrom2DArray(
+				level,
+				x + shiftXPtr,
+				y + shiftYPtr,
+			);
+			if (spritePtr === undefined) {
+				spritePtr = 10;
+			}
+
+			let savedData = getSpriteFromHiddenCanvas(
+				ctxSprites,
+				spritePtr,
+				spriteSlotLookup,
+			);
+			let tileX = x;
+			let tileY = y;
+			ctx.putImageData(
+				savedData,
+				-1 * (CAMERA["xOffset"] % GRID_WIDTH_PX) + tileX * GRID_WIDTH_PX,
+				-1 * (CAMERA["yOffset"] % GRID_WIDTH_PX) + tileY * GRID_WIDTH_PX,
+			);
+		}
+}
+
+export function drawPlayer(ctx2, animationArray) {
+	let spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
+	let spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
+	let spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
+	let yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
+
+	let playerFacingLeft = 0;
+	for (let i = 0; i < spriteWidth; i += 1)
+		for (let j = 0; j < spriteHeight; j += 1) {
+			let pixelColor;
+			if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0) {
+				pixelColor = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth]
+				playerFacingLeft = 1;
+			} else
+			if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0) {
+				if (CONTROLLER["lastLeftOrRight"] !== "ArrowRight") {
+					pixelColor = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+					playerFacingLeft = 1;
+				} else {
+					pixelColor = spriteArray[i + j * spriteWidth];
+				}
+			} else {
+				pixelColor = spriteArray[i + j * spriteWidth];
+			}
+			pixelColor = validatePixelColor(pixelColor, DARK_PALETTE);
+
+			let x = PLAYER["x"] + i * SCALE;
+			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
+			ctx2.fillStyle = pixelColor;
+			ctx2.fillRect(
+				x,
+				y,
+				SCALE,
+				SCALE,
+			);
+		}
 }
