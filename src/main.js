@@ -24,6 +24,11 @@ import {
 } from "./levels.js";
 
 import {
+	handleKeyDown,
+	handleKeyUp,
+} from "./listeners.js";
+
+import {
 	SPRITE_LOOKUP,
 	STAND_CYCLE,
 	SKID_CYCLE,
@@ -40,24 +45,8 @@ import {
 } from "./state.js";
 
 
-document.addEventListener("keydown", function(e) {
-	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.code === key)
-			CONTROLLER[key] = 1;
-	}
-});
-
-document.addEventListener("keyup", function(e) {
-	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.code === key) {
-			CONTROLLER[key] = 0;
-			CONTROLLER["lastKeyUp"] = key;
-		}
-	}
-	if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
-		CONTROLLER["lastLeftOrRight"] = e.code;
-	}
-});
+document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("keyup", handleKeyUp);
 
 
 // init canvas for background layer

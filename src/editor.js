@@ -15,6 +15,11 @@ import {
 } from "./helpers.js";
 
 import {
+	handleKeyDown,
+	handleKeyUp,
+} from "./listeners.js"
+
+import {
 	SPRITE_LOOKUP,
 } from "./sprites.js";
 
@@ -139,24 +144,8 @@ for (let ptr in spriteSlotLookup) {
 
 copyBtn.addEventListener("click", copyLevelToClipboard);
 
-document.addEventListener("keydown", function(e) {
-	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.code === key)
-			CONTROLLER[key] = 1;
-	}
-});
-
-document.addEventListener("keyup", function(e) {
-	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.code === key) {
-			CONTROLLER[key] = 0;
-			CONTROLLER["lastKeyUp"] = key;
-		}
-	}
-	if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
-		CONTROLLER["lastLeftOrRight"] = e.code;
-	}
-});
+document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("keyup", handleKeyUp);
 
 canvasSprites.addEventListener("mousedown", selectSpriteToPaintWith);
 canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
