@@ -1,48 +1,32 @@
 "use strict";
 
 import {
-	DARK_PALETTE,
-} from "./colors.js";
-
-import {
 	SPRITE_WIDTH,
 	GRID_WIDTH_PX,
-	SCALE,
-	SCALE2,
-	FPS,
 	VALID_CONTROLLER_KEYS,
 } from "./constants.js";
 
 import {
 	hexToRgb,
-	validatePixelColor,
 	getValueFrom2DArray,
-	putValueTo2DArray,
 	isValidIndex,
 	getSpriteFromHiddenCanvas,
 	saveSpriteToHiddenCanvas,
 } from "./helpers.js";
 
 import {
-	LEVEL,
-} from "./levels.js";
-
-import {
 	SPRITE_LOOKUP,
-	STAND_CYCLE,
-	SKID_CYCLE,
-	WALK_CYCLE,
-	JUMP_CYCLE,
-	WALK_CYCLE_FRAMES_SLOW,
-	WALK_CYCLE_FRAMES_FAST,
 } from "./sprites.js";
 
 import {
 	CAMERA,
 	CONTROLLER,
-	PLAYER,
 } from "./state.js";
 
+
+let FPS = 20;
+let CLICKED_SPRITE = undefined;
+let MOUSEDOWN = false;
 let TEMP_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -53,11 +37,9 @@ let TEMP_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
-let CLICKED_SPRITE = undefined;
-let MOUSEDOWN = false;
 
-let copyBtn = document.getElementById("copy-to-clipboard");
-copyBtn.addEventListener("click", function(e) {
+
+function copyLevelToClipboard(e) {
 	let stringyLevel = "const LEVEL = [\r";
 
 	for (let y = 0; y < TEMP_LEVEL.length; y += 1) {
@@ -72,27 +54,52 @@ copyBtn.addEventListener("click", function(e) {
 	}
 	stringyLevel += "];";
 	navigator.clipboard.writeText(stringyLevel);
-})
+}
 
-document.addEventListener("keydown", function(e) {
-	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.code === key)
-			CONTROLLER[key] = 1;
-	}
-});
+function selectSpriteToPaintWith(e) {
+	let xPixel = e.offsetX;
+	let yPixel = e.offsetY;
 
-document.addEventListener("keyup", function(e) {
-	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.code === key) {
-			CONTROLLER[key] = 0;
-			CONTROLLER["lastKeyUp"] = key;
-		}
-	}
-	if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
-		CONTROLLER["lastLeftOrRight"] = e.code;
-	}
-});
+	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
+	CLICKED_SPRITE = slotSpriteLookup[xTile];
+}
 
+function getClickedCoordinates(e) {
+	let xPixel = e.offsetX;
+	let yPixel = e.offsetY;
+
+	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
+	let yTile = Math.floor(yPixel / GRID_WIDTH_PX);
+
+	let xLevel = xTile + CAMERA["xOffset"] / GRID_WIDTH_PX;
+	let yLevel = yTile + CAMERA["yOffset"] / GRID_WIDTH_PX;
+	return [xLevel, yLevel];
+}
+
+function updateCanvasOnMouseDown(e) {
+	MOUSEDOWN = true;
+	let coords = getClickedCoordinates(e);
+	let xLevel = coords[0];
+	let yLevel = coords[1];
+
+	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel)) {
+		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
+	}
+}
+
+function updateCanvasOnMouseMove(e) {
+	let coords = getClickedCoordinates(e);
+	let xLevel = coords[0];
+	let yLevel = coords[1];
+
+	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN) {
+		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
+	}
+}
+
+
+
+let copyBtn = document.getElementById("copy-to-clipboard");
 
 // init canvas for background layer
 const canvas = document.getElementById("canvas");
@@ -130,46 +137,30 @@ for (let ptr in spriteSlotLookup) {
 }
 
 
-// select a sprite you want to paint with
-canvasSprites.addEventListener("mousedown", function(e) {
-	let xPixel = e.offsetX;
-	let yPixel = e.offsetY;
+copyBtn.addEventListener("click", copyLevelToClipboard);
 
-	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
-	CLICKED_SPRITE = slotSpriteLookup[xTile];
-})
-
-// update the sprite
-canvas.addEventListener("mousedown", function(e) {
-	MOUSEDOWN = true;
-
-	let xPixel = e.offsetX;
-	let yPixel = e.offsetY;
-
-	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
-	let yTile = Math.floor(yPixel / GRID_WIDTH_PX);
-
-	let xLevel = xTile + CAMERA["xOffset"] / GRID_WIDTH_PX;
-	let yLevel = yTile + CAMERA["yOffset"] / GRID_WIDTH_PX;
-
-	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel)) {
-		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
+document.addEventListener("keydown", function(e) {
+	for (let key of VALID_CONTROLLER_KEYS) {
+		if (e.code === key)
+			CONTROLLER[key] = 1;
 	}
-})
-canvas.addEventListener("mousemove", function(e) {
-	let xPixel = e.offsetX;
-	let yPixel = e.offsetY;
+});
 
-	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
-	let yTile = Math.floor(yPixel / GRID_WIDTH_PX);
-
-	let xLevel = xTile + CAMERA["xOffset"] / GRID_WIDTH_PX;
-	let yLevel = yTile + CAMERA["yOffset"] / GRID_WIDTH_PX;
-
-	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN) {
-		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
+document.addEventListener("keyup", function(e) {
+	for (let key of VALID_CONTROLLER_KEYS) {
+		if (e.code === key) {
+			CONTROLLER[key] = 0;
+			CONTROLLER["lastKeyUp"] = key;
+		}
 	}
-})
+	if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
+		CONTROLLER["lastLeftOrRight"] = e.code;
+	}
+});
+
+canvasSprites.addEventListener("mousedown", selectSpriteToPaintWith);
+canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
+canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
 canvas.addEventListener("mouseup", function(e) {
 	MOUSEDOWN = false;
 })
