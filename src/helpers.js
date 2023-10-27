@@ -19,6 +19,13 @@ export function getValueFrom2DArray(array_2d, x, y) {
 	return array_2d[y][x];
 }
 
+export function isValidIndex(array_2d, x, y) {
+	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
+		return false;
+	return true;
+}
+
+
 export function putValueTo2DArray(array_2d, x, y, val) {
 	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
 		return undefined;

@@ -22,3 +22,13 @@ canvas#canvas-sprites {
 	top: 0;
 	left: 0;
 }
+
+button.copy-to-clipboard {
+	position: absolute;
+	background-color: #27a8f4;
+	outline: 0px;
+	border: 0px solid red;
+	color: #111;
+	top: 64px;
+	padding: 0.5rem;
+}

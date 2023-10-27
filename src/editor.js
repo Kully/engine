@@ -18,6 +18,7 @@ import {
 	validatePixelColor,
 	getValueFrom2DArray,
 	putValueTo2DArray,
+	isValidIndex,
 } from "./helpers.js";
 
 import {
@@ -40,10 +41,57 @@ import {
 	PLAYER,
 } from "./state.js";
 
-
-let TEMP_LEVEL = LEVEL;
+let TEMP_LEVEL = [
+	[4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[4,4,4,4,4,4,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	[4,4,4,4,4,4,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4],
+	[4,4,4,4,4,4,4,4,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+	[4,4,4,4,4,4,4,4,4,4,4,4,4,7,4,0,4,4,4,4,0,4,4,4],
+	[4,4,4,4,4,4,4,0,4,7,4,4,0,0,0,8,0,0,0,0,0,4,4,4],
+	[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+	[4,4,4,4,4,4,4,4,7,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4],
+	[4,4,4,4,4,4,4,4,4,4,4,4,7,0,0,0,0,0,0,0,4,4,4,4],
+	[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+	[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+	[4,4,4,4,4,4,0,0,4,4,4,4,4,4,0,0,4,4,4,4,4,4,4,4],
+	[4,4,4,4,4,4,4,0,4,4,4,4,4,4,0,0,4,4,4,4,4,4,4,4],
+	[4,4,4,4,4,4,4,0,4,4,4,4,4,4,0,0,4,4,4,4,4,4,4,4],
+];
+// let TEMP_LEVEL = [
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+// ];
 let CLICKED_SPRITE = undefined;
+let MOUSEDOWN = false;
 
+let copyBtn = document.getElementById("copy-to-clipboard");
+copyBtn.addEventListener("click", function(e) {
+	let stringyLevel = "const LEVEL = [\r";
+
+	for (let y = 0; y < TEMP_LEVEL.length; y += 1) {
+		stringyLevel += "    [";
+		for (let x = 0; x < TEMP_LEVEL[y].length; x += 1) {
+			stringyLevel += TEMP_LEVEL[y][x];
+			if(x != TEMP_LEVEL[y].length - 1)
+				stringyLevel += ", ";
+		}
+		stringyLevel += "],";
+		stringyLevel += "\r";
+	}
+	stringyLevel += "];";
+	navigator.clipboard.writeText(stringyLevel);
+})
 
 document.addEventListener("keydown", function(e) {
 	for (let key of VALID_CONTROLLER_KEYS) {
@@ -77,24 +125,21 @@ const ctxSprites = canvasSprites.getContext("2d", {
 	willReadFrequently: true
 });
 
+
+// place sprites in sprite gallery
 let levelSpriteCount = Object.keys(SPRITE_LOOKUP).length
 canvasSprites.width = levelSpriteCount * GRID_WIDTH_PX;
 canvasSprites.height = GRID_WIDTH_PX;
-
-
-let spriteSlotLookup = {
-	4: 0,
-	8: 1,
-	5: 2,
-	7: 3,
-	0: 4,
-}
-let slotSpriteLookup = {
-	0: 4,
-	1: 8,
-	2: 5,
-	3: 7,
-	4: 0,
+let spriteSlotLookup = {};
+let slotSpriteLookup = {};
+let keys = Object.keys(SPRITE_LOOKUP);
+for (let i=0; i<keys.length; i+=1)
+{
+	if (keys[i] != 1)
+	{
+		spriteSlotLookup[keys[i]] = i;
+		slotSpriteLookup[i] = keys[i];
+	}
 }
 for (let ptr in spriteSlotLookup)
 	saveSpriteToHiddenCanvas(ptr, GRID_WIDTH_PX / SPRITE_WIDTH, spriteSlotLookup[ptr]);
@@ -111,6 +156,8 @@ canvasSprites.addEventListener("mousedown", function(e) {
 
 // update the sprite
 canvas.addEventListener("mousedown", function(e) {
+	MOUSEDOWN = true;
+
 	let xPixel = e.offsetX;
 	let yPixel = e.offsetY;
 
@@ -119,7 +166,29 @@ canvas.addEventListener("mousedown", function(e) {
 
 	let xLevel = xTile + CAMERA["xOffset"] / GRID_WIDTH_PX;
 	let yLevel = yTile + CAMERA["yOffset"] / GRID_WIDTH_PX;
-	TEMP_LEVEL = putValueTo2DArray(TEMP_LEVEL, xLevel, yLevel, CLICKED_SPRITE);
+
+	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel))
+	{
+		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
+	}
+})
+canvas.addEventListener("mousemove", function(e) {
+	let xPixel = e.offsetX;
+	let yPixel = e.offsetY;
+
+	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
+	let yTile = Math.floor(yPixel / GRID_WIDTH_PX);
+
+	let xLevel = xTile + CAMERA["xOffset"] / GRID_WIDTH_PX;
+	let yLevel = yTile + CAMERA["yOffset"] / GRID_WIDTH_PX;
+
+	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN)
+	{
+		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
+	}
+})
+canvas.addEventListener("mouseup", function(e) {
+	MOUSEDOWN = false;
 })
 
 
@@ -137,7 +206,7 @@ function drawLevel() {
 				y + shiftYPtr,
 			);
 			if (spritePtr === undefined) {
-				spritePtr = 0;
+				spritePtr = 10;
 			}
 
 			let savedData = getSpriteFromHiddenCanvas(spritePtr);
@@ -192,7 +261,6 @@ function clearLevelCanvas() {
 
 function gameLoop()
 {
-
 	if(CONTROLLER["ArrowLeft"])
 		CAMERA["xOffset"] -= GRID_WIDTH_PX;
 	if(CONTROLLER["ArrowRight"])
@@ -204,4 +272,4 @@ function gameLoop()
 	drawLevel();
 }
 
-setInterval(gameLoop, 1000 / 10);
+setInterval(gameLoop, 1000 / 20);
