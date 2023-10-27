@@ -21,7 +21,7 @@ export const CAMERA = {
 	width: SCREEN_WIDTH_PX,
 	height: SCREEN_HEIGHT_PX,
 	xOffset: 0,
-	yOffset: 300,
+	yOffset: 0,
 	leftThresh: Math.floor(SCREEN_WIDTH_PX * 0.4),
 	rightThresh: Math.floor(SCREEN_WIDTH_PX * 0.5),
 	upThresh: Math.floor(SCREEN_HEIGHT_PX * 0.4),

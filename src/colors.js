@@ -41,4 +41,5 @@ export const DARK_PALETTE = [
 	"#8198A9",
 	"#272640",
 	"#f1dca7", // player skin
+	"#941b0c", // invalid
 ];
