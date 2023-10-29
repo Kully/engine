@@ -125,7 +125,11 @@ export function drawLevel(ctx, ctxSprites, level, spriteSlotLookup) {
 			else
 				shiftXPtr = Math.ceil(CAMERA["xOffset"] / GRID_WIDTH_PX);
 
-			let shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
+			let shiftYPtr;
+			if (CAMERA["yOffset"] >= 0)
+				shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
+			else
+				shiftYPtr = Math.ceil(CAMERA["yOffset"] / GRID_WIDTH_PX);
 
 			let spritePtr = getValueFrom2DArray(
 				level,
