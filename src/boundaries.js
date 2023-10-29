@@ -62,7 +62,7 @@ export function handleXBoundaryCollision(level) {
 	let xTileCurrent = Math.round(playerGridX);
 	// deal with boundary on your left
 	let spriteToLeft = level[yTileCurrent - 1][xTileToYourLeft];
-	if (SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
+	if (spriteToLeft === undefined || SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
 		PLAYER["x"] = (xTileToYourLeft + 1) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
