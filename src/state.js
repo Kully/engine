@@ -4,18 +4,15 @@ import {
 	GRID_WIDTH_PX,
 	SCREEN_WIDTH_PX,
 	SCREEN_HEIGHT_PX,
+	VALID_CONTROLLER_KEYS,
 } from "./constants.js";
 
-export const CONTROLLER = {
-	ArrowLeft: 0,
-	ArrowRight: 0,
-	ArrowUp: 0,
-	ArrowDown: 0,
-	z: 0,
-	x: 0,
-	lastKeyUp: "ArrowRight",
-	lastLeftOrRight: "ArrowRight",
-};
+
+export const CONTROLLER = {};
+for (let key of VALID_CONTROLLER_KEYS)
+	CONTROLLER[key] = 0;
+CONTROLLER["lastKeyUp"] = "ArrowRight";
+CONTROLLER["lastLeftOrRight"] = "ArrowRight";
 
 export const CAMERA = {
 	width: SCREEN_WIDTH_PX,
