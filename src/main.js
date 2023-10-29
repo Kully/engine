@@ -8,22 +8,10 @@ import {
 } from "./boundaries.js";
 
 import {
-	DARK_PALETTE,
-} from "./colors.js";
-
-import {
-	SPRITE_WIDTH,
-	GRID_WIDTH_PX,
-	SCALE,
-	SCALE2,
 	FPS,
-	VALID_CONTROLLER_KEYS,
 } from "./constants.js";
 
 import {
-	hexToRgb,
-	validatePixelColor,
-	getValueFrom2DArray,
 	createHiddenSpriteLookups,
 	clearCanvas,
 	drawLevel,
@@ -46,13 +34,10 @@ import {
 } from "./physics.js"
 
 import {
-	SPRITE_LOOKUP,
 	STAND_CYCLE,
 	SKID_CYCLE,
 	WALK_CYCLE,
 	JUMP_CYCLE,
-	WALK_CYCLE_FRAMES_SLOW,
-	WALK_CYCLE_FRAMES_FAST,
 } from "./sprites.js";
 
 import {
