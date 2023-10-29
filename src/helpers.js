@@ -119,7 +119,12 @@ export function drawLevel(ctx, ctxSprites, level, spriteSlotLookup) {
 	let yTiles = canvas.height / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
 		for (let y = 0; y < yTiles + 1; y += 1) {
-			let shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
+			let shiftXPtr;
+			if (CAMERA["xOffset"] >= 0)
+				shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
+			else
+				shiftXPtr = Math.ceil(CAMERA["xOffset"] / GRID_WIDTH_PX);
+
 			let shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
 
 			let spritePtr = getValueFrom2DArray(
@@ -138,10 +143,12 @@ export function drawLevel(ctx, ctxSprites, level, spriteSlotLookup) {
 			);
 			let tileX = x;
 			let tileY = y;
+			let putImageDataX = tileX * GRID_WIDTH_PX - (CAMERA["xOffset"] % GRID_WIDTH_PX);
+			let putImageDataY = tileY * GRID_WIDTH_PX - (CAMERA["yOffset"] % GRID_WIDTH_PX);
 			ctx.putImageData(
 				savedData,
-				-1 * (CAMERA["xOffset"] % GRID_WIDTH_PX) + tileX * GRID_WIDTH_PX,
-				-1 * (CAMERA["yOffset"] % GRID_WIDTH_PX) + tileY * GRID_WIDTH_PX,
+				putImageDataX,
+				putImageDataY,
 			);
 		}
 }
