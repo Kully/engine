@@ -120,6 +120,7 @@ function followPlayerWithCamera() {
 	_moveCamera("y", "upThresh", "downThresh", "speedY");
 }
 
+let FRAME = 0;
 function gameLoop(e) {
 	followPlayerWithCamera();
 
@@ -137,6 +138,7 @@ function gameLoop(e) {
 	clearCanvas(canvas2, ctx2);
 	drawLevel(ctx, ctxSprites, LEVEL, spriteSlotLookup);
 	drawPlayer(ctx2, animationArray);
+	FRAME += 1;
 }
 
 setInterval(gameLoop, 1000 / FPS);
