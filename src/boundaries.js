@@ -81,16 +81,4 @@ export function handleYBoundaryCollision(level) {
 		let playerGridFloatY = getPlayerGridY();
 		PLAYER["y"] = Math.floor(playerGridFloatY) * GRID_WIDTH_PX - CAMERA["yOffset"];
 	}
-
-	let playerGridFloatY = getPlayerGridY();
-	let a = (PLAYER["y"] + CAMERA["yOffset"]) / GRID_WIDTH_PX;
-	let y = Math.floor(a) - 1;
-
-	let playerGridFloatX = getPlayerGridX();
-	let x = Math.round(playerGridFloatX);
-
-	let spritePtr = getValueFrom2DArray(level, x, y);
-	if (SPRITE_LOOKUP[spritePtr]["hitbox"] === true) {
-		PLAYER["y"] = Math.floor(playerGridFloatY + 1) * GRID_WIDTH_PX - CAMERA["yOffset"];
-	}
 }
