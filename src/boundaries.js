@@ -50,16 +50,20 @@ export function getSpritePtrPlayerInside(level) {
 
 
 export function handleXBoundaryCollision(level) {
-	// handle boundaries
+	// set up the variables
 	let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
 	let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
 	playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
 	playerGridY += CAMERA["yOffset"] / GRID_WIDTH_PX;
-	let yTileCurrent = Math.floor(playerGridY);
+
+	let xTileCurrent = Math.round(playerGridX);
+	let yTileCurrent = Math.round(playerGridY);
 
 	let xTileToYourLeft = Math.floor(playerGridX);
 	let xTileToYourRight = Math.ceil(playerGridX);
-	let xTileCurrent = Math.round(playerGridX);
+	let yTileAboveYou = Math.floor(playerGridY);
+	let yTileBelowYou = Math.ceil(playerGridY);
+
 	// deal with boundary on your left
 	let spriteToLeft = level[yTileCurrent - 1][xTileToYourLeft];
 	if (spriteToLeft === undefined || SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
@@ -72,6 +76,13 @@ export function handleXBoundaryCollision(level) {
 	if (spiteToRight === undefined || SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
 		PLAYER["x"] = (xTileToYourLeft) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
+	}
+
+	// prevent jumping through blocks
+	let spriteAboveYou = getValueFrom2DArray(level, xTileCurrent, yTileAboveYou - 1);
+	if (spriteAboveYou === undefined || SPRITE_LOOKUP[spriteAboveYou]["hitbox"] === true) {
+		PLAYER["y"] = (yTileAboveYou + 1) * GRID_WIDTH_PX;
+		PLAYER["y"] -= CAMERA["yOffset"];
 	}
 }
 
