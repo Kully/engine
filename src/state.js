@@ -7,6 +7,11 @@ import {
 	VALID_CONTROLLER_KEYS,
 } from "./constants.js";
 
+import {
+	PLAYER_TILE_X,
+	PLAYER_TILE_Y,
+} from "./levels.js";
+
 
 export const CONTROLLER = {};
 for (let key of VALID_CONTROLLER_KEYS)
@@ -25,9 +30,6 @@ export const CAMERA = {
 	downThresh: Math.floor(SCREEN_HEIGHT_PX * 0.5),
 };
 
-// TODO: Make sure that PLAYER["width"] is correct
-let PLAYER_TILE_X = 8;
-let PLAYER_TILE_Y = 8;
 export const PLAYER = {
 	x: GRID_WIDTH_PX * PLAYER_TILE_X - CAMERA["xOffset"],
 	y: GRID_WIDTH_PX * PLAYER_TILE_Y - CAMERA["yOffset"],
