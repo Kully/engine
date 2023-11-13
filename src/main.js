@@ -2,8 +2,7 @@
 
 
 import {
-	handleXBoundaryCollision,
-	handleYBoundaryCollision,
+	handleBoundaryCollision,
 	isPlayerStanding,
 } from "./boundaries.js";
 
@@ -128,8 +127,7 @@ function gameLoop(e) {
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
 
-	handleYBoundaryCollision(LEVEL);
-	handleXBoundaryCollision(LEVEL);
+	handleBoundaryCollision(LEVEL);
 
 	let animationArray = findAnimationCycle();
 	updatePlayerPointers(animationArray);
