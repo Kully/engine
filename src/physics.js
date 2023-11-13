@@ -22,8 +22,8 @@ import {
 
 export function updateHorizontalSpeed() {
 	let maxSpeed = SCALE;
-	let accInc = 0.5;
-	let decInc = 0.25;
+	let accInc = 0.8;
+	let decInc = 0.17;
 	let walk_frame_arr;
 	if (CONTROLLER["KeyZ"] == 1) {
 		maxSpeed = 1.6 * SCALE;
