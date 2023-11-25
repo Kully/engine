@@ -32,7 +32,6 @@ const GRAVITY_ACCEL = 0.5;
 const TERMINAL_VELOCITY = 130;
 
 export function updateHorizontalSpeed() {
-	console.log(PLAYER["speed"]);
 	let maxSpeed = MAX_SPEED;
 	let walkFrameArr;
 	if(CAN_RUN)
