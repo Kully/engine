@@ -20,36 +20,53 @@ import {
 } from "./state.js";
 
 
+const CAN_RUN = false;
+
+const ACCELERATION = 1;
+const DECELERATION = 2;
+const MAX_SPEED = 4;
+const RUN_MAX_SPEED = 6;
+
+const JUMP_ACCEL = 11;
+const GRAVITY_ACCEL = 0.5;
+const TERMINAL_VELOCITY = 130;
+
 export function updateHorizontalSpeed() {
-	let maxSpeed = SCALE;
-	let accInc = 0.8;
-	let decInc = 0.17;
-	let walk_frame_arr;
-	if (CONTROLLER["KeyZ"] == 1) {
-		maxSpeed = 1.6 * SCALE;
-		walk_frame_arr = WALK_CYCLE_FRAMES_FAST;
-	} else {
-		walk_frame_arr = WALK_CYCLE_FRAMES_SLOW;
+	console.log(PLAYER["speed"]);
+	let maxSpeed = MAX_SPEED;
+	let walkFrameArr;
+	if(CAN_RUN)
+	{
+		if (CONTROLLER["KeyZ"] == 1) {
+			maxSpeed = RUN_MAX_SPEED;
+			walkFrameArr = WALK_CYCLE_FRAMES_FAST;
+		} else {
+			walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
+		}
 	}
-	WALK_CYCLE[0]["frameDuration"] = walk_frame_arr[0]
-	WALK_CYCLE[1]["frameDuration"] = walk_frame_arr[1]
-	WALK_CYCLE[2]["frameDuration"] = walk_frame_arr[2]
-	WALK_CYCLE[3]["frameDuration"] = walk_frame_arr[3]
+	else
+	{
+		walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
+	}
+	WALK_CYCLE[0]["frameDuration"] = walkFrameArr[0]
+	WALK_CYCLE[1]["frameDuration"] = walkFrameArr[1]
+	WALK_CYCLE[2]["frameDuration"] = walkFrameArr[2]
+	WALK_CYCLE[3]["frameDuration"] = walkFrameArr[3]
 
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
-		PLAYER["speed"] -= accInc;
+		PLAYER["speed"] -= ACCELERATION;
 	else
 	if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
-		PLAYER["speed"] += accInc;
-	else {
-		if (PLAYER["speed"] > 0.25)
-			PLAYER["speed"] -= decInc;
-		else
-		if (PLAYER["speed"] < -0.25)
-			PLAYER["speed"] += decInc;
-		else
-			PLAYER["speed"] = 0;
-	}
+		PLAYER["speed"] += ACCELERATION;
+	else
+	if (PLAYER["speed"] > 0.25)
+		PLAYER["speed"] -= DECELERATION;
+	else
+	if (PLAYER["speed"] < -0.25)
+		PLAYER["speed"] += DECELERATION;
+	else
+		PLAYER["speed"] = 0;
+
 	// throttle the speed
 	if (PLAYER["speed"] > maxSpeed)
 		PLAYER["speed"] = maxSpeed;
@@ -66,11 +83,11 @@ export function updateVerticalSpeed(level) {
 	} else
 	if (!isPlayerStanding(level)) {
 		PLAYER["jumpJuice"] -= 1;
-		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + 0.65, 13);
+		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + GRAVITY_ACCEL, TERMINAL_VELOCITY);
 	}
 
 	if (CONTROLLER["KeyX"] === 1 && PLAYER["jumpJuice"] > 0 && isPlayerStanding(level)) {
-		PLAYER["speedY"] -= 10;
+		PLAYER["speedY"] -= JUMP_ACCEL;
 	}
 }
 
