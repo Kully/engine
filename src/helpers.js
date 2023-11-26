@@ -23,8 +23,15 @@ import {
 
 
 export function hexToRgb(hex) {
-	let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-	return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16), 255] : null;
+	let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	if (result) {
+		let r = parseInt(result[1], 16);
+		let g = parseInt(result[2], 16);
+		let b = parseInt(result[3], 16);
+		let a = parseInt(result[4], 16);
+		return [r, g, b, a];
+	}
+	return null;
 }
 
 export function validatePixelColor(color, COLOR_PALETTE) {

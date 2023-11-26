@@ -1,4 +1,4 @@
-/* Data */
+/* Sprites */
 
 export const SPRITE_LOOKUP = {
 	0: {
