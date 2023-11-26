@@ -120,6 +120,7 @@ function followPlayerWithCamera() {
 }
 
 let FRAME = 0;
+
 function gameLoop(e) {
 	followPlayerWithCamera();
 
