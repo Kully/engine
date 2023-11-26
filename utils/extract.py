@@ -1,7 +1,7 @@
 from PIL import Image
 
 
-DARK_PALETTE = [
+COLORS = [
     "#00000000",
     "#004058",
     "#b8f8d8",
@@ -45,7 +45,7 @@ def extract_spritesheet_colors(filename, sprite_size):
         for x in range(0, width, sprite_size):
             sprite = image.crop((x, y, x + sprite_size, y + sprite_size))
             sprite_colors.append(
-                [DARK_PALETTE.index(tuple_to_hex(pixel)) for pixel in sprite.getdata()]
+                [COLORS.index(tuple_to_hex(pixel)) for pixel in sprite.getdata()]
             )
 
     return sprite_colors

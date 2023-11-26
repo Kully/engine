@@ -1,7 +1,7 @@
 /* Helper Functions */
 
 import {
-	DARK_PALETTE,
+	COLOR_PALETTE,
 } from "./colors.js";
 
 import {
@@ -27,11 +27,11 @@ export function hexToRgb(hex) {
 	return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16), 255] : null;
 }
 
-export function validatePixelColor(color, DARK_PALETTE) {
+export function validatePixelColor(color, COLOR_PALETTE) {
 	if (color.toString().startsWith("#"))
 		return color;
 	else
-		return DARK_PALETTE[color];
+		return COLOR_PALETTE[color];
 }
 
 export function getValueFrom2DArray(array_2d, x, y) {
@@ -74,7 +74,7 @@ export function saveSpriteToHiddenCanvas(ctxSprites, spritePtr, scale, slotX) {
 	for (let i = 0; i < spriteData.length; i += 1) {
 		let imageData = ctxSprites.createImageData(2 * SCALE, 2 * SCALE);
 		let colorPtr = spriteData[i];
-		let hex = DARK_PALETTE[colorPtr];
+		let hex = COLOR_PALETTE[colorPtr];
 		let rgbArray = hexToRgb(hex);
 
 		for (let j = 0; j < SPRITE_WIDTH * SPRITE_WIDTH; j += 1) {
@@ -181,7 +181,7 @@ export function drawPlayer(ctx2, animationArray) {
 			} else {
 				pixelColor = spriteArray[i + j * spriteWidth];
 			}
-			pixelColor = validatePixelColor(pixelColor, DARK_PALETTE);
+			pixelColor = validatePixelColor(pixelColor, COLOR_PALETTE);
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
