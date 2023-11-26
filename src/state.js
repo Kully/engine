@@ -28,6 +28,7 @@ export const CAMERA = {
 	rightThresh: Math.floor(SCREEN_WIDTH_PX * 0.5),
 	upThresh: Math.floor(SCREEN_HEIGHT_PX * 0.4),
 	downThresh: Math.floor(SCREEN_HEIGHT_PX * 0.5),
+	easeIn: 8,
 };
 
 export const PLAYER = {
