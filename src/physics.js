@@ -22,8 +22,8 @@ import {
 
 const CAN_RUN = false;
 
-const ACCELERATION = 1;
-const DECELERATION = 2;
+const ACCELERATION = 0.5;
+const DECELERATION = 4;
 const MAX_SPEED = 4;
 const RUN_MAX_SPEED = 6;
 
@@ -32,39 +32,52 @@ const GRAVITY_ACCEL = 0.5;
 const TERMINAL_VELOCITY = 130;
 
 export function updateHorizontalSpeed() {
+	let lastSpeed = PLAYER["speed"];
 	let maxSpeed = MAX_SPEED;
 	let walkFrameArr;
-	if(CAN_RUN)
-	{
+
+	// toggle between running and walking
+	if (CAN_RUN) {
 		if (CONTROLLER["KeyZ"] == 1) {
 			maxSpeed = RUN_MAX_SPEED;
 			walkFrameArr = WALK_CYCLE_FRAMES_FAST;
 		} else {
 			walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
 		}
-	}
-	else
-	{
+	} else {
 		walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
 	}
+
 	WALK_CYCLE[0]["frameDuration"] = walkFrameArr[0]
 	WALK_CYCLE[1]["frameDuration"] = walkFrameArr[1]
 	WALK_CYCLE[2]["frameDuration"] = walkFrameArr[2]
 	WALK_CYCLE[3]["frameDuration"] = walkFrameArr[3]
 
+	// accelerate the player
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
 		PLAYER["speed"] -= ACCELERATION;
 	else
 	if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
 		PLAYER["speed"] += ACCELERATION;
 	else
-	if (PLAYER["speed"] > 0.25)
+	if (PLAYER["speed"] > 0)
 		PLAYER["speed"] -= DECELERATION;
 	else
-	if (PLAYER["speed"] < -0.25)
+	if (PLAYER["speed"] < 0)
 		PLAYER["speed"] += DECELERATION;
-	else
+
+	// ensure that you stop moving
+	if (
+		(
+			lastSpeed !== 0 &&
+			PLAYER["speed"] !== 0
+		) &&
+		(
+			Math.sign(lastSpeed) != Math.sign(PLAYER["speed"])
+		)
+	) {
 		PLAYER["speed"] = 0;
+	}
 
 	// throttle the speed
 	if (PLAYER["speed"] > maxSpeed)
