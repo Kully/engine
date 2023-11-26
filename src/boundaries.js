@@ -27,10 +27,31 @@ export function getPlayerGridY() {
 }
 
 export function isPlayerStanding(level) {
-	let spritePtr = getSpritePtrPlayerInside(level);
-	let isBoundaryBelowYou = (SPRITE_LOOKUP[spritePtr]["hitbox"] === true);
 
+	// Unexpected results if 0.5 or more.
+	// The bigger the number, the further off the
+	// edge the player can stand before falling.
+	const STAND_LENIANCY = 0.25;
+
+	let playerGridFloatX = getPlayerGridX();
 	let playerGridFloatY = getPlayerGridY();
+	let y = Math.floor(playerGridFloatY);
+
+	let spriteXLeftPtr = getValueFrom2DArray(
+		level,
+		Math.max(Math.round(playerGridFloatX - STAND_LENIANCY), 0),
+		y,
+	);
+	let spriteXRightPtr = getValueFrom2DArray(
+		level,
+		Math.max(Math.round(playerGridFloatX + STAND_LENIANCY), 0),
+		y,
+	);
+
+	let isBoundaryBelowYou = (
+		SPRITE_LOOKUP[spriteXLeftPtr]["hitbox"] === true ||
+		SPRITE_LOOKUP[spriteXRightPtr]["hitbox"] === true
+	);
 	if (isBoundaryBelowYou && Number.isInteger(playerGridFloatY))
 		return true;
 	return false;
