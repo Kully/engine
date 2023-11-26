@@ -1,5 +1,15 @@
 /* Colors */
 
+const GREYSCALE_COLORS = [
+	"#EEEEEE",
+	"#CCCCCC",
+	"#999999",
+	"#666666",
+	"#333333",
+	"#000000",
+];
+
+
 // define a suite of color palettes to choose from
 export const LIGHT_PALETTE = [
 	"#00000000",
