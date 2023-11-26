@@ -85,6 +85,20 @@ export const SPRITE_LOOKUP = {
 		name: "seaweedTileMissingBottomRight",
 		hitbox: true,
 	},
+	9: {
+		sprite: [
+			  2,  2,  2,  2, 10, 10, 10, 13,
+			  1, 10, 15,  3, 11,  3, 11,  4,
+			  1,  1,  3,  3, 13,  2, 10,  8,
+			  1,  1,  1,  2,  2,  8,  8,  8,
+			  1,  1,  1,  1,  8, 11,  3,  8,
+			  1,  1,  1,  1,  1,  3,  3, 14,
+			  1,  1,  1,  1,  1,  1,  4,  8,
+			  1,  1,  1,  1,  1,  1,  1,  8,
+		],
+		name: "seaweedTileMissingBottomLeft",
+		hitbox: true,
+	},
 	8: {
 		sprite: [
 			  1,  1,  1,  8,  8,  1,  1,  1,
