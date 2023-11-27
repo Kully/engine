@@ -1,7 +1,8 @@
 /* Helper Functions */
 
 import {
-	COLOR_PALETTE,
+	PLAYER_COLOR_MAP,
+	LEVEL_COLOR_MAP,
 } from "./colors.js";
 
 import {
@@ -24,7 +25,7 @@ import {
 } from "./sprites.js";
 
 
-let INVALID_SPIRTE_INDEX = 10;
+let INVALID_SPIRTE_INDEX = 0;
 
 
 export function hexToRgb(hex) {
@@ -79,7 +80,7 @@ export function saveSpriteToHiddenCanvas(spritesCtx, spritePtr, scale, slotX) {
 	for (let i = 0; i < spriteData.length; i += 1) {
 		let imageData = spritesCtx.createImageData(2 * SCALE, 2 * SCALE);
 		let colorPtr = spriteData[i];
-		let hex = COLOR_PALETTE[colorPtr];
+		let hex = LEVEL_COLOR_MAP[colorPtr];
 		let rgbArray = hexToRgb(hex);
 
 		for (let j = 0; j < SPRITE_WIDTH * SPRITE_WIDTH; j += 1) {
@@ -171,22 +172,22 @@ export function drawPlayer(playerLayerCtx, animationArray) {
 	let playerFacingLeft = 0;
 	for (let i = 0; i < spriteWidth; i += 1)
 		for (let j = 0; j < spriteHeight; j += 1) {
-			let pixelColor;
+			let colorPtr;
 			if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0) {
-				pixelColor = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth]
+				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth]
 				playerFacingLeft = 1;
 			} else
 			if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0) {
 				if (CONTROLLER["lastLeftOrRight"] !== "ArrowRight") {
-					pixelColor = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+					colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
 					playerFacingLeft = 1;
 				} else {
-					pixelColor = spriteArray[i + j * spriteWidth];
+					colorPtr = spriteArray[i + j * spriteWidth];
 				}
 			} else {
-				pixelColor = spriteArray[i + j * spriteWidth];
+				colorPtr = spriteArray[i + j * spriteWidth];
 			}
-			pixelColor = COLOR_PALETTE[pixelColor]
+			let pixelColor = PLAYER_COLOR_MAP[colorPtr];
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;

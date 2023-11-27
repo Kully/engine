@@ -10,28 +10,21 @@ export const GREYSCALE_COLORS = [
 	"#EEEEEEFF",
 ];
 
-export const LIGHT_PALETTE = [
-	"#00000000",
-	"#004058FF",
-	"#b8f8d8FF",
-	"#01a844FF",
-	"#015800FF",
-	"#231955FF",
-	"#de7c70FF",
-	"#400426FF",
-	"#000000FF",
-	"#b8f9d8FF",
-	"#b9f819FF",
-	"#00a844FF",
-	"#b8f819FF",
-	"#01a944FF",
-	"#015900FF",
-	"#015801FF",
-	"#01a945FF",
-	"#f1c7c2FF",
-];
-
-
-// assign the color palette you want
-export let COLOR_PALETTE;
-COLOR_PALETTE = LIGHT_PALETTE;
+export const LEVEL_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: GREYSCALE_COLORS[1],
+	2: "#FF0000FF",
+	3: "#01A844FF",
+	4: "#FF0000FF",
+	5: "#FF0000FF",
+	6: "#FF00FFFF",
+};
+export const PLAYER_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#FF0000FF",
+	2: "#FF0000FF",
+	3: "#FF0000FF",
+	4: "#400426FF",
+	5: "#de7c70FF",
+	6: "#f1c7c2FF",
+};
