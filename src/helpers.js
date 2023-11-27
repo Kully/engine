@@ -9,6 +9,8 @@ import {
 	SCALE,
 	SCALE2,
 	SPRITE_WIDTH,
+	SCREEN_WIDTH_PX,
+	SCREEN_HEIGHT_PX,
 } from "./constants.js";
 
 import {
@@ -20,6 +22,9 @@ import {
 import {
 	SPRITE_LOOKUP,
 } from "./sprites.js";
+
+
+let INVALID_SPIRTE_INDEX = 10;
 
 
 export function hexToRgb(hex) {
@@ -122,8 +127,8 @@ export function createHiddenSpriteLookups(canvasSprites, ctxSprites) {
 }
 
 export function drawLevelLayer(ctx, ctxSprites, level, spriteSlotLookup) {
-	let xTiles = canvas.width / GRID_WIDTH_PX;
-	let yTiles = canvas.height / GRID_WIDTH_PX;
+	let xTiles = SCREEN_WIDTH_PX / GRID_WIDTH_PX;
+	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
 		for (let y = 0; y < yTiles + 1; y += 1) {
 			let shiftXPtr;
@@ -144,7 +149,7 @@ export function drawLevelLayer(ctx, ctxSprites, level, spriteSlotLookup) {
 				y + shiftYPtr,
 			);
 			if (spritePtr === undefined) {
-				spritePtr = 10;
+				spritePtr = INVALID_SPIRTE_INDEX;
 			}
 
 			let savedData = getSpriteFromHiddenCanvas(

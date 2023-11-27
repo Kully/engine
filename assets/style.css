@@ -11,11 +11,6 @@ canvas {
 	left: calc(50% - 960px / 2);
 }
 
-canvas#canvas-mg {
-	z-index: 1;
-	position: absolute;
-}
-
 canvas#canvas-sprites {
 	position: absolute;
 	visibility: hidden;

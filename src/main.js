@@ -49,8 +49,8 @@ import {
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
 
-const canvas = document.getElementById("canvas");
-const canvas2 = document.getElementById("canvas2");
+const canvas = document.getElementById("level-layer-canvas");
+const canvas2 = document.getElementById("player-layer-canvas");
 const canvasSprites = document.getElementById("canvas-sprites");
 
 const ctx = canvas.getContext("2d");
