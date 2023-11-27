@@ -51,11 +51,11 @@ document.addEventListener("keyup", handleKeyUp);
 
 const levelLayerCanvas = document.getElementById("level-layer-canvas");
 const playerLayerCanvas = document.getElementById("player-layer-canvas");
-const canvasSprites = document.getElementById("canvas-sprites");
+const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 
 const levelLayerCtx = levelLayerCanvas.getContext("2d");
 const playerLayerCtx = playerLayerCanvas.getContext("2d");
-const ctxSprites = canvasSprites.getContext("2d", {
+const spritesCtx = spritesCanvas.getContext("2d", {
 	willReadFrequently: true
 });
 
@@ -64,7 +64,7 @@ levelLayerCanvas.height = CAMERA["height"];
 playerLayerCanvas.width = levelLayerCanvas.width;
 playerLayerCanvas.height = levelLayerCanvas.height;
 
-let lookups = createHiddenSpriteLookups(canvasSprites, ctxSprites);
+let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
@@ -137,7 +137,7 @@ function gameLoop(e) {
 
 	clearCanvas(levelLayerCanvas, levelLayerCtx);
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
-	drawLevelLayer(levelLayerCtx, ctxSprites, LEVEL, spriteSlotLookup);
+	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 	drawPlayer(playerLayerCtx, animationArray);
 	FRAME += 1;
 }

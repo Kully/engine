@@ -11,7 +11,7 @@ canvas {
 	left: calc(50% - 960px / 2);
 }
 
-canvas#canvas-sprites {
+canvas#prerender-sprites-canvas {
 	position: absolute;
 	visibility: hidden;
 	top: 0;

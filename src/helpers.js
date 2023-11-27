@@ -71,20 +71,20 @@ export function clearCanvas(canvas, ctx) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-export function getSpriteFromHiddenCanvas(ctxSprites, spritePtr, spriteSlotLookup) {
+export function getSpriteFromHiddenCanvas(spritesCtx, spritePtr, spriteSlotLookup) {
 	let slotX = spriteSlotLookup[spritePtr]
 	let left = GRID_WIDTH_PX * slotX;
 	let top = 0;
 	let width = GRID_WIDTH_PX;
 	let height = GRID_WIDTH_PX;
-	let savedData = ctxSprites.getImageData(left, top, width, height);
+	let savedData = spritesCtx.getImageData(left, top, width, height);
 	return savedData;
 }
 
-export function saveSpriteToHiddenCanvas(ctxSprites, spritePtr, scale, slotX) {
+export function saveSpriteToHiddenCanvas(spritesCtx, spritePtr, scale, slotX) {
 	let spriteData = SPRITE_LOOKUP[spritePtr]["sprite"];
 	for (let i = 0; i < spriteData.length; i += 1) {
-		let imageData = ctxSprites.createImageData(2 * SCALE, 2 * SCALE);
+		let imageData = spritesCtx.createImageData(2 * SCALE, 2 * SCALE);
 		let colorPtr = spriteData[i];
 		let hex = COLOR_PALETTE[colorPtr];
 		let rgbArray = hexToRgb(hex);
@@ -97,15 +97,15 @@ export function saveSpriteToHiddenCanvas(ctxSprites, spritePtr, scale, slotX) {
 		}
 		let x = SCALE * SPRITE_WIDTH * slotX + SCALE * (i % SPRITE_WIDTH);
 		let y = 0 + SCALE * (Math.floor(i / SPRITE_WIDTH));
-		ctxSprites.putImageData(imageData, SCALE2 * x, SCALE2 * y);
+		spritesCtx.putImageData(imageData, SCALE2 * x, SCALE2 * y);
 	}
 }
 
 
-export function createHiddenSpriteLookups(canvasSprites, ctxSprites) {
+export function createHiddenSpriteLookups(spritesCanvas, spritesCtx) {
 	let levelSpriteCount = Object.keys(SPRITE_LOOKUP).length
-	canvasSprites.width = levelSpriteCount * GRID_WIDTH_PX;
-	canvasSprites.height = GRID_WIDTH_PX;
+	spritesCanvas.width = levelSpriteCount * GRID_WIDTH_PX;
+	spritesCanvas.height = GRID_WIDTH_PX;
 	let spriteSlotLookup = {};
 	let slotSpriteLookup = {};
 	let keys = Object.keys(SPRITE_LOOKUP);
@@ -117,7 +117,7 @@ export function createHiddenSpriteLookups(canvasSprites, ctxSprites) {
 	}
 	for (let ptr in spriteSlotLookup) {
 		saveSpriteToHiddenCanvas(
-			ctxSprites,
+			spritesCtx,
 			ptr,
 			GRID_WIDTH_PX / SPRITE_WIDTH,
 			spriteSlotLookup[ptr]
@@ -126,7 +126,7 @@ export function createHiddenSpriteLookups(canvasSprites, ctxSprites) {
 	return [spriteSlotLookup, slotSpriteLookup];
 }
 
-export function drawLevelLayer(levelLayerCtx, ctxSprites, level, spriteSlotLookup) {
+export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLookup) {
 	let xTiles = SCREEN_WIDTH_PX / GRID_WIDTH_PX;
 	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
@@ -153,7 +153,7 @@ export function drawLevelLayer(levelLayerCtx, ctxSprites, level, spriteSlotLooku
 			}
 
 			let savedData = getSpriteFromHiddenCanvas(
-				ctxSprites,
+				spritesCtx,
 				spritePtr,
 				spriteSlotLookup,
 			);
