@@ -13,7 +13,7 @@ import {
 	getSpriteFromHiddenCanvas,
 	saveSpriteToHiddenCanvas,
 	createHiddenSpriteLookups,
-	drawLevel,
+	drawLevelLayer,
 } from "./helpers.js";
 
 import {
@@ -147,7 +147,7 @@ function gameLoop() {
 		CAMERA["yOffset"] -= GRID_WIDTH_PX;
 	if (CONTROLLER["ArrowDown"])
 		CAMERA["yOffset"] += GRID_WIDTH_PX;
-	drawLevel(ctx, ctxSprites, TEMP_LEVEL, spriteSlotLookup);
+	drawLevelLayer(ctx, ctxSprites, TEMP_LEVEL, spriteSlotLookup);
 }
 
 setInterval(gameLoop, 1000 / FPS);

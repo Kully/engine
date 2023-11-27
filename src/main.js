@@ -13,7 +13,7 @@ import {
 import {
 	createHiddenSpriteLookups,
 	clearCanvas,
-	drawLevel,
+	drawLevelLayer,
 	drawPlayer,
 } from "./helpers.js";
 
@@ -137,7 +137,7 @@ function gameLoop(e) {
 
 	clearCanvas(canvas, ctx);
 	clearCanvas(canvas2, ctx2);
-	drawLevel(ctx, ctxSprites, LEVEL, spriteSlotLookup);
+	drawLevelLayer(ctx, ctxSprites, LEVEL, spriteSlotLookup);
 	drawPlayer(ctx2, animationArray);
 	FRAME += 1;
 }

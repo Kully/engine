@@ -121,7 +121,7 @@ export function createHiddenSpriteLookups(canvasSprites, ctxSprites) {
 	return [spriteSlotLookup, slotSpriteLookup];
 }
 
-export function drawLevel(ctx, ctxSprites, level, spriteSlotLookup) {
+export function drawLevelLayer(ctx, ctxSprites, level, spriteSlotLookup) {
 	let xTiles = canvas.width / GRID_WIDTH_PX;
 	let yTiles = canvas.height / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
