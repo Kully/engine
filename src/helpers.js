@@ -3,6 +3,7 @@
 import {
 	PLAYER_COLOR_MAP,
 	LEVEL_COLOR_MAP,
+	GREYSCALE_COLORS,
 } from "./colors.js";
 
 import {
@@ -12,6 +13,7 @@ import {
 	SPRITE_WIDTH,
 	SCREEN_WIDTH_PX,
 	SCREEN_HEIGHT_PX,
+	DRAW_SPRITES_WITH_COLOR,
 } from "./constants.js";
 
 import {
@@ -80,8 +82,14 @@ export function saveSpriteToHiddenCanvas(spritesCtx, spritePtr, scale, slotX) {
 	for (let i = 0; i < spriteData.length; i += 1) {
 		let imageData = spritesCtx.createImageData(2 * SCALE, 2 * SCALE);
 		let colorPtr = spriteData[i];
-		let hex = LEVEL_COLOR_MAP[colorPtr];
-		let rgbArray = hexToRgb(hex);
+
+		let pixelColor;
+		if (DRAW_SPRITES_WITH_COLOR)
+			pixelColor = LEVEL_COLOR_MAP[colorPtr];
+		else
+			pixelColor = GREYSCALE_COLORS[colorPtr];
+
+		let rgbArray = hexToRgb(pixelColor);
 
 		for (let j = 0; j < SPRITE_WIDTH * SPRITE_WIDTH; j += 1) {
 			imageData.data[4 * j + 0] = rgbArray[0];
@@ -187,7 +195,12 @@ export function drawPlayerLayer(playerLayerCtx, animationArray) {
 			} else {
 				colorPtr = spriteArray[i + j * spriteWidth];
 			}
-			let pixelColor = PLAYER_COLOR_MAP[colorPtr];
+
+			let pixelColor;
+			if (DRAW_SPRITES_WITH_COLOR)
+				pixelColor = PLAYER_COLOR_MAP[colorPtr];
+			else
+				pixelColor = GREYSCALE_COLORS[colorPtr];
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;

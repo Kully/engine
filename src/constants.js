@@ -17,3 +17,5 @@ export const VALID_CONTROLLER_KEYS = [
 ];
 export const SCREEN_WIDTH_PX = 960;
 export const SCREEN_HEIGHT_PX = 540;
+
+export const DRAW_SPRITES_WITH_COLOR = true;
