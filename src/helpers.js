@@ -39,13 +39,6 @@ export function hexToRgb(hex) {
 	return null;
 }
 
-export function validatePixelColor(color, COLOR_PALETTE) {
-	if (color.toString().startsWith("#"))
-		return color;
-	else
-		return COLOR_PALETTE[color];
-}
-
 export function getValueFrom2DArray(array_2d, x, y) {
 	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
 		return undefined;
@@ -193,7 +186,7 @@ export function drawPlayer(playerLayerCtx, animationArray) {
 			} else {
 				pixelColor = spriteArray[i + j * spriteWidth];
 			}
-			pixelColor = validatePixelColor(pixelColor, COLOR_PALETTE);
+			pixelColor = COLOR_PALETTE[pixelColor]
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
