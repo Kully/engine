@@ -13,8 +13,8 @@ import {
 import {
 	createHiddenSpriteLookups,
 	clearCanvas,
-	drawLevel,
-	drawPlayer,
+	drawLevelLayer,
+	drawPlayerLayer,
 } from "./helpers.js";
 
 import {
@@ -49,22 +49,22 @@ import {
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
 
-const canvas = document.getElementById("canvas");
-const canvas2 = document.getElementById("canvas2");
-const canvasSprites = document.getElementById("canvas-sprites");
+const levelLayerCanvas = document.getElementById("level-layer-canvas");
+const playerLayerCanvas = document.getElementById("player-layer-canvas");
+const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 
-const ctx = canvas.getContext("2d");
-const ctx2 = canvas2.getContext("2d");
-const ctxSprites = canvasSprites.getContext("2d", {
+const levelLayerCtx = levelLayerCanvas.getContext("2d");
+const playerLayerCtx = playerLayerCanvas.getContext("2d");
+const spritesCtx = spritesCanvas.getContext("2d", {
 	willReadFrequently: true
 });
 
-canvas.width = CAMERA["width"];
-canvas.height = CAMERA["height"];
-canvas2.width = canvas.width;
-canvas2.height = canvas.height;
+levelLayerCanvas.width = CAMERA["width"];
+levelLayerCanvas.height = CAMERA["height"];
+playerLayerCanvas.width = levelLayerCanvas.width;
+playerLayerCanvas.height = levelLayerCanvas.height;
 
-let lookups = createHiddenSpriteLookups(canvasSprites, ctxSprites);
+let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
@@ -135,10 +135,10 @@ function gameLoop(e) {
 	let animationArray = findAnimationCycle();
 	updatePlayerPointers(animationArray);
 
-	clearCanvas(canvas, ctx);
-	clearCanvas(canvas2, ctx2);
-	drawLevel(ctx, ctxSprites, LEVEL, spriteSlotLookup);
-	drawPlayer(ctx2, animationArray);
+	clearCanvas(levelLayerCanvas, levelLayerCtx);
+	clearCanvas(playerLayerCanvas, playerLayerCtx);
+	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
+	drawPlayerLayer(playerLayerCtx, animationArray);
 	FRAME += 1;
 }
 

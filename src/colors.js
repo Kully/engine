@@ -1,70 +1,30 @@
 /* Colors */
 
-// define a suite of color palettes to choose from
-export const LIGHT_PALETTE = [
+export const GREYSCALE_COLORS = [
 	"#00000000",
-	"#004058",
-	"#b8f8d8",
-	"#01a844",
-	"#015800",
-	"#231955",
-	"#de7c70",
-	"#400426",
-	"#000000",
-	"#b8f9d8",
-	"#b9f819",
-	"#00a844",
-	"#b8f819",
-	"#01a944",
-	"#015900",
-	"#015801",
-	"#01a945",
-	"#f1c7c2",
-];
-export const DARK_PALETTE = [
-	"#00000000",
-	"#002137", // background
-	"#0b525b",
-	"#065a60",
-	"#002137",
-	"#231955",
-	"#065a60", // player outfit
-	"#020202", // near black
-	"#001523",
-	"#272640",
-	"#065a60",
-	"#0b525b",
-	"#797d62",
-	"#272640",
-	"#272640",
-	"#8198A9",
-	"#272640",
-	"#f1dca7", // player skin
-	"#941b0c", // invalid
-];
-export const GLITCH_PALETTE = [
-	"#00000000",
-	"#002137",
-	"#231955",
-	"#065a60",
-	"#002137",
-	"#020202",
-	"#8198A9",
-	"#FFFFFF",
-	"#065a60",
-	"#0b525b",
-	"#001523",
-	"#272640",
-	"#941b0c",
-	"#f1dca7",
-	"#797d62",
-	"#272640",
-	"#272640",
-	"#272640",
-	"#0b525b",
+	"#000000FF",
+	"#333333FF",
+	"#666666FF",
+	"#999999FF",
+	"#CCCCCCFF",
+	"#EEEEEEFF",
 ];
 
-
-// assign the color palette you want
-export let COLOR_PALETTE;
-COLOR_PALETTE = LIGHT_PALETTE;
+export const LEVEL_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: GREYSCALE_COLORS[1],
+	2: "#FF0000FF",
+	3: "#223843FF",
+	4: "#FF0000FF",
+	5: "#FF0000FF",
+	6: "#EFF1F3FF",
+};
+export const PLAYER_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#FF0000FF",
+	2: "#FF0000FF",
+	3: "#FF0000FF",
+	4: "#400426FF",
+	5: "#de7c70FF",
+	6: "#f1c7c2FF",
+};

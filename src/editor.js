@@ -13,7 +13,7 @@ import {
 	getSpriteFromHiddenCanvas,
 	saveSpriteToHiddenCanvas,
 	createHiddenSpriteLookups,
-	drawLevel,
+	drawLevelLayer,
 } from "./helpers.js";
 
 import {
@@ -113,17 +113,17 @@ function updateCanvasOnMouseMove(e) {
 
 let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
-const canvasSprites = document.getElementById("canvas-sprites");
+const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 
 const ctx = canvas.getContext("2d");
-const ctxSprites = canvasSprites.getContext("2d", {
+const spritesCtx = spritesCanvas.getContext("2d", {
 	willReadFrequently: true
 });
 
 canvas.width = CAMERA["width"];
 canvas.height = CAMERA["height"];
 
-let lookups = createHiddenSpriteLookups(canvasSprites, ctxSprites);
+let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
@@ -131,7 +131,7 @@ let slotSpriteLookup = lookups[1];
 copyBtn.addEventListener("click", copyLevelToClipboard);
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
-canvasSprites.addEventListener("mousedown", selectSpriteToPaintWith);
+spritesCanvas.addEventListener("mousedown", selectSpriteToPaintWith);
 canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
 canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
 canvas.addEventListener("mouseup", function(e) {
@@ -147,7 +147,7 @@ function gameLoop() {
 		CAMERA["yOffset"] -= GRID_WIDTH_PX;
 	if (CONTROLLER["ArrowDown"])
 		CAMERA["yOffset"] += GRID_WIDTH_PX;
-	drawLevel(ctx, ctxSprites, TEMP_LEVEL, spriteSlotLookup);
+	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 }
 
 setInterval(gameLoop, 1000 / FPS);
