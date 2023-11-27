@@ -126,7 +126,7 @@ export function createHiddenSpriteLookups(canvasSprites, ctxSprites) {
 	return [spriteSlotLookup, slotSpriteLookup];
 }
 
-export function drawLevelLayer(ctx, ctxSprites, level, spriteSlotLookup) {
+export function drawLevelLayer(levelLayerCtx, ctxSprites, level, spriteSlotLookup) {
 	let xTiles = SCREEN_WIDTH_PX / GRID_WIDTH_PX;
 	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
@@ -161,7 +161,7 @@ export function drawLevelLayer(ctx, ctxSprites, level, spriteSlotLookup) {
 			let tileY = y;
 			let putImageDataX = tileX * GRID_WIDTH_PX - (CAMERA["xOffset"] % GRID_WIDTH_PX);
 			let putImageDataY = tileY * GRID_WIDTH_PX - (CAMERA["yOffset"] % GRID_WIDTH_PX);
-			ctx.putImageData(
+			levelLayerCtx.putImageData(
 				savedData,
 				putImageDataX,
 				putImageDataY,
@@ -169,7 +169,7 @@ export function drawLevelLayer(ctx, ctxSprites, level, spriteSlotLookup) {
 		}
 }
 
-export function drawPlayer(ctx2, animationArray) {
+export function drawPlayer(playerLayerCtx, animationArray) {
 	let spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
 	let spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
@@ -197,8 +197,8 @@ export function drawPlayer(ctx2, animationArray) {
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
-			ctx2.fillStyle = pixelColor;
-			ctx2.fillRect(
+			playerLayerCtx.fillStyle = pixelColor;
+			playerLayerCtx.fillRect(
 				x,
 				y,
 				SCALE,
