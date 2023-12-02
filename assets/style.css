@@ -30,4 +30,10 @@ button.copy-to-clipboard {
 
 .instructions {
 	color: white;
+	z-index: 1;
+	position: absolute;
+	top: calc(50vh + 540px / 2);
+	left: calc(50% - 960px / 2);
+	width: 960px;
+	text-align: center;
 }
