@@ -27,3 +27,7 @@ button.copy-to-clipboard {
 	top: 64px;
 	padding: 0.5rem;
 }
+
+.instructions {
+	color: white;
+}
