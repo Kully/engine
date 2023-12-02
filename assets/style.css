@@ -5,6 +5,7 @@ body {
 }
 
 canvas {
+	outline: 1px solid #333;
 	z-index: 0;
 	position: absolute;
 	top: calc(50vh - 540px / 2);
