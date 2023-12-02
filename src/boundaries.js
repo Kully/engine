@@ -77,8 +77,8 @@ export function handleBoundaryCollision(level) {
 	playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
 	playerGridY += CAMERA["yOffset"] / GRID_WIDTH_PX;
 
-	let xTileCurrent = Math.round(playerGridX);
-	let yTileCurrent = Math.round(playerGridY);
+	let xTileRounded = Math.round(playerGridX);
+	let yTileRounded = Math.round(playerGridY);
 
 	let xTileToYourLeft = Math.floor(playerGridX);
 	let xTileToYourRight = Math.ceil(playerGridX);
@@ -86,21 +86,35 @@ export function handleBoundaryCollision(level) {
 	let yTileBelowYou = Math.ceil(playerGridY);
 
 	// deal with boundaries on your left
-	let spriteToLeft = level[yTileCurrent - 1][xTileToYourLeft];
+	let spriteToLeft = level[yTileRounded - 1][xTileToYourLeft];
 	if (spriteToLeft === undefined || SPRITE_LOOKUP[spriteToLeft]["hitbox"] === true) {
 		PLAYER["x"] = (xTileToYourLeft + 1) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
 
 	// deal with boundaries on your right
-	let spiteToRight = level[yTileCurrent - 1][xTileToYourRight];
-	if (spiteToRight === undefined || SPRITE_LOOKUP[spiteToRight]["hitbox"] === true) {
+	let boundaryOnRight = false;
+	if (!Number.isInteger(playerGridY)) {
+		let tileRight = level[yTileRounded - 1][xTileToYourRight];
+		if (SPRITE_LOOKUP[tileRight]["hitbox"] === true) {
+			boundaryOnRight = true;
+		}
+	} else {
+		let tileRightAbove = level[yTileAboveYou - 1][xTileToYourRight];
+		let tileRightBelow = level[yTileBelowYou - 1][xTileToYourRight];
+
+		if (SPRITE_LOOKUP[tileRightAbove]["hitbox"] === true || SPRITE_LOOKUP[tileRightBelow]["hitbox"] === true) {
+			boundaryOnRight = true;
+		}
+	}
+	if (boundaryOnRight) {
 		PLAYER["x"] = (xTileToYourLeft) * GRID_WIDTH_PX;
 		PLAYER["x"] -= CAMERA["xOffset"];
 	}
 
+
 	// deal with boundaries above you
-	let spriteAboveYou = getValueFrom2DArray(level, xTileCurrent, yTileAboveYou - 1);
+	let spriteAboveYou = getValueFrom2DArray(level, xTileRounded, yTileAboveYou - 1);
 	if (spriteAboveYou === undefined || SPRITE_LOOKUP[spriteAboveYou]["hitbox"] === true) {
 		PLAYER["y"] = (yTileAboveYou + 1) * GRID_WIDTH_PX;
 		PLAYER["y"] -= CAMERA["yOffset"];
