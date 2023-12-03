@@ -35,11 +35,18 @@ button.copy-to-clipboard {
 }
 
 .instructions {
-	color: white;
+	color: #A4A4A4;
+	font-family: Courier;
 	z-index: 1;
 	position: absolute;
 	top: calc(50vh + var(--screen-height) / 2);
 	left: calc(50% - var(--screen-width) / 2);
 	width: 960px;
 	text-align: center;
+	padding: 0.25rem 0.5rem;
+}
+.instructions code {
+	color: #EEE;
+	background-color: #222;
+	padding: 0.25rem;
 }
