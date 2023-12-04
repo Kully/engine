@@ -37,6 +37,7 @@ import {
 	SKID_CYCLE,
 	WALK_CYCLE,
 	JUMP_CYCLE,
+	SPRITES,
 } from "./sprites.js";
 
 import {
@@ -83,19 +84,23 @@ function updatePlayerPointers(animationArray) {
 function findAnimationCycle() {
 	let animationArray;
 	if (!isPlayerStanding(LEVEL)) {
-		animationArray = JUMP_CYCLE;
+		animationArray = SPRITES["ranger"]["JUMP_CYCLE"];
 	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
-		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
-			animationArray = SKID_CYCLE;
-		} else
-		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
-			animationArray = SKID_CYCLE;
+		if (SPRITES["ranger"]["SKID_CYCLE"]) {
+			if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
+				animationArray = SKID_CYCLE;
+			} else
+			if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
+				animationArray = SKID_CYCLE;
+			} else {
+				animationArray = WALK_CYCLE;
+			}
 		} else {
-			animationArray = WALK_CYCLE;
+			animationArray = SPRITES["ranger"]["WALK_CYCLE"];
 		}
 	} else {
-		animationArray = STAND_CYCLE;
+		animationArray = SPRITES["ranger"]["STAND_CYCLE"];
 	}
 
 	return animationArray;

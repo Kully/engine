@@ -19,7 +19,7 @@ export const LEVEL_COLOR_MAP = {
 	5: "#FF0000FF",
 	6: "#EFF1F3FF",
 };
-export const PLAYER_COLOR_MAP = {
+export const NEPTUNE_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#FF0000FF",
 	2: "#FF0000FF",
@@ -28,7 +28,7 @@ export const PLAYER_COLOR_MAP = {
 	5: "#de7c70FF",
 	6: "#f1c7c2FF",
 };
-export const RANGER_PLAYER_COLOR_MAP = {
+export const PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#202020FF",
 	2: "#523001FF",
