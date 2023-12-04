@@ -28,3 +28,12 @@ export const PLAYER_COLOR_MAP = {
 	5: "#de7c70FF",
 	6: "#f1c7c2FF",
 };
+export const RANGER_PLAYER_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#202020FF",
+	2: "#523001FF",
+	3: "#746234FF",
+	4: "#F77659FF",
+	5: "#D3B79CFF",
+	6: "#FFC635FF",
+};
