@@ -1,3 +1,6 @@
+"""Extract the colors out of a sprite."""
+
+
 from PIL import Image
 
 
