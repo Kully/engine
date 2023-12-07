@@ -6,6 +6,8 @@
 	--lasso-color: #75EA8F;
 
 	--box-shadow: 0 0 22px rgba(0,0,0,0.0.1);
+	--margin: 0.5rem;
+	--displayed-sprite-width: 64px;
 }
 
 * {
@@ -52,7 +54,7 @@ label {
 canvas {
 	z-index: 0;
 	background-color: #000000;
-	margin-bottom: 0.5rem;
+	margin-bottom: var(--margin);
 	box-shadow: var(--box-shadow);
 }
 
@@ -66,10 +68,10 @@ canvas {
 .control-row {
 	display: flex;
 	flex-direction: row;
-	margin-bottom: 0.5rem;
+	margin-bottom: var(--margin);
 }
 .control {
-	margin-right: 0.5rem;
+	margin-right: var(--margin);
 	text-align: center;
 	box-shadow: var(--box-shadow);
 	padding: 0 0.5em;
@@ -83,4 +85,13 @@ canvas {
 	color: white;
 	padding: 0.5rem;
 	pointer-events: none !important;
+}
+
+.selection {
+	pointer-events: none;
+	height: calc(var(--displayed-sprite-width) - 2px);
+	width: calc(var(--displayed-sprite-width) - 2px);
+	border: 2px dotted var(--selection-color);
+	position: absolute;
+	top: calc(0.5rem + 38px);
 }

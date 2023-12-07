@@ -75,6 +75,9 @@ function selectSpriteToPaintWith(e) {
 
 	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
 	CLICKED_SPRITE = slotSpriteLookup[xTile];
+
+	selection.style.left = `calc(64px * ${xTile})`;
+
 }
 
 function getClickedCoordinates(e) {
@@ -114,6 +117,7 @@ function updateCanvasOnMouseMove(e) {
 let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
+const selection = document.getElementById("selection");
 
 const ctx = canvas.getContext("2d");
 const spritesCtx = spritesCanvas.getContext("2d", {
