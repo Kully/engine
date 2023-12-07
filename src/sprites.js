@@ -113,6 +113,20 @@ export const SPRITE_LOOKUP = {
 		name: "outofbounds",
 		hitbox: false,
 	},
+	10: {
+		sprite: [
+			0, 4, 0, 0, 0, 0, 4, 0,
+			4, 0, 0, 0, 0, 0, 0, 4,
+			0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 4, 4, 0, 0, 0,
+			0, 0, 0, 4, 4, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0,
+			4, 0, 0, 0, 0, 0, 0, 4,
+			0, 4, 0, 0, 0, 0, 4, 0,
+		],
+		name: "player",
+		hitbox: false,
+	},
 };
 
 export const STAND_CYCLE = [{

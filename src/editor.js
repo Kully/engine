@@ -52,9 +52,32 @@ let TEMP_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
+function getPlayerSpriteIdx() {
+	for (let index in SPRITE_LOOKUP) {
+		if (SPRITE_LOOKUP[index]["name"] == "player")
+			return index;
+	}
+	return -1;
+}
+const PLAYER_SPRITE_IDX = getPlayerSpriteIdx(SPRITE_LOOKUP);
+
 
 function copyLevelToClipboard(e) {
-	let stringyLevel = "const LEVEL = [\r";
+	// Extract out where the position's initial spawn point is
+	let playerX;
+	let playerY;
+	for(let y = 0; y < TEMP_LEVEL.length; y += 1)
+	{
+		if(TEMP_LEVEL[y].includes(PLAYER_SPRITE_IDX))
+		{
+			playerY = y;
+			playerX = TEMP_LEVEL[y].indexOf(PLAYER_SPRITE_IDX);
+		}
+	}
+	let stringyLevel = "";
+	stringyLevel += `export let PLAYER_TILE_X = ${playerX};\r`
+	stringyLevel += `export let PLAYER_TILE_Y = ${playerY};\r`
+	stringyLevel += "export const LEVEL = [\r";
 
 	for (let y = 0; y < TEMP_LEVEL.length; y += 1) {
 		stringyLevel += "    [";
