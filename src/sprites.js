@@ -99,6 +99,20 @@ export const SPRITE_LOOKUP = {
 		name: "door",
 		hitbox: false,
 	},
+	9: {
+		sprite: [
+			5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,
+		],
+		name: "outofbounds",
+		hitbox: false,
+	},
 };
 
 export const STAND_CYCLE = [{

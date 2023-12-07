@@ -27,7 +27,7 @@ import {
 } from "./sprites.js";
 
 
-let INVALID_SPIRTE_INDEX = 0;
+let INVALID_SPIRTE_INDEX = 9;
 
 
 export function hexToRgb(hex) {

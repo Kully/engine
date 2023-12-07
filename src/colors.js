@@ -16,7 +16,7 @@ export const LEVEL_COLOR_MAP = {
 	2: "#FF0000FF",
 	3: "#223843FF",
 	4: "#FF0000FF",
-	5: "#FF0000FF",
+	5: "#BBBBBBFF",
 	6: "#EFF1F3FF",
 };
 export const PLAYER_COLOR_MAP = {
