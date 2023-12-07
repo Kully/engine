@@ -1,0 +1,52 @@
+:root {
+	--screen-width: 960px;
+	--screen-height: 540px;
+}
+
+body {
+	background-color: #111;
+	margin: 0;
+	padding: 0;
+}
+
+canvas {
+	outline: 1px solid #333;
+	z-index: 0;
+	position: absolute;
+	top: calc(50vh - var(--screen-height) / 2);
+	left: calc(50% - var(--screen-width) / 2);
+}
+
+canvas#prerender-sprites-canvas {
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	left: 0;
+}
+
+button.copy-to-clipboard {
+	position: absolute;
+	background-color: #27a8f4;
+	outline: 0px;
+	border: 0px solid red;
+	color: #111;
+	top: 64px;
+	padding: 0.5rem;
+}
+
+.instructions {
+	color: #A4A4A4;
+	font-family: Courier;
+	z-index: 1;
+	position: absolute;
+	top: calc(50vh + var(--screen-height) / 2);
+	left: calc(50% - var(--screen-width) / 2);
+	width: 960px;
+	text-align: center;
+	padding: 0.25rem 0.5rem;
+}
+.instructions code {
+	color: #EEE;
+	background-color: #222;
+	padding: 0.25rem;
+}
