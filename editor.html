@@ -9,11 +9,23 @@
 </head>
 
 <body>
-	<button id="copy-to-clipboard" class="copy-to-clipboard">
-		Copy to Clipboard
-	</button>
-	<canvas id="canvas" style="outline: 1px solid white;"></canvas>
-	<canvas id="prerender-sprites-canvas" style="visibility: visible"></canvas>
+	<span class="app-title">Level Edit</span>
+	<div class="content">
+		<div class="control-row">
+			<select id="level-dropdown" class="control" name="level-dropdown">
+				<option value="a">Empty (20x20)</option>
+			    <option value="b">LEVEL B</option>
+			    <option value="c">LEVEL C</option>
+			</select>
+			<input type="number" value="16" class="control" />
+			<input type="number" value="20" class="control" />
+			<button id="lasso-btn" class="lasso-btn control">Lasso</button>
+			<button id="copy-to-clipboard" class="copy-to-clipboard control">Copy to Clipboard</button>
+		</div>
+		<canvas id="prerender-sprites-canvas" style="visibility: visible"></canvas>
+		<canvas id="canvas"></canvas>
+	</div>
+
 </body>
 
 <script type="module" src="src/editor.js"></script>

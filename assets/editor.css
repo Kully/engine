@@ -1,52 +1,85 @@
 :root {
 	--screen-width: 960px;
 	--screen-height: 540px;
+
+	--selection-color: #FF24BD;
+	--lasso-color: #75EA8F;
+
+	--box-shadow: 0 0 22px rgba(0,0,0,0.0.1);
+}
+
+* {
+	font-family: Arial;
 }
 
 body {
-	background-color: #111;
+	background-color: #292928;
 	margin: 0;
 	padding: 0;
 }
 
-canvas {
-	outline: 1px solid #333;
-	z-index: 0;
-	position: absolute;
-	top: calc(50vh - var(--screen-height) / 2);
-	left: calc(50% - var(--screen-width) / 2);
+button, input, select {
+	height: 38px;
+	border-radius: 8px;
+	outline: 0px solid black;
+	border: 0px solid black;
 }
 
-canvas#prerender-sprites-canvas {
-	position: absolute;
-	visibility: hidden;
-	top: 0;
-	left: 0;
+button {
+	color: #FFFFFF;
+	font-weight: 900;
 }
-
+button.lasso-btn {
+	background-color: #589D67;
+}
 button.copy-to-clipboard {
-	position: absolute;
-	background-color: #27a8f4;
-	outline: 0px;
-	border: 0px solid red;
-	color: #111;
-	top: 64px;
-	padding: 0.5rem;
+	background-color: #4B7092;
 }
 
-.instructions {
-	color: #A4A4A4;
-	font-family: Courier;
-	z-index: 1;
-	position: absolute;
-	top: calc(50vh + var(--screen-height) / 2);
-	left: calc(50% - var(--screen-width) / 2);
-	width: 960px;
-	text-align: center;
-	padding: 0.25rem 0.5rem;
+input, select {
+	background-color: #444544;
+	color: #999;
+	font-weight: 100;
 }
-.instructions code {
-	color: #EEE;
-	background-color: #222;
-	padding: 0.25rem;
+input[type="number"] {
+	width: 60px;
+}
+
+label {
+	color: #FFFFFF;
+}
+
+canvas {
+	z-index: 0;
+	background-color: #000000;
+	margin-bottom: 0.5rem;
+	box-shadow: var(--box-shadow);
+}
+
+.content {
+	margin: 2rem 0;
+	position: relative;
+	width: var(--screen-width);
+	left: calc(50% - var(--screen-width) / 2);
+}
+
+.control-row {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 0.5rem;
+}
+.control {
+	margin-right: 0.5rem;
+	text-align: center;
+	box-shadow: var(--box-shadow);
+}
+
+.app-title {
+	position: absolute;
+	font-weight: 900;
+	right: 0;
+	top: 0;
+	color: white;
+	padding: 0.5rem;
+	pointer-events: none !important;
 }
