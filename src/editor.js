@@ -32,6 +32,7 @@ import {
 
 
 let FPS = 20;
+let CLICKED_SPRITE_INT = 0;
 let CLICKED_SPRITE = undefined;
 let MOUSEDOWN = false;
 let TEMP_LEVEL = [
@@ -74,10 +75,14 @@ function selectSpriteToPaintWith(e) {
 	let yPixel = e.offsetY;
 
 	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
-	CLICKED_SPRITE = slotSpriteLookup[xTile];
+	CLICKED_SPRITE_INT = xTile;
 
-	selection.style.left = `calc(64px * ${xTile})`;
+	updateActiveSprite(CLICKED_SPRITE_INT);
+}
 
+function updateActiveSprite(CLICKED_SPRITE_INT) {
+	CLICKED_SPRITE = slotSpriteLookup[CLICKED_SPRITE_INT];
+	selection.style.left = `calc(64px * ${CLICKED_SPRITE_INT})`;
 }
 
 function getClickedCoordinates(e) {
@@ -113,6 +118,10 @@ function updateCanvasOnMouseMove(e) {
 	}
 }
 
+function getSpriteCount(spritesCanvas) {
+	return spritesCanvas.width / spritesCanvas.height;
+}
+
 
 let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
@@ -140,6 +149,26 @@ canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
 canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
 canvas.addEventListener("mouseup", function(e) {
 	MOUSEDOWN = false;
+})
+
+
+document.addEventListener("keydown", function(e) {
+	if (e.code == "KeyA") {
+		CLICKED_SPRITE_INT -= 1;
+	} else
+	if (e.code == "KeyD") {
+		CLICKED_SPRITE_INT += 1;
+	}
+
+	let spriteCount = getSpriteCount(spritesCanvas);
+	if (CLICKED_SPRITE_INT < 0) {
+		CLICKED_SPRITE_INT = spriteCount - 1;
+	}
+	if (CLICKED_SPRITE_INT > spriteCount - 1) {
+		CLICKED_SPRITE_INT = 0;
+	}
+
+	updateActiveSprite(CLICKED_SPRITE_INT);
 })
 
 function gameLoop() {
