@@ -19,6 +19,10 @@ import {
 } from "./helpers.js";
 
 import {
+	LEVEL_LOOKUP,
+} from "./levels.js"
+
+import {
 	handleKeyDown,
 	handleKeyUp,
 } from "./listeners.js"
@@ -294,5 +298,16 @@ function gameLoop() {
 updateActiveSprite(CLICKED_SPRITE_INT);
 widthSelector.value = TEMP_LEVEL[0].length;
 heightSelector.value = TEMP_LEVEL.length;
+
+// populate the saved levels dropdown
+const levelSelector = document.getElementById("level-dropdown");
+
+for(name in LEVEL_LOOKUP)
+{
+	let option = document.createElement("option");
+	option.innerHTML = name;
+	option.value = name;
+	levelSelector.appendChild(option);
+}
 
 setInterval(gameLoop, 1000 / FPS);
