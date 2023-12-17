@@ -27,7 +27,9 @@ import {
 } from "./sprites.js";
 
 
-let INVALID_SPIRTE_INDEX = 3;
+let INVISIBLE_SPIRTE_IDX = 0;
+let OUTOFBOUNDS_SPIRTE_IDX = 3;
+let PLAYER_SPIRTE_IDX = 10;
 
 
 export function hexToRgb(hex) {
@@ -151,12 +153,22 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 				y + shiftYPtr,
 			);
 
-			// handle special cases
+			// don't show anything
 			if (spritePtr === undefined) {
-				spritePtr = INVALID_SPIRTE_INDEX;
+				spritePtr = OUTOFBOUNDS_SPIRTE_IDX;
 			}
+
+			// show spawn tile in edit mode but hide during gameplay
 			if (SPRITE_LOOKUP[spritePtr]["name"] === "player") {
-				spritePtr = 0;
+				if(window.location.href.endsWith("editor.html"))
+				{
+					spritePtr = PLAYER_SPIRTE_IDX;
+				}
+				else
+				if(window.location.href.endsWith("index.html"))
+				{
+					spritePtr = INVISIBLE_SPIRTE_IDX;
+				}
 			}
 
 			let savedData = getSpriteFromHiddenCanvas(
