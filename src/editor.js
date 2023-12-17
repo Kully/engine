@@ -41,7 +41,8 @@ let FPS = 20;
 let CLICKED_SPRITE_INT = 0;
 let CLICKED_SPRITE = undefined;
 let MOUSEDOWN = false;
-let TEMP_LEVEL = [
+
+const EMPTY_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -51,6 +52,7 @@ let TEMP_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
+let TEMP_LEVEL = EMPTY_LEVEL;
 
 function getPlayerSpriteIdx() {
 	for (let index in SPRITE_LOOKUP) {
@@ -133,6 +135,33 @@ function resetLevel(e) {
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 }
 
+function loadCanvasLevel(e) {
+	let name = e.target.value;
+
+	if(name === "default") {
+		TEMP_LEVEL = EMPTY_LEVEL;
+	}
+	else {
+		TEMP_LEVEL = LEVEL_LOOKUP[name]["level"];
+	}
+	populateDimensionsDropdowns();
+}
+
+function populateDimensionsDropdowns() {
+	widthSelector.value = TEMP_LEVEL[0].length;
+	heightSelector.value = TEMP_LEVEL.length;
+}
+
+function populateLevelDropdown() {
+	for(name in LEVEL_LOOKUP)
+	{
+		let option = document.createElement("option");
+		option.innerHTML = name;
+		option.value = name;
+		levelSelector.appendChild(option);
+	}
+}
+
 function getClickedCoordinates(e) {
 	let xPixel = e.offsetX;
 	let yPixel = e.offsetY;
@@ -176,6 +205,8 @@ let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 const selection = document.getElementById("selection");
+
+const levelSelector = document.getElementById("level-dropdown");
 const widthSelector = document.getElementById("tile-width");
 const heightSelector = document.getElementById("tile-height");
 
@@ -200,6 +231,7 @@ spritesCanvas.addEventListener("mousedown", selectSpriteToPaintWith);
 canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
 canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
 canvas.addEventListener("mouseup", function(e) {MOUSEDOWN = false;})
+levelSelector.addEventListener("change", loadCanvasLevel);
 
 heightSelector.addEventListener("change", function(e) {
 	let currentHeight = getHeight2DArray(TEMP_LEVEL);
@@ -290,18 +322,7 @@ function gameLoop() {
 }
 
 updateActiveSprite(CLICKED_SPRITE_INT);
-widthSelector.value = TEMP_LEVEL[0].length;
-heightSelector.value = TEMP_LEVEL.length;
-
-// populate the saved levels dropdown
-const levelSelector = document.getElementById("level-dropdown");
-
-for(name in LEVEL_LOOKUP)
-{
-	let option = document.createElement("option");
-	option.innerHTML = name;
-	option.value = name;
-	levelSelector.appendChild(option);
-}
+populateDimensionsDropdowns();
+populateLevelDropdown();
 
 setInterval(gameLoop, 1000 / FPS);
