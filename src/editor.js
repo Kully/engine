@@ -150,6 +150,8 @@ let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 const selection = document.getElementById("selection");
+const widthSelector = document.getElementById("tile-width");
+const heightSelector = document.getElementById("tile-height");
 
 const ctx = canvas.getContext("2d");
 const spritesCtx = spritesCanvas.getContext("2d", {
@@ -207,4 +209,7 @@ function gameLoop() {
 }
 
 updateActiveSprite(CLICKED_SPRITE_INT);
+widthSelector.value = TEMP_LEVEL[0].length;
+heightSelector.value = TEMP_LEVEL.length;
+
 setInterval(gameLoop, 1000 / FPS);
