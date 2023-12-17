@@ -76,10 +76,11 @@ function copyLevelToClipboard(e) {
 			playerX = TEMP_LEVEL[y].indexOf(PLAYER_SPRITE_IDX);
 		}
 	}
+
 	let stringyLevel = "";
-	stringyLevel += `export let PLAYER_TILE_X = ${playerX};\r`
-	stringyLevel += `export let PLAYER_TILE_Y = ${playerY};\r`
-	stringyLevel += "export const LEVEL = [\r";
+	stringyLevel += `"playerX": ${playerX},\r`;
+	stringyLevel += `"playerY": ${playerY},\r`;
+	stringyLevel += `"level": [\r`;
 
 	for (let y = 0; y < TEMP_LEVEL.length; y += 1) {
 		stringyLevel += "    [";
@@ -91,7 +92,7 @@ function copyLevelToClipboard(e) {
 		stringyLevel += "],";
 		stringyLevel += "\r";
 	}
-	stringyLevel += "];";
+	stringyLevel += "],";
 	navigator.clipboard.writeText(stringyLevel);
 
 	// indicate to user that copying was successful
