@@ -206,4 +206,5 @@ function gameLoop() {
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 }
 
+updateActiveSprite(CLICKED_SPRITE_INT);
 setInterval(gameLoop, 1000 / FPS);
