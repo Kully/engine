@@ -50,6 +50,14 @@ export function getValueFrom2DArray(array_2d, x, y) {
 	return array_2d[y][x];
 }
 
+export function getWidth2DArray(array_2d) {
+	return array_2d[0].length;
+}
+
+export function getHeight2DArray(array_2d) {
+	return array_2d.length;
+}
+
 export function isValidIndex(array_2d, x, y) {
 	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
 		return false;

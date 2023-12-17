@@ -14,6 +14,8 @@ import {
 	saveSpriteToHiddenCanvas,
 	createHiddenSpriteLookups,
 	drawLevelLayer,
+	getWidth2DArray,
+	getHeight2DArray,
 } from "./helpers.js";
 
 import {
@@ -174,6 +176,30 @@ canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
 canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
 canvas.addEventListener("mouseup", function(e) {MOUSEDOWN = false;})
 
+heightSelector.addEventListener("change", function(e) {
+	let currentHeight = getHeight2DArray(TEMP_LEVEL);
+	let currentWidth = getWidth2DArray(TEMP_LEVEL);
+
+	let newHeight = e.target.value;
+	if(newHeight > currentHeight)
+	{
+		for(let i=0; i < newHeight - currentHeight; i+=1)
+		{
+			let row = []
+			for(let i=0; i<currentWidth; i+=1)
+			{
+				row.push(0)
+			}
+			TEMP_LEVEL.push(row)
+		}
+	}
+	else
+	{
+		for(let i=0; i < currentHeight - newHeight; i+=1)
+			TEMP_LEVEL.pop(0)
+	}
+})
+
 
 document.addEventListener("keydown", function(e) {
 	if (e.code == "KeyA") {
@@ -195,6 +221,12 @@ document.addEventListener("keydown", function(e) {
 })
 
 function gameLoop() {
+	if(
+		document.activeElement.id === "tile-width" ||
+		document.activeElement.id === "tile-height"
+	)
+		return;
+
 	if (CONTROLLER["ArrowLeft"])
 		CAMERA["xOffset"] -= GRID_WIDTH_PX;
 	if (CONTROLLER["ArrowRight"])
