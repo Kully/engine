@@ -196,7 +196,30 @@ heightSelector.addEventListener("change", function(e) {
 	else
 	{
 		for(let i=0; i < currentHeight - newHeight; i+=1)
-			TEMP_LEVEL.pop(0)
+			TEMP_LEVEL.pop()
+	}
+})
+
+
+widthSelector.addEventListener("change", function(e) {
+	let currentHeight = getHeight2DArray(TEMP_LEVEL);
+	let currentWidth = getWidth2DArray(TEMP_LEVEL);
+
+	let newWidth = e.target.value;
+	console.log("newWidth is ", newWidth);
+	if(newWidth > currentWidth)
+	{
+		for(let y=0; y < currentHeight; y+=1)
+		{
+			TEMP_LEVEL[y].push(0)
+		}
+	}
+	else
+	{
+		for(let y=0; y < currentHeight; y+=1)
+		{
+			TEMP_LEVEL[y].pop()
+		}
 	}
 })
 
