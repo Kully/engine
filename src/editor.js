@@ -146,6 +146,7 @@ function loadCanvasLevel(e) {
 		TEMP_LEVEL = LEVEL_LOOKUP[name]["level"];
 	}
 	populateDimensionsDropdowns();
+	document.getElementById('level-dropdown').blur();
 }
 
 function populateDimensionsDropdowns() {
