@@ -198,6 +198,7 @@ heightSelector.addEventListener("change", function(e) {
 		for(let i=0; i < currentHeight - newHeight; i+=1)
 			TEMP_LEVEL.pop()
 	}
+	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 })
 
 
@@ -221,6 +222,7 @@ widthSelector.addEventListener("change", function(e) {
 			TEMP_LEVEL[y].pop()
 		}
 	}
+	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 })
 
 
