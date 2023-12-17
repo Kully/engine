@@ -8,6 +8,8 @@
 	--box-shadow: 0 0 22px rgba(0,0,0,0.0.1);
 	--margin: 0.5rem;
 	--displayed-sprite-width: 64px;
+
+	--widget-height: 38px;
 }
 
 * {
@@ -21,7 +23,7 @@ body {
 }
 
 button, input, select {
-	height: 38px;
+	height: var(--widget-height);
 	border-radius: 8px;
 	outline: 0px solid black;
 	border: 0px solid black;
@@ -75,6 +77,18 @@ canvas {
 	text-align: center;
 	box-shadow: var(--box-shadow);
 	padding: 0 0.5em;
+}
+
+.label-input-container {
+	display: flex;
+	flex-direction: column;
+}
+.label-input-container .label {
+	font-weight: 100;
+	font-size: 0.8rem;
+	position: absolute;
+	color: #BBB;
+	top: calc(var(--margin) * -1 - 0.6rem);
 }
 
 .app-title {
