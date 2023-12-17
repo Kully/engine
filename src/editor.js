@@ -172,9 +172,7 @@ document.addEventListener("keyup", handleKeyUp);
 spritesCanvas.addEventListener("mousedown", selectSpriteToPaintWith);
 canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
 canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
-canvas.addEventListener("mouseup", function(e) {
-	MOUSEDOWN = false;
-})
+canvas.addEventListener("mouseup", function(e) {MOUSEDOWN = false;})
 
 
 document.addEventListener("keydown", function(e) {
