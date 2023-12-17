@@ -118,6 +118,23 @@ function updateActiveSprite(CLICKED_SPRITE_INT) {
 	selection.style.left = `calc(64px * ${CLICKED_SPRITE_INT})`;
 }
 
+function resetLevel(e) {
+	let currentWidth = getWidth2DArray(TEMP_LEVEL);
+	let currentHeight = getHeight2DArray(TEMP_LEVEL);
+
+	TEMP_LEVEL = [];
+	for(let y=0; y<currentHeight; y+=1)
+	{
+		let row = []
+		for(let x=0; x<currentWidth; x+=1)
+		{
+			row.push(0)
+		}
+		TEMP_LEVEL.push(row)
+	}
+	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
+}
+
 function getClickedCoordinates(e) {
 	let xPixel = e.offsetX;
 	let yPixel = e.offsetY;
@@ -156,6 +173,7 @@ function getSpriteCount(spritesCanvas) {
 }
 
 
+let resetBtn = document.getElementById("reset-btn");
 let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
@@ -177,6 +195,7 @@ let slotSpriteLookup = lookups[1];
 
 
 copyBtn.addEventListener("click", copyLevelToClipboard);
+resetBtn.addEventListener("click", resetLevel);
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
 spritesCanvas.addEventListener("mousedown", selectSpriteToPaintWith);
