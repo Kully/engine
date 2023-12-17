@@ -108,3 +108,28 @@ canvas {
 	position: absolute;
 	top: calc(0.5rem + 38px);
 }
+
+.popup-message {
+	opacity: 0;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	border-radius: 4px;
+	padding: 0.5rem;
+}
+
+
+/* Animations */
+
+.fadeOutAnimation {
+	animation: fadeOut 3s;
+	animation-fill-mode: forwards;
+	animation-play-state: paused;
+}
+
+@keyframes fadeOut
+{
+	0%   {opacity: 0; transform: translate(0, 1rem);}
+	10%  {opacity: 1; transform: none;}
+	80%  {opacity: 1;}
+	100% {opacity: 0;}
+}

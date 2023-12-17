@@ -93,6 +93,14 @@ function copyLevelToClipboard(e) {
 	}
 	stringyLevel += "];";
 	navigator.clipboard.writeText(stringyLevel);
+
+	// indicate to user that copying was successful
+	let popupMessage = document.getElementById("popup-message");
+    popupMessage.classList.remove("fadeOutAnimation");
+    void popupMessage.offsetWidth;
+    popupMessage.innerHTML = "Copied!";
+    popupMessage.style.animationPlayState = "running";
+    popupMessage.classList.add("fadeOutAnimation");
 }
 
 function selectSpriteToPaintWith(e) {
