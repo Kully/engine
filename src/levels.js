@@ -64,7 +64,7 @@ export const LEVEL_LOOKUP = {
     },
 };
 
-const levelName = "hub";
+const levelName = "leap of faith";
 export const PLAYER_TILE_X = LEVEL_LOOKUP[levelName]["playerX"];
 export const PLAYER_TILE_Y = LEVEL_LOOKUP[levelName]["playerY"];
 export const LEVEL = LEVEL_LOOKUP[levelName]["level"];
