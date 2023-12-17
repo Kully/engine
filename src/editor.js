@@ -207,19 +207,20 @@ widthSelector.addEventListener("change", function(e) {
 	let currentWidth = getWidth2DArray(TEMP_LEVEL);
 
 	let newWidth = e.target.value;
-	console.log("newWidth is ", newWidth);
 	if(newWidth > currentWidth)
 	{
 		for(let y=0; y < currentHeight; y+=1)
 		{
-			TEMP_LEVEL[y].push(0)
+			for(let i=0; i<newWidth - currentWidth; i+=1)
+				TEMP_LEVEL[y].push(0)
 		}
 	}
 	else
 	{
 		for(let y=0; y < currentHeight; y+=1)
 		{
-			TEMP_LEVEL[y].pop()
+			for(let i=0; i<currentWidth - newWidth; i+=1)
+				TEMP_LEVEL[y].pop()
 		}
 	}
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
