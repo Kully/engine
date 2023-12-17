@@ -150,8 +150,13 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 				x + shiftXPtr,
 				y + shiftYPtr,
 			);
+
+			// handle special cases
 			if (spritePtr === undefined) {
 				spritePtr = INVALID_SPIRTE_INDEX;
+			}
+			if (SPRITE_LOOKUP[spritePtr]["name"] === "player") {
+				spritePtr = 0;
 			}
 
 			let savedData = getSpriteFromHiddenCanvas(
