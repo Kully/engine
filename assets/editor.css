@@ -3,7 +3,6 @@
 	--screen-height: 540px;
 
 	--selection-color: #FF24BD;
-	--lasso-color: #75EA8F;
 
 	--box-shadow: 0 0 22px rgba(0,0,0,0.0.1);
 	--margin: 0.5rem;
@@ -33,10 +32,10 @@ button {
 	color: #FFFFFF;
 	font-weight: 900;
 }
-button.lasso-btn {
+button.primary-btn {
 	background-color: #589D67;
 }
-button.copy-to-clipboard {
+button.secondary-btn {
 	background-color: #4B7092;
 }
 
