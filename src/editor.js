@@ -52,7 +52,8 @@ const EMPTY_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
-let TEMP_LEVEL = EMPTY_LEVEL;
+let TEMP_LEVEL = EMPTY_LEVEL.map(innerArray => [...innerArray]);
+let HOVER_LEVEL = TEMP_LEVEL.map(innerArray => [...innerArray]);
 
 function getPlayerSpriteIdx() {
 	for (let index in SPRITE_LOOKUP) {
@@ -195,6 +196,12 @@ function updateCanvasOnMouseMove(e) {
 	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN) {
 		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
 	}
+	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && !MOUSEDOWN)
+	{
+		HOVER_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
+		drawLevelLayer(hoverCtx, spritesCtx, HOVER_LEVEL, spriteSlotLookup);
+		HOVER_LEVEL = TEMP_LEVEL.map(innerArray => [...innerArray]);
+	}
 }
 
 function getSpriteCount(spritesCanvas) {
@@ -205,6 +212,7 @@ function getSpriteCount(spritesCanvas) {
 let resetBtn = document.getElementById("reset-btn");
 let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
+const hoverCanvas = document.getElementById("hover-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 const selection = document.getElementById("selection");
 
@@ -213,12 +221,16 @@ const widthSelector = document.getElementById("tile-width");
 const heightSelector = document.getElementById("tile-height");
 
 const ctx = canvas.getContext("2d");
+const hoverCtx = hoverCanvas.getContext("2d");
 const spritesCtx = spritesCanvas.getContext("2d", {
 	willReadFrequently: true
 });
 
 canvas.width = CAMERA["width"];
 canvas.height = CAMERA["height"];
+
+hoverCanvas.width = CAMERA["width"];
+hoverCanvas.height = CAMERA["height"];
 
 let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];

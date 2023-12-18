@@ -60,6 +60,15 @@ canvas {
 	background-color: #000000;
 	margin-bottom: var(--margin);
 	box-shadow: var(--box-shadow);
+	cursor: pointer;
+}
+
+canvas#hover-canvas {
+	position: absolute;
+	pointer-events: none;
+	background-color: rgba(0,0,0,0);
+	opacity: 0.4;
+	left: 0;
 }
 
 .content {
