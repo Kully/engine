@@ -41,6 +41,8 @@ let FPS = 20;
 let CLICKED_SPRITE_INT = 0;
 let CLICKED_SPRITE = undefined;
 let MOUSEDOWN = false;
+let CANVAS_XLEVEL = 0;
+let CANVAS_YLEVEL = 0;
 
 const EMPTY_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -183,25 +185,36 @@ function updateCanvasOnMouseDown(e) {
 	let xLevel = coords[0];
 	let yLevel = coords[1];
 
+	CANVAS_XLEVEL = xLevel;
+	CANVAS_YLEVEL = yLevel;
+
 	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel)) {
 		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
 	}
 }
+
+function displayPreviewTile() {
+	if (isValidIndex(TEMP_LEVEL, CANVAS_XLEVEL, CANVAS_YLEVEL) && !MOUSEDOWN)
+	{
+		HOVER_LEVEL[CANVAS_YLEVEL][CANVAS_XLEVEL] = CLICKED_SPRITE;
+		drawLevelLayer(hoverCtx, spritesCtx, HOVER_LEVEL, spriteSlotLookup);
+		HOVER_LEVEL = TEMP_LEVEL.map(innerArray => [...innerArray]);
+	}
+}
+
 
 function updateCanvasOnMouseMove(e) {
 	let coords = getClickedCoordinates(e);
 	let xLevel = coords[0];
 	let yLevel = coords[1];
 
+	CANVAS_XLEVEL = xLevel;
+	CANVAS_YLEVEL = yLevel;
+
 	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN) {
 		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
 	}
-	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && !MOUSEDOWN)
-	{
-		HOVER_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
-		drawLevelLayer(hoverCtx, spritesCtx, HOVER_LEVEL, spriteSlotLookup);
-		HOVER_LEVEL = TEMP_LEVEL.map(innerArray => [...innerArray]);
-	}
+	displayPreviewTile();
 }
 
 function getSpriteCount(spritesCanvas) {
@@ -315,6 +328,7 @@ document.addEventListener("keydown", function(e) {
 	}
 
 	updateActiveSprite(CLICKED_SPRITE_INT);
+	displayPreviewTile();
 })
 
 function gameLoop() {
