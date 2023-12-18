@@ -38,7 +38,7 @@ import {
 
 
 let FPS = 20;
-let CLICKED_SPRITE_INT = 0;
+let CLICKED_SPRITE_INT = 2;
 let CLICKED_SPRITE = undefined;
 let MOUSEDOWN = false;
 let CANVAS_XLEVEL = 0;
