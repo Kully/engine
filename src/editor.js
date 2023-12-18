@@ -338,14 +338,17 @@ function gameLoop() {
 	)
 		return;
 
-	if (CONTROLLER["ArrowLeft"])
-		CAMERA["xOffset"] -= GRID_WIDTH_PX;
-	if (CONTROLLER["ArrowRight"])
-		CAMERA["xOffset"] += GRID_WIDTH_PX;
-	if (CONTROLLER["ArrowUp"])
-		CAMERA["yOffset"] -= GRID_WIDTH_PX;
-	if (CONTROLLER["ArrowDown"])
-		CAMERA["yOffset"] += GRID_WIDTH_PX;
+	if(!MOUSEDOWN)
+	{
+		if (CONTROLLER["ArrowLeft"])
+			CAMERA["xOffset"] -= GRID_WIDTH_PX;
+		if (CONTROLLER["ArrowRight"])
+			CAMERA["xOffset"] += GRID_WIDTH_PX;
+		if (CONTROLLER["ArrowUp"])
+			CAMERA["yOffset"] -= GRID_WIDTH_PX;
+		if (CONTROLLER["ArrowDown"])
+			CAMERA["yOffset"] += GRID_WIDTH_PX;
+	}
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 	displayPreviewTile();
 }
