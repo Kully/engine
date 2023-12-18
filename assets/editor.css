@@ -33,12 +33,17 @@ button, input, select {
 button {
 	color: #FFFFFF;
 	font-weight: 900;
+	transition: 0.12s;
 }
 button.primary-btn {
 	background-color: #589D67;
 }
 button.secondary-btn {
 	background-color: #4B7092;
+}
+button:hover {
+	cursor: pointer;
+	opacity: 0.7;
 }
 
 input, select {
