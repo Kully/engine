@@ -27,7 +27,9 @@ import {
 } from "./sprites.js";
 
 
-let INVALID_SPIRTE_INDEX = 0;
+let INVISIBLE_SPIRTE_IDX = 0;
+let OUTOFBOUNDS_SPIRTE_IDX = 3;
+let PLAYER_SPIRTE_IDX = 10;
 
 
 export function hexToRgb(hex) {
@@ -46,6 +48,14 @@ export function getValueFrom2DArray(array_2d, x, y) {
 	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
 		return undefined;
 	return array_2d[y][x];
+}
+
+export function getWidth2DArray(array_2d) {
+	return array_2d[0].length;
+}
+
+export function getHeight2DArray(array_2d) {
+	return array_2d.length;
 }
 
 export function isValidIndex(array_2d, x, y) {
@@ -150,8 +160,23 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 				x + shiftXPtr,
 				y + shiftYPtr,
 			);
+
+			// don't show anything
 			if (spritePtr === undefined) {
-				spritePtr = INVALID_SPIRTE_INDEX;
+				spritePtr = OUTOFBOUNDS_SPIRTE_IDX;
+			}
+
+			// show spawn tile in edit mode but hide during gameplay
+			if (SPRITE_LOOKUP[spritePtr]["name"] === "player") {
+				if(window.location.href.endsWith("editor.html"))
+				{
+					spritePtr = PLAYER_SPIRTE_IDX;
+				}
+				else
+				if(window.location.href.endsWith("index.html"))
+				{
+					spritePtr = INVISIBLE_SPIRTE_IDX;
+				}
 			}
 
 			let savedData = getSpriteFromHiddenCanvas(
