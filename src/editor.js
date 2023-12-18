@@ -347,6 +347,7 @@ function gameLoop() {
 	if (CONTROLLER["ArrowDown"])
 		CAMERA["yOffset"] += GRID_WIDTH_PX;
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
+	displayPreviewTile();
 }
 
 updateActiveSprite(CLICKED_SPRITE_INT);
