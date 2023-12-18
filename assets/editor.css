@@ -3,6 +3,7 @@
 	--screen-height: 540px;
 
 	--selection-color: #FF24BD;
+	--selection-border-width: 2px;
 
 	--box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.1);
 	--margin: 0.5rem;
@@ -103,9 +104,10 @@ canvas {
 
 .selection {
 	pointer-events: none;
-	height: calc(var(--displayed-sprite-width) - 2px);
-	width: calc(var(--displayed-sprite-width) - 2px);
-	border: 2px dotted var(--selection-color);
+	height: calc(var(--displayed-sprite-width) - var(--selection-border-width));
+	width: calc(var(--displayed-sprite-width) - var(--selection-border-width));
+	border: var(--selection-border-width) solid var(--selection-color);
+	border-radius: 2px;
 	position: absolute;
 	top: calc(0.5rem + 38px);
 }
