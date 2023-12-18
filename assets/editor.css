@@ -4,7 +4,7 @@
 
 	--selection-color: #FF24BD;
 
-	--box-shadow: 0 0 22px rgba(0,0,0,0.0.1);
+	--box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.1);
 	--margin: 0.5rem;
 	--displayed-sprite-width: 64px;
 
@@ -26,6 +26,7 @@ button, input, select {
 	border-radius: 8px;
 	outline: 0px solid black;
 	border: 0px solid black;
+	box-shadow: var(--box-shadow);
 }
 
 button {
