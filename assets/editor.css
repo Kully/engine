@@ -1,0 +1,148 @@
+:root {
+	--screen-width: 960px;
+	--screen-height: 540px;
+
+	--selection-color: #FF24BD;
+	--selection-border-width: 2px;
+
+	--box-shadow: 3px 3px 8px 0 rgba(0,0,0,0.1);
+	--margin: 0.5rem;
+	--displayed-sprite-width: 64px;
+
+	--widget-height: 38px;
+}
+
+* {
+	font-family: Arial;
+}
+
+body {
+	background-color: #292928;
+	margin: 0;
+	padding: 0;
+}
+
+button, input, select {
+	height: var(--widget-height);
+	border-radius: 8px;
+	outline: 0px solid black;
+	border: 0px solid black;
+	box-shadow: var(--box-shadow);
+}
+
+button {
+	color: #FFFFFF;
+	font-weight: 900;
+	transition: 0.12s;
+}
+button.primary-btn {
+	background-color: #589D67;
+}
+button.secondary-btn {
+	background-color: #4B7092;
+}
+button:hover {
+	cursor: pointer;
+	opacity: 0.7;
+}
+
+input, select {
+	background-color: #444544;
+	color: #999;
+	font-weight: 100;
+}
+input[type="number"] {
+	width: 60px;
+}
+
+canvas {
+	z-index: 0;
+	background-color: #000000;
+	margin-bottom: var(--margin);
+	box-shadow: var(--box-shadow);
+	cursor: pointer;
+}
+
+canvas#hover-canvas {
+	position: absolute;
+	pointer-events: none;
+	background-color: rgba(0,0,0,0);
+	opacity: 0.4;
+	left: 0;
+}
+
+.content {
+	margin: 2rem 0;
+	position: relative;
+	width: var(--screen-width);
+	left: calc(50% - var(--screen-width) / 2);
+}
+
+.control-row {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: var(--margin);
+}
+.control {
+	margin-right: var(--margin);
+	text-align: center;
+	box-shadow: var(--box-shadow);
+	padding: 0 0.5em;
+}
+
+.label-input-container {
+	display: flex;
+	flex-direction: column;
+}
+.label-input-container .label {
+	font-weight: 900;
+	font-size: 0.8rem;
+	position: absolute;
+	color: #BBB;
+	top: calc(var(--margin) * -1 - 0.6rem);
+}
+
+.app-title {
+	position: absolute;
+	font-weight: 900;
+	right: 0;
+	top: 0;
+	color: white;
+	padding: 0.5rem;
+	pointer-events: none !important;
+}
+
+.selection {
+	pointer-events: none;
+	height: calc(var(--displayed-sprite-width) - var(--selection-border-width));
+	width: calc(var(--displayed-sprite-width) - var(--selection-border-width));
+	border: var(--selection-border-width) solid var(--selection-color);
+	border-radius: 2px;
+	position: absolute;
+	top: calc(0.5rem + 38px);
+}
+
+.popup-message {
+	opacity: 0;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	border-radius: 4px;
+	padding: 0.5rem;
+}
+
+
+/* Animations */
+
+.fadeOutAnimation {
+	animation: fadeOut 3s;
+	animation-fill-mode: forwards;
+	animation-play-state: paused;
+}
+
+@keyframes fadeOut
+{
+	0%   {opacity: 0; transform: translate(0, 1rem);}
+	10%  {opacity: 1; transform: none;}
+	80%  {opacity: 1;}
+	100% {opacity: 0;}
+}

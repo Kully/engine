@@ -4,16 +4,47 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Neptune</title>
-	<link rel="stylesheet" type="text/css" href="assets/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/editor.css">
 	<link rel="shortcut icon" href="assets/favicon.png" />
 </head>
 
 <body>
-	<button id="copy-to-clipboard" class="copy-to-clipboard">
-		Copy to Clipboard
-	</button>
-	<canvas id="canvas" style="outline: 1px solid white;"></canvas>
-	<canvas id="prerender-sprites-canvas" style="visibility: visible"></canvas>
+	<span class="app-title">Level Edit</span>
+	<div class="content">
+		<div class="control-row">
+			<div class="label-input-container">
+				<label for="level-dropdown" id="label-level-dropdown" class="label">Level</label>
+				<select id="level-dropdown" class="control" name="level-dropdown">
+					<option value="default">Default</option>
+				</select>
+			</div>
+
+			<div class="label-input-container">
+				<label for="tile-width" id="label-tile-width" class="label">Width</label>
+				<input id="tile-width" type="number" value="" class="control" min="5" max="40"/>
+			</div>
+
+			<div class="label-input-container">
+				<label for="tile-height" id="label-tile-height" class="label">Height</label>
+				<input id="tile-height" type="number" value="" class="control" min="5" max="40"/>
+			</div>
+
+			<button id="reset-btn" class="secondary-btn control">
+				Reset
+			</button>
+
+			<button id="copy-to-clipboard" class="primary-btn control">
+				Copy to Clipboard
+			</button>
+			<span id="popup-message" class="popup-message"></span>
+
+		</div>
+		<canvas id="prerender-sprites-canvas" style="visibility: visible"></canvas>
+		<div id="selection" class="selection"></div>
+		<canvas id="canvas"></canvas>
+		<canvas id="hover-canvas"></canvas>
+	</div>
+
 </body>
 
 <script type="module" src="src/editor.js"></script>
