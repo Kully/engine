@@ -57,15 +57,17 @@ const UNDERGROUND = [
 We create separate level objects to deal with the browser's cache limitations. Given the proper computing enviornment, we could theoretically have one large contiguous level (eg. 1000 x 1000 tiles) and intelligently load and unload metatiles as the player moves around.
 
 
+# Spaces
+
 There are different ways to allow a player to explore spaces. A space is any physical 3D volume that has a non-zero volume: worlds, lands, rooms, offices, beaches, cities, and galaxies are all exampls of spaces.
 
 In the real world, humans make distinctions between spaces based on the way they (are allowed to) interact with and engage in that space.
 
-- Beaches are the space where you build sand castles, swim in the ocean, or read a book while getting a tan.
+- A Beach is a space where you build sand castles, swim in the ocean, or read a book while getting a tan.
 - Offices are the place where you (try to) get shit done.
 - Bedrooms are where you take ... lots of naps.
 
-Spaces may nest within each other, and sometimes the distinction betweeon one space and other is hard to define.
+Spaces may nest within each other, and sometimes the distinction betweeon one space and other is hard to define. One example of nesting is the Beach: we can treat it both as one space, or a collection of smaller subspaces, including the _"volleyball net"_ space, the _"sand castle making"_ space, and the _"bar"_ space.
 
 ### Moving Between Spaces
 
@@ -77,6 +79,7 @@ Think about video games you have played. Implicit spaces exist based on the way 
 - Move around a HUB world in Super Mario Sunshine.
 - Shoot a door open, and walk through it, as in the Metroid Series.
 - Enter a portal in Ratchet and Clank
+
 
 **Ideas**
 
