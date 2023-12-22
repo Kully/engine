@@ -88,14 +88,7 @@ function findAnimationCycle() {
 	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
 		if (SPRITES["ranger"]["SKID_CYCLE"]) {
-			if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
-				animationArray = SKID_CYCLE;
-			} else
-			if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
-				animationArray = SKID_CYCLE;
-			} else {
-				animationArray = WALK_CYCLE;
-			}
+			animationArray = WALK_CYCLE;
 		} else {
 			animationArray = SPRITES["ranger"]["WALK_CYCLE"];
 		}
