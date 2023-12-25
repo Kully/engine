@@ -37,6 +37,7 @@ import {
 	SKID_CYCLE,
 	WALK_CYCLE,
 	JUMP_CYCLE,
+	SPRITES,
 } from "./sprites.js";
 
 import {
@@ -69,6 +70,7 @@ let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
 function updatePlayerPointers(animationArray) {
+	// walking
 	if (PLAYER["walkSpritePointer"] >= animationArray.length) {
 		PLAYER["walkSpritePointer"] = 0;
 		PLAYER["walkFrameCounter"] = 0;
@@ -78,24 +80,43 @@ function updatePlayerPointers(animationArray) {
 		PLAYER["walkFrameCounter"] = 0;
 		PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
 	}
+
+	// shooting
+	if (PLAYER["shootSpritePointer"] >= animationArray.length) {
+		PLAYER["shootSpritePointer"] = 0;
+		PLAYER["shootFrameCounter"] = 0;
+	}
+	PLAYER["shootFrameCounter"] += 1;
+	if (PLAYER["shootFrameCounter"] > animationArray[PLAYER["shootSpritePointer"]]["frameDuration"] - 1) {
+		PLAYER["shootFrameCounter"] = 0;
+		PLAYER["shootSpritePointer"] = (PLAYER["shootSpritePointer"] + 1) % animationArray.length;
+	}
 }
 
 function findAnimationCycle() {
 	let animationArray;
 	if (!isPlayerStanding(LEVEL)) {
-		animationArray = JUMP_CYCLE;
+		if (CONTROLLER["KeyZ"]) {
+			animationArray = SPRITES["ranger"]["SHOOT_CYCLE"];
+		} else {
+			animationArray = SPRITES["ranger"]["JUMP_CYCLE"];
+		}
 	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
-		if (PLAYER["speed"] > 0 && CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
-			animationArray = SKID_CYCLE;
-		} else
-		if (PLAYER["speed"] < 0 && !CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"] && CONTROLLER["KeyZ"]) {
-			animationArray = SKID_CYCLE;
-		} else {
-			animationArray = WALK_CYCLE;
+		if (CONTROLLER["KeyZ"]) {
+			animationArray = SPRITES["ranger"]["SHOOT_CYCLE"];
+		}
+		else {
+			animationArray = SPRITES["ranger"]["WALK_CYCLE"];
 		}
 	} else {
-		animationArray = STAND_CYCLE;
+		if (CONTROLLER["KeyZ"]) {
+			animationArray = SPRITES["ranger"]["SHOOT_CYCLE"];
+		}
+		else
+		{
+			animationArray = SPRITES["ranger"]["STAND_CYCLE"];
+		}
 	}
 
 	return animationArray;
