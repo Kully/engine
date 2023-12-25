@@ -33,10 +33,7 @@ import {
 } from "./physics.js"
 
 import {
-	STAND_CYCLE,
-	SKID_CYCLE,
-	WALK_CYCLE,
-	JUMP_CYCLE,
+	PROTAGONIST,
 	SPRITES,
 } from "./sprites.js";
 
@@ -97,25 +94,25 @@ function findAnimationCycle() {
 	let animationArray;
 	if (!isPlayerStanding(LEVEL)) {
 		if (CONTROLLER["KeyZ"]) {
-			animationArray = SPRITES["ranger"]["SHOOT_CYCLE"];
+			animationArray = SPRITES[PROTAGONIST]["SHOOT_CYCLE"];
 		} else {
-			animationArray = SPRITES["ranger"]["JUMP_CYCLE"];
+			animationArray = SPRITES[PROTAGONIST]["JUMP_CYCLE"];
 		}
 	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
 		if (CONTROLLER["KeyZ"]) {
-			animationArray = SPRITES["ranger"]["SHOOT_CYCLE"];
+			animationArray = SPRITES[PROTAGONIST]["SHOOT_CYCLE"];
 		}
 		else {
-			animationArray = SPRITES["ranger"]["WALK_CYCLE"];
+			animationArray = SPRITES[PROTAGONIST]["WALK_CYCLE"];
 		}
 	} else {
 		if (CONTROLLER["KeyZ"]) {
-			animationArray = SPRITES["ranger"]["SHOOT_CYCLE"];
+			animationArray = SPRITES[PROTAGONIST]["SHOOT_CYCLE"];
 		}
 		else
 		{
-			animationArray = SPRITES["ranger"]["STAND_CYCLE"];
+			animationArray = SPRITES[PROTAGONIST]["STAND_CYCLE"];
 		}
 	}
 

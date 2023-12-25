@@ -9,12 +9,6 @@ import {
 } from "./constants.js";
 
 import {
-	WALK_CYCLE,
-	WALK_CYCLE_FRAMES_SLOW,
-	WALK_CYCLE_FRAMES_FAST,
-} from "./sprites.js";
-
-import {
 	CONTROLLER,
 	PLAYER,
 } from "./state.js";
@@ -37,21 +31,21 @@ export function updateHorizontalSpeed() {
 	let walkFrameArr;
 
 	// toggle between running and walking
-	if (CAN_RUN) {
-		if (CONTROLLER["KeyZ"] == 1) {
-			maxSpeed = RUN_MAX_SPEED;
-			walkFrameArr = WALK_CYCLE_FRAMES_FAST;
-		} else {
-			walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
-		}
-	} else {
-		walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
-	}
+	// if (CAN_RUN) {
+	// 	if (CONTROLLER["KeyZ"] == 1) {
+	// 		maxSpeed = RUN_MAX_SPEED;
+	// 		walkFrameArr = WALK_CYCLE_FRAMES_FAST;
+	// 	} else {
+	// 		walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
+	// 	}
+	// } else {
+	// 	walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
+	// }
 
-	WALK_CYCLE[0]["frameDuration"] = walkFrameArr[0]
-	WALK_CYCLE[1]["frameDuration"] = walkFrameArr[1]
-	WALK_CYCLE[2]["frameDuration"] = walkFrameArr[2]
-	WALK_CYCLE[3]["frameDuration"] = walkFrameArr[3]
+	// WALK_CYCLE[0]["frameDuration"] = walkFrameArr[0]
+	// WALK_CYCLE[1]["frameDuration"] = walkFrameArr[1]
+	// WALK_CYCLE[2]["frameDuration"] = walkFrameArr[2]
+	// WALK_CYCLE[3]["frameDuration"] = walkFrameArr[3]
 
 	// accelerate the player
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
