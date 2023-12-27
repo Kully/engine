@@ -129,6 +129,7 @@ export const SPRITE_LOOKUP = {
 	},
 };
 
+const RANGER_WALK_FRAMES = [7, 7, 10];
 const RANGER_SPRITES = {
 	STAND_CYCLE: [
 		{
@@ -406,7 +407,7 @@ const RANGER_SPRITES = {
 			],
 			width: 16,
 			height: 16,
-			frameDuration: 4,
+			frameDuration: WALK_FRAMES[0],
 			xShift: 0,
 			yShift: 0,
 		},
@@ -431,7 +432,7 @@ const RANGER_SPRITES = {
 			],
 			width: 16,
 			height: 16,
-			frameDuration: 4,
+			frameDuration: WALK_FRAMES[1],
 			xShift: 0,
 			yShift: 0,
 		},
@@ -456,7 +457,7 @@ const RANGER_SPRITES = {
 			],
 			width: 16,
 			height: 16,
-			frameDuration: 4,
+			frameDuration: WALK_FRAMES[2],
 			xShift: 0,
 			yShift: 0,
 		},
