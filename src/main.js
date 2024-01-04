@@ -101,7 +101,7 @@ function findAnimationCycle() {
 	} else
 	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
 		if (CONTROLLER["KeyZ"]) {
-			animationArray = SPRITES[PROTAGONIST]["SHOOT_CYCLE"];
+			animationArray = SPRITES[PROTAGONIST]["WALK_SHOOT_CYCLE"];
 		}
 		else {
 			animationArray = SPRITES[PROTAGONIST]["WALK_CYCLE"];
