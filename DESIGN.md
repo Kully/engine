@@ -13,55 +13,40 @@ This HTML5 game is written in the Javascript Programming Language. It doesn't ha
 ## Specification
 
 
-#### Concept
+#### Concept (?)
 
 ...
 
-#### Story
+#### Story (?)
 
 ...
 
-#### Game Structure
+#### World (?)
 
-...
-
-#### Players
-
-...
-
-#### Action
-
-...
-
-#### Objective
-
-...
-
-#### Graphics
-
-...
+- We are in a post-apocalyptic world.
+- The Nazi's won the war.
+- The protagonist is a bounty-hunter that takes on odd, but dangerous, jobs to feed his family.
 
 
-#### Gameplay
+#### Objective (?)
 
-...
+- Get enough gold so that the Nazi commander tasking is satisfied.
 
-#### World
+#### Gameplay (?)
 
-...
-
-#### Landscape
-
-...
-
-#### Object Types
-
-...
+- You platform your way around the level you spawn in.
+- There are enemies (guarding gold) and your task is to shoot them up
 
 #### Controls
 
-...
+- Move `LEFT` and `RIGHT`
+- Jump with `X`
+- Shoot with `Z`
+
+#### Graphics
+
+The look and feel of the levels, the protagonist, the sprites, and the animations that pair with them, take their inspiration from the cinematic platformer game genre.
 
 #### Menus
 
-...
+There are currently no menus in the game.
