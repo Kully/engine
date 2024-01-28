@@ -3,6 +3,7 @@
 ## Scope
 
 A game design document for the collaborative game project between Adam Kulidjian and Daniel Pianezza.
+GANG GANG
 
 
 ## System Architecture
