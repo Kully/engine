@@ -11,12 +11,12 @@ export const GREYSCALE_COLORS = [
 ];
 
 export const LEVEL_COLOR_MAP = {
-	0: GREYSCALE_COLORS[0],
+	0: "#223748FF",
 	1: "#19100EFF",
 	2: "#290F04FF",
 	3: "#451608FF",
 	4: "#75270DFF",
-	5: "#B03912FF",  // used for the backdrop
+	5: "#B03912FF",
 	6: "#E38F7BFF",
 };
 
