@@ -38,4 +38,6 @@ export const PLAYER_COLOR_MAP = {
 	4: "#DB7272FF",
 	5: "#E3B3B3FF",
 	6: "#FFFFFFFF",
+	7: "#ebcd46ff",
+    8: "#e1622bff",
 };
