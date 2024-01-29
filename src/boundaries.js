@@ -79,6 +79,7 @@ export function handleBoundaryCollision(level) {
 
 	let xTileCurrent = Math.round(playerGridX);
 	let yTileCurrent = Math.round(playerGridY);
+	console.log(xTileCurrent);
 
 	let xTileToYourLeft = Math.floor(playerGridX);
 	let xTileToYourRight = Math.ceil(playerGridX);
