@@ -32,10 +32,10 @@ export const NEPTUNE_COLOR_MAP = {
 };
 export const PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
-	1: "#202020FF",
-	2: "#452F09FF",
-	3: "#A38E6DFF",
-	4: "#E3B3B3FF",
-	5: "#EEEEEEFF",
-	6: "#FFC635FF",
+	1: "#000000FF",
+	2: "#47300BFF",
+	3: "#A48D6DFF",
+	4: "#DB7272FF",
+	5: "#E3B3B3FF",
+	6: "#FFFFFFFF",
 };
