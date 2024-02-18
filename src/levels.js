@@ -62,9 +62,23 @@ export const LEVEL_LOOKUP = {
             [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4],
         ],
     },
+    "smallTest": {
+        "playerX": 5,
+        "playerY": 4,
+        "level": [
+            [4, 4, 4, 4, 4, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [4, 4, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [4, 4, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0],
+            [4, 4, 4, 41, 0, 10, 0, 0, 0, 4, 41, 0, 0, 0, 0, 0, 0],
+            [4, 4, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 4, 4],
+            [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+            [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        ],
+    }
 };
 
-const levelName = "leap of faith";
+const levelName = "smallTest";
 export const PLAYER_TILE_X = LEVEL_LOOKUP[levelName]["playerX"];
 export const PLAYER_TILE_Y = LEVEL_LOOKUP[levelName]["playerY"];
 export const LEVEL = LEVEL_LOOKUP[levelName]["level"];
