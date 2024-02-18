@@ -16,8 +16,6 @@ import {
 
 const CAN_RUN = false;
 
-// const ACCELERATION = 0.5;
-// const DECELERATION = 4;
 const ACCELERATION = 0.2;
 const DECELERATION = 0.2;
 
