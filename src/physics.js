@@ -16,9 +16,12 @@ import {
 
 const CAN_RUN = false;
 
-const ACCELERATION = 0.5;
-const DECELERATION = 4;
-const MAX_SPEED = 4;
+// const ACCELERATION = 0.5;
+// const DECELERATION = 4;
+const ACCELERATION = 0.2;
+const DECELERATION = 0.2;
+
+const MAX_SPEED = 3;
 const RUN_MAX_SPEED = 6;
 
 const JUMP_ACCEL = 11;
