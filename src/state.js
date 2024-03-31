@@ -42,6 +42,4 @@ export const PLAYER = {
 	jumpJuice: 1,
 	walkFrameCounter: 0,
 	walkSpritePointer: 0,
-	shootFrameCounter: 0,
-	shootSpritePointer: 0,
 };
