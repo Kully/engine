@@ -31,23 +31,6 @@ export function updateHorizontalSpeed() {
 	let maxSpeed = MAX_SPEED;
 	let walkFrameArr;
 
-	// toggle between running and walking
-	// if (CAN_RUN) {
-	// 	if (CONTROLLER["KeyZ"] == 1) {
-	// 		maxSpeed = RUN_MAX_SPEED;
-	// 		walkFrameArr = WALK_CYCLE_FRAMES_FAST;
-	// 	} else {
-	// 		walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
-	// 	}
-	// } else {
-	// 	walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
-	// }
-
-	// WALK_CYCLE[0]["frameDuration"] = walkFrameArr[0]
-	// WALK_CYCLE[1]["frameDuration"] = walkFrameArr[1]
-	// WALK_CYCLE[2]["frameDuration"] = walkFrameArr[2]
-	// WALK_CYCLE[3]["frameDuration"] = walkFrameArr[3]
-
 	// accelerate the player
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
 		PLAYER["speed"] -= ACCELERATION;

@@ -41,3 +41,12 @@ export const PLAYER_COLOR_MAP = {
 	7: "#ebcd46ff",
     8: "#e1622bff",
 };
+export const ENEMY2_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#0F4061FF",
+	2: "#135985FF",
+	3: "#80161DFF",
+	4: "#FF0000FF",
+	5: "#FF0000FF",
+	6: "#FF0000FF",
+};

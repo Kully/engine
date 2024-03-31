@@ -41,6 +41,7 @@ import {
 	CAMERA,
 	CONTROLLER,
 	PLAYER,
+	ENEMY2,
 } from "./state.js";
 
 
@@ -110,20 +111,23 @@ function findAnimationCycle() {
 	return animationArray;
 }
 
-
 function followPlayerWithCamera() {
 	function _moveCamera(variable, lowThresh, highThresh, speedVar) {
 		if (PLAYER[variable] > CAMERA[highThresh]) {
 			let distPastThresh = Math.abs(PLAYER[variable] - CAMERA[highThresh]);
 			let dist = Math.floor(distPastThresh / CAMERA["easeIn"]);
 			CAMERA[variable + "Offset"] += dist;
+
 			PLAYER[variable] -= dist;
+			ENEMY2[variable] -= dist;
 		} else
 		if ((PLAYER[variable]) < CAMERA[lowThresh]) {
 			let distPastThresh = Math.abs(PLAYER[variable] - CAMERA[lowThresh]);
 			let dist = Math.floor(distPastThresh / CAMERA["easeIn"]);
 			CAMERA[variable + "Offset"] -= dist;
+
 			PLAYER[variable] += dist;
+			ENEMY2[variable] += dist;
 		}
 	}
 	_moveCamera("x", "leftThresh", "rightThresh", "speed");
