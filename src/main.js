@@ -67,7 +67,6 @@ let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
 function updatePlayerPointers(animationArray) {
-	// walking
 	if (PLAYER["walkSpritePointer"] >= animationArray.length) {
 		PLAYER["walkSpritePointer"] = 0;
 		PLAYER["walkFrameCounter"] = 0;
@@ -76,17 +75,6 @@ function updatePlayerPointers(animationArray) {
 	if (PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"] - 1) {
 		PLAYER["walkFrameCounter"] = 0;
 		PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
-	}
-
-	// shooting
-	if (PLAYER["shootSpritePointer"] >= animationArray.length) {
-		PLAYER["shootSpritePointer"] = 0;
-		PLAYER["shootFrameCounter"] = 0;
-	}
-	PLAYER["shootFrameCounter"] += 1;
-	if (PLAYER["shootFrameCounter"] > animationArray[PLAYER["shootSpritePointer"]]["frameDuration"] - 1) {
-		PLAYER["shootFrameCounter"] = 0;
-		PLAYER["shootSpritePointer"] = (PLAYER["shootSpritePointer"] + 1) % animationArray.length;
 	}
 }
 
