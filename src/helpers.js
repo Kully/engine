@@ -199,30 +199,36 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 		}
 }
 
+function playerFacingLeft()
+{
+	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0) {
+		return true;
+	} else
+	if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0) {
+		if (CONTROLLER["lastLeftOrRight"] !== "ArrowRight") {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
 export function drawPlayerLayer(playerLayerCtx, animationArray) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
 	let spriteHeight = animationArray[PLAYER["spritePtr"]]["height"];
 	let yShift = animationArray[PLAYER["spritePtr"]]["yShift"];
 
-	let playerFacingLeft = 0;
 	for (let i = 0; i < spriteWidth; i += 1)
 		for (let j = 0; j < spriteHeight; j += 1) {
 			let colorPtr;
-			if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0) {
-				// flip sprite to face left
-				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth]
-			} else
-			if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0) {
-				if (CONTROLLER["lastLeftOrRight"] !== "ArrowRight") {
-					// flip sprite to face left
-					colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
-				} else {
-					colorPtr = spriteArray[i + j * spriteWidth];
-				}
-			} else {
+
+			if(playerFacingLeft())
+				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+			else
 				colorPtr = spriteArray[i + j * spriteWidth];
-			}
 
 			let pixelColor;
 			if (DRAW_SPRITES_WITH_COLOR)
