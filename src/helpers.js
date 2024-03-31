@@ -2,6 +2,7 @@
 
 import {
 	PLAYER_COLOR_MAP,
+	ENEMY2_COLOR_MAP,
 	LEVEL_COLOR_MAP,
 	GREYSCALE_COLORS,
 } from "./colors.js";
@@ -20,10 +21,12 @@ import {
 	CAMERA,
 	CONTROLLER,
 	PLAYER,
+	ENEMY2,
 } from "./state.js";
 
 import {
 	SPRITE_LOOKUP,
+	SPRITES,
 } from "./sprites.js";
 
 
@@ -229,6 +232,36 @@ export function drawPlayerLayer(playerLayerCtx, animationArray) {
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
+			playerLayerCtx.fillStyle = pixelColor;
+			playerLayerCtx.fillRect(
+				x,
+				y,
+				SCALE,
+				SCALE,
+			);
+		}
+
+
+	// removed the `let` on these variables since already declared
+	spriteArray = SPRITES["enemy2"]["STAND_CYCLE"][0]["sprite"];
+	spriteWidth = SPRITES["enemy2"]["STAND_CYCLE"][0]["width"];
+	spriteHeight = SPRITES["enemy2"]["STAND_CYCLE"][0]["height"];
+	yShift = SPRITES["enemy2"]["STAND_CYCLE"][0]["yShift"];
+
+	playerFacingLeft = 1;
+	for (let i = 0; i < spriteWidth; i += 1)
+		for (let j = 0; j < spriteHeight; j += 1) {
+			let colorPtr;
+			colorPtr = spriteArray[i + j * spriteWidth];
+
+			let pixelColor;
+			if (DRAW_SPRITES_WITH_COLOR)
+				pixelColor = ENEMY2_COLOR_MAP[colorPtr];
+			else
+				pixelColor = GREYSCALE_COLORS[colorPtr];
+
+			let x = ENEMY2["x"] + i * SCALE;
+			let y = ENEMY2["y"] + (j - spriteHeight + yShift) * SCALE;
 			playerLayerCtx.fillStyle = pixelColor;
 			playerLayerCtx.fillRect(
 				x,
