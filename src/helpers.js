@@ -197,10 +197,10 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 }
 
 export function drawPlayerLayer(playerLayerCtx, animationArray) {
-	let spriteArray = animationArray[PLAYER["walkSpritePointer"]]["sprite"];
-	let spriteWidth = animationArray[PLAYER["walkSpritePointer"]]["width"];
-	let spriteHeight = animationArray[PLAYER["walkSpritePointer"]]["height"];
-	let yShift = animationArray[PLAYER["walkSpritePointer"]]["yShift"];
+	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
+	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
+	let spriteHeight = animationArray[PLAYER["spritePtr"]]["height"];
+	let yShift = animationArray[PLAYER["spritePtr"]]["yShift"];
 
 	let playerFacingLeft = 0;
 	for (let i = 0; i < spriteWidth; i += 1)

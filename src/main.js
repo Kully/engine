@@ -68,18 +68,18 @@ let slotSpriteLookup = lookups[1];
 
 function updatePlayerPointers(animationArray) {
 	// move to first frame of animation if we reach the end
-	if (PLAYER["walkSpritePointer"] >= animationArray.length) {
-		PLAYER["walkSpritePointer"] = 0;
-		PLAYER["walkFrameCounter"] = 0;
+	if (PLAYER["spritePtr"] >= animationArray.length) {
+		PLAYER["spritePtr"] = 0;
+		PLAYER["frameCounter"] = 0;
 	}
 
 	// advance to next animation frame
-	PLAYER["walkFrameCounter"] += 1;
+	PLAYER["frameCounter"] += 1;
 
 	// move through duration of a single animation frame
-	if (PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"] - 1) {
-		PLAYER["walkFrameCounter"] = 0;
-		PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
+	if (PLAYER["frameCounter"] > animationArray[PLAYER["spritePtr"]]["frameDuration"] - 1) {
+		PLAYER["frameCounter"] = 0;
+		PLAYER["spritePtr"] = (PLAYER["spritePtr"] + 1) % animationArray.length;
 	}
 }
 
