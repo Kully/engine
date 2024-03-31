@@ -210,13 +210,13 @@ export function drawPlayerLayer(playerLayerCtx, animationArray) {
 		for (let j = 0; j < spriteHeight; j += 1) {
 			let colorPtr;
 			if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0) {
+				// flip sprite to face left
 				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth]
-				playerFacingLeft = 1;
 			} else
 			if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0) {
 				if (CONTROLLER["lastLeftOrRight"] !== "ArrowRight") {
+					// flip sprite to face left
 					colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
-					playerFacingLeft = 1;
 				} else {
 					colorPtr = spriteArray[i + j * spriteWidth];
 				}
@@ -248,7 +248,6 @@ export function drawPlayerLayer(playerLayerCtx, animationArray) {
 	spriteHeight = SPRITES["enemy2"]["STAND_CYCLE"][0]["height"];
 	yShift = SPRITES["enemy2"]["STAND_CYCLE"][0]["yShift"];
 
-	playerFacingLeft = 1;
 	for (let i = 0; i < spriteWidth; i += 1)
 		for (let j = 0; j < spriteHeight; j += 1) {
 			let colorPtr;
