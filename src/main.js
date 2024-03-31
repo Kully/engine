@@ -67,26 +67,17 @@ let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
 function updatePlayerPointers(animationArray) {
-	// walking
-	if (PLAYER["walkSpritePointer"] >= animationArray.length) {
-		PLAYER["walkSpritePointer"] = 0;
-		PLAYER["walkFrameCounter"] = 0;
-	}
-	PLAYER["walkFrameCounter"] += 1;
-	if (PLAYER["walkFrameCounter"] > animationArray[PLAYER["walkSpritePointer"]]["frameDuration"] - 1) {
-		PLAYER["walkFrameCounter"] = 0;
-		PLAYER["walkSpritePointer"] = (PLAYER["walkSpritePointer"] + 1) % animationArray.length;
+	// move to first frame of animation if we reach the end
+	if (PLAYER["spritePtr"] >= animationArray.length) {
+		PLAYER["spritePtr"] = 0;
+		PLAYER["frameCounter"] = 0;
 	}
 
-	// shooting
-	if (PLAYER["shootSpritePointer"] >= animationArray.length) {
-		PLAYER["shootSpritePointer"] = 0;
-		PLAYER["shootFrameCounter"] = 0;
-	}
-	PLAYER["shootFrameCounter"] += 1;
-	if (PLAYER["shootFrameCounter"] > animationArray[PLAYER["shootSpritePointer"]]["frameDuration"] - 1) {
-		PLAYER["shootFrameCounter"] = 0;
-		PLAYER["shootSpritePointer"] = (PLAYER["shootSpritePointer"] + 1) % animationArray.length;
+	// move through duration of a single animation frame
+	PLAYER["frameCounter"] += 1;
+	if (PLAYER["frameCounter"] > animationArray[PLAYER["spritePtr"]]["frameDuration"] - 1) {
+		PLAYER["frameCounter"] = 0;
+		PLAYER["spritePtr"] = (PLAYER["spritePtr"] + 1) % animationArray.length;
 	}
 }
 
@@ -95,7 +86,11 @@ function findAnimationCycle() {
 	if (!isPlayerStanding(LEVEL)) {
 		animationArray = SPRITES[PROTAGONIST]["JUMP_CYCLE"];
 	} else
-	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
+	if (
+		Math.abs(PLAYER["speed"]) > 0 ||
+		(CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"]) ||
+		(!CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"])
+	) {
 		if (CONTROLLER["KeyZ"]) {
 			animationArray = SPRITES[PROTAGONIST]["WALK_SHOOT_CYCLE"];
 		}

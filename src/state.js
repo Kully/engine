@@ -40,8 +40,6 @@ export const PLAYER = {
 	speedY: 0,
 	canJump: true,
 	jumpJuice: 1,
-	walkFrameCounter: 0,
-	walkSpritePointer: 0,
-	shootFrameCounter: 0,
-	shootSpritePointer: 0,
+	frameCounter: 0,
+	spritePtr: 0,
 };
