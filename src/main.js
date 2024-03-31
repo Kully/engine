@@ -73,10 +73,8 @@ function updatePlayerPointers(animationArray) {
 		PLAYER["frameCounter"] = 0;
 	}
 
-	// advance to next animation frame
-	PLAYER["frameCounter"] += 1;
-
 	// move through duration of a single animation frame
+	PLAYER["frameCounter"] += 1;
 	if (PLAYER["frameCounter"] > animationArray[PLAYER["spritePtr"]]["frameDuration"] - 1) {
 		PLAYER["frameCounter"] = 0;
 		PLAYER["spritePtr"] = (PLAYER["spritePtr"] + 1) % animationArray.length;
