@@ -952,6 +952,7 @@ const NEPTUNE_SPRITES = {
 export const SPRITES = {
 	"ranger": RANGER_SPRITES,
 	"neptune": NEPTUNE_SPRITES,
+	"enemy2": ENEMY2_SPRITES,
 };
 
 export const PROTAGONIST = "ranger";
