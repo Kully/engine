@@ -83,7 +83,11 @@ function findAnimationCycle() {
 	if (!isPlayerStanding(LEVEL)) {
 		animationArray = SPRITES[PROTAGONIST]["JUMP_CYCLE"];
 	} else
-	if (Math.abs(PLAYER["speed"]) > 0 || CONTROLLER["ArrowLeft"] || CONTROLLER["ArrowRight"]) {
+	if (
+		Math.abs(PLAYER["speed"]) > 0 ||
+		(CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"]) ||
+		(!CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"])
+	) {
 		if (CONTROLLER["KeyZ"]) {
 			animationArray = SPRITES[PROTAGONIST]["WALK_SHOOT_CYCLE"];
 		}
