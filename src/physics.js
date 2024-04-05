@@ -22,7 +22,7 @@ const DECELERATION = 0.2;
 const MAX_SPEED = 3;
 const RUN_MAX_SPEED = 6;
 
-const JUMP_ACCEL = 11;
+const JUMP_ACCEL = 8;
 const GRAVITY_ACCEL = 0.5;
 const TERMINAL_VELOCITY = 130;
 
