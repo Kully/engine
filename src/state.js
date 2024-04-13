@@ -40,8 +40,14 @@ export const PLAYER = {
 	speedY: 0,
 	canJump: true,
 	jumpJuice: 1,
-	walkFrameCounter: 0,
-	walkSpritePointer: 0,
-	shootFrameCounter: 0,
-	shootSpritePointer: 0,
+	frameCounter: 0,
+	spritePtr: 0,
+};
+export const ENEMY2 = {
+	x: GRID_WIDTH_PX * (PLAYER_TILE_X+2) - CAMERA["xOffset"],
+	y: GRID_WIDTH_PX * PLAYER_TILE_Y - CAMERA["yOffset"],
+	width: 16,
+	height: 16,
+	frameCounter: 0,
+	spritePtr: 0,
 };

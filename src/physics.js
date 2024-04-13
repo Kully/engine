@@ -16,12 +16,13 @@ import {
 
 const CAN_RUN = false;
 
-const ACCELERATION = 0.5;
-const DECELERATION = 4;
-const MAX_SPEED = 4;
+const ACCELERATION = 0.2;
+const DECELERATION = 0.2;
+
+const MAX_SPEED = 3;
 const RUN_MAX_SPEED = 6;
 
-const JUMP_ACCEL = 9;
+const JUMP_ACCEL = 8;
 const GRAVITY_ACCEL = 0.5;
 const TERMINAL_VELOCITY = 130;
 
@@ -29,23 +30,6 @@ export function updateHorizontalSpeed() {
 	let lastSpeed = PLAYER["speed"];
 	let maxSpeed = MAX_SPEED;
 	let walkFrameArr;
-
-	// toggle between running and walking
-	// if (CAN_RUN) {
-	// 	if (CONTROLLER["KeyZ"] == 1) {
-	// 		maxSpeed = RUN_MAX_SPEED;
-	// 		walkFrameArr = WALK_CYCLE_FRAMES_FAST;
-	// 	} else {
-	// 		walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
-	// 	}
-	// } else {
-	// 	walkFrameArr = WALK_CYCLE_FRAMES_SLOW;
-	// }
-
-	// WALK_CYCLE[0]["frameDuration"] = walkFrameArr[0]
-	// WALK_CYCLE[1]["frameDuration"] = walkFrameArr[1]
-	// WALK_CYCLE[2]["frameDuration"] = walkFrameArr[2]
-	// WALK_CYCLE[3]["frameDuration"] = walkFrameArr[3]
 
 	// accelerate the player
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
