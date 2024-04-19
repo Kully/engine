@@ -143,7 +143,7 @@ export const SPRITE_LOOKUP = {
 	},
 };
 
-const RANGER_WALK_FRAMES = [7, 7, 10];
+const RANGER_WALK_FRAMES = [10, 10, 10];
 const RANGER_SPRITES = {
 	STAND_CYCLE: [
 		{
