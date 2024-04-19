@@ -446,7 +446,7 @@ const RANGER_SPRITES = {
 			],
 			width: 16,
 			height: 16,
-			frameDuration: 10,
+			frameDuration: 5,
 			xShift: 0,
 			yShift: 0,
 		},
