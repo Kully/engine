@@ -13,6 +13,7 @@ import {
 import {
 	createHiddenSpriteLookups,
 	clearCanvas,
+	playerFacingLeft,
 	drawLevelLayer,
 	drawPlayerLayer,
 } from "./helpers.js";
@@ -82,11 +83,24 @@ function updatePlayerPointers(animationArray) {
 	}
 }
 
-function findAnimationCycle() {
+function findAnimationCycle(FRAME) {
 	let animationArray;
+	let animationCycle;
+
 	if (!isPlayerStanding(LEVEL)) {
 		animationArray = SPRITES[PROTAGONIST]["JUMP_CYCLE"];
+		animationCycle = "JUMP_CYCLE";
 	} else
+	if(
+		playerFacingLeft() !== PLAYER["wasFacingLeftLastFrame"] ||
+		(PLAYER["lastAnimationCycle"] === "TURN_CYCLE" &&
+		PLAYER["lastAnimationCycleCount"] < SPRITES[PROTAGONIST]["TURN_CYCLE"][0]["frameDuration"])
+	)
+	{
+		animationArray = SPRITES[PROTAGONIST]["TURN_CYCLE"];
+		animationCycle = "TURN_CYCLE";
+	}
+	else
 	if (
 		Math.abs(PLAYER["speed"]) > 0 ||
 		(CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"]) ||
@@ -94,20 +108,30 @@ function findAnimationCycle() {
 	) {
 		if (CONTROLLER["KeyZ"]) {
 			animationArray = SPRITES[PROTAGONIST]["WALK_SHOOT_CYCLE"];
+			animationCycle = "WALK_SHOOT_CYCLE";
 		}
 		else {
 			animationArray = SPRITES[PROTAGONIST]["WALK_CYCLE"];
+			animationCycle = "WALK_CYCLE";
 		}
 	} else {
 		if (CONTROLLER["KeyZ"]) {
 			animationArray = SPRITES[PROTAGONIST]["SHOOT_CYCLE"];
+			animationCycle = "SHOOT_CYCLE";
 		}
 		else
 		{
 			animationArray = SPRITES[PROTAGONIST]["STAND_CYCLE"];
+			animationCycle = "STAND_CYCLE";
 		}
 	}
 
+	// manage state
+	if(PLAYER["lastAnimationCycle"] !== animationCycle)
+		PLAYER["lastAnimationCycleCount"] = 0
+	PLAYER["lastAnimationCycle"] = animationCycle;
+	PLAYER["lastAnimationCycleCount"] += 1;
+	PLAYER["wasFacingLeftLastFrame"] = playerFacingLeft();
 	return animationArray;
 }
 
@@ -145,7 +169,7 @@ function gameLoop(e) {
 
 	handleBoundaryCollision(LEVEL);
 
-	let animationArray = findAnimationCycle();
+	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray);
 
 	clearCanvas(levelLayerCanvas, levelLayerCtx);
