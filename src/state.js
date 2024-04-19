@@ -45,6 +45,8 @@ export const PLAYER = {
 	lastAnimationCycle: null,
 	lastAnimationCycleCount: 0,
 	wasFacingLeftLastFrame: false,
+	accelUserValue: 0.2,
+	maxSpeedUserValue: 3
 };
 
 let ENEMY2_X = 6;
