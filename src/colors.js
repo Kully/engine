@@ -10,7 +10,8 @@ export const GREYSCALE_COLORS = [
 	"#EEEEEEFF",
 ];
 
-export const LEVEL_COLOR_MAP = {
+// brown hues
+export const BROWN_LEVEL_COLOR_MAP = {
 	0: "#223748FF",
 	1: "#19100EFF",
 	2: "#290F04FF",
@@ -19,6 +20,17 @@ export const LEVEL_COLOR_MAP = {
 	5: "#B03912FF",
 	6: "#E38F7BFF",
 };
+
+// blue hues
+export const LEVEL_COLOR_MAP = {
+	0: "#0E121AFF",
+	1: "#090909FF",
+	2: "#042029FF",
+	3: "#082D45FF",
+	4: "#0D5675FF",
+	5: "#1286B0FF",
+	6: "#7BDAE3FF",
+}
 
 
 export const NEPTUNE_COLOR_MAP = {
