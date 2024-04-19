@@ -299,11 +299,15 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	spriteHeight = SPRITES["enemy2"]["STAND_CYCLE"][0]["height"];
 	yShift = SPRITES["enemy2"]["STAND_CYCLE"][0]["yShift"];
 
+	let enemyFacingLeft = false;
 	for (let i = 0; i < spriteWidth; i += 1)
 		for (let j = 0; j < spriteHeight; j += 1) {
 			let colorPtr;
-			// colorPtr = spriteArray[i + j * spriteWidth];
-			colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+
+			if(enemyFacingLeft)
+				colorPtr = spriteArray[i + j * spriteWidth];
+			else
+				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
 
 			let pixelColor;
 			if (DRAW_SPRITES_WITH_COLOR)
