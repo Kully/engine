@@ -35,6 +35,46 @@ let OUTOFBOUNDS_SPIRTE_IDX = 3;
 let PLAYER_SPIRTE_IDX = 10;
 
 
+export function hexToNumber(hexString) {
+	return parseInt(hexString, 16);
+}
+
+export function numberToHex(number) {
+	return number.toString(16).padEnd(2, "0");
+}
+
+function mutatePixel(pixelColor, warpPct) {
+	function perturb(hexNumber)
+	{
+		let num = hexToNumber(hexNumber);
+		let maxColorDist = undefined;
+		let rand = maxColorDist;
+		if(Math.random() > (1-warpPct))
+			num += rand;
+		else
+		if(rand + maxColorDist > 255)
+			num -= rand;
+		return numberToHex(num);
+	}
+
+	// extract the original components of the color
+	let r = pixelColor.substring(1, 3);
+	let g = pixelColor.substring(3, 5);
+	let b = pixelColor.substring(5, 7);
+	let alpha = pixelColor.substring(7, 9);
+
+	let newR = r;
+	let newG = g;
+	let newB = b;
+	if(alpha !== "00")
+	{
+		newR = perturb(r);
+		newG = perturb(g);
+		pixelColor = "#" + newR + newG + newB + alpha;
+	}
+	return pixelColor;
+}
+
 export function hexToRgb(hex) {
 	let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 	if (result) {
@@ -199,7 +239,7 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 		}
 }
 
-function playerFacingLeft()
+export function playerFacingLeft()
 {
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0) {
 		return true;
@@ -215,7 +255,7 @@ function playerFacingLeft()
 	}
 }
 
-export function drawPlayerLayer(playerLayerCtx, animationArray) {
+export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
 	let spriteHeight = animationArray[PLAYER["spritePtr"]]["height"];
@@ -235,6 +275,11 @@ export function drawPlayerLayer(playerLayerCtx, animationArray) {
 				pixelColor = PLAYER_COLOR_MAP[colorPtr];
 			else
 				pixelColor = GREYSCALE_COLORS[colorPtr];
+
+			// spawn the player in via a glitchy effect
+			let warpPct = 1 - FRAME / 35;
+			warpPct = Math.min(1, warpPct);
+			pixelColor = mutatePixel(pixelColor, warpPct);
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
