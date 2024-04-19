@@ -1,8 +1,6 @@
 :root {
 	--screen-width: 960px;
 	--screen-height: 540px;
-
-	--canvas-outline-width: 1px;
 }
 
 body {
@@ -12,7 +10,7 @@ body {
 }
 
 canvas {
-	outline: var(--canvas-outline-width) solid #333;
+	outline: 0px solid #333;
 	z-index: 0;
 	position: absolute;
 	top: calc(50vh - var(--screen-height) / 2);
@@ -44,7 +42,7 @@ button.copy-to-clipboard {
 	position: absolute;
 	top: calc(50vh + var(--screen-height) / 2);
 	left: calc(50% - var(--screen-width) / 2 - 1px);
-	width: calc(960px + 2 * var(--canvas-outline-width));
+	width: 960px;
 	text-align: center;
 	padding: 0.5rem 0;
 }

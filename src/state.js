@@ -42,10 +42,16 @@ export const PLAYER = {
 	jumpJuice: 1,
 	frameCounter: 0,
 	spritePtr: 0,
+	lastAnimationCycle: null,
+	lastAnimationCycleCount: 0,
+	wasFacingLeftLastFrame: false,
 };
+
+let ENEMY2_X = 6;
+let ENEMY2_Y = 4;
 export const ENEMY2 = {
-	x: GRID_WIDTH_PX * (PLAYER_TILE_X+2) - CAMERA["xOffset"],
-	y: GRID_WIDTH_PX * PLAYER_TILE_Y - CAMERA["yOffset"],
+	x: GRID_WIDTH_PX * ENEMY2_X - CAMERA["xOffset"],
+	y: GRID_WIDTH_PX * ENEMY2_Y - CAMERA["yOffset"],
 	width: 16,
 	height: 16,
 	frameCounter: 0,
