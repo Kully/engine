@@ -151,7 +151,7 @@ function gameLoop(e) {
 	clearCanvas(levelLayerCanvas, levelLayerCtx);
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
 	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
-	drawPlayerLayer(playerLayerCtx, animationArray);
+	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
 	FRAME += 1;
 }
 
