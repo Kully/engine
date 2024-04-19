@@ -196,6 +196,13 @@ def get_sprite_data(filename):
 
 
 if __name__ == "__main__":
+    print("Turn Animation")
+    filename = (
+        f"utils/media/sprites/Idle_Turn/Protagonist_IdleForward_01.png"
+    )
+    engine_sprite_blob = get_sprite_data(filename)
+    print(engine_sprite_blob)
+
     print("Idle Animation")
     for index in range(4):
         filename = (
@@ -203,6 +210,7 @@ if __name__ == "__main__":
         )
         engine_sprite_blob = get_sprite_data(filename)
         print(engine_sprite_blob)
+
     print("Jump Cycle")
     for index in range(7):
         filename = (
@@ -210,6 +218,7 @@ if __name__ == "__main__":
         )
         engine_sprite_blob = get_sprite_data(filename)
         print(engine_sprite_blob)
+
     print("Shoot Cycle")
     for index in range(6):
         filename = (
@@ -217,6 +226,7 @@ if __name__ == "__main__":
         )
         engine_sprite_blob = get_sprite_data(filename)
         print(engine_sprite_blob)
+
     print("Walk Cycle")
     for index in range(3):
         filename = (
@@ -224,6 +234,7 @@ if __name__ == "__main__":
         )
         engine_sprite_blob = get_sprite_data(filename)
         print(engine_sprite_blob)
+
     print("Walk Shoot Cycle")
     for index in range(3):
         filename = (
