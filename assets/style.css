@@ -51,3 +51,11 @@ button.copy-to-clipboard {
 	background-color: #222;
 	padding: 0.25rem;
 }
+
+.text {
+	font-family: Courier;
+	color: #FFF;
+}
+.control {
+	width: 40px;
+}

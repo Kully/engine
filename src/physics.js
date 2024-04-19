@@ -14,35 +14,26 @@ import {
 } from "./state.js";
 
 
-const CAN_RUN = false;
-
-const ACCELERATION = 0.2;
-const DECELERATION = 0.2;
-
-const MAX_SPEED = 3;
-const RUN_MAX_SPEED = 6;
-
 const JUMP_ACCEL = 8;
 const GRAVITY_ACCEL = 0.5;
 const TERMINAL_VELOCITY = 130;
 
-export function updateHorizontalSpeed() {
+export function updateHorizontalSpeed(accel, maxSpeed) {
 	let lastSpeed = PLAYER["speed"];
-	let maxSpeed = MAX_SPEED;
 	let walkFrameArr;
 
 	// accelerate the player
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
-		PLAYER["speed"] -= ACCELERATION;
+		PLAYER["speed"] -= accel;
 	else
 	if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
-		PLAYER["speed"] += ACCELERATION;
+		PLAYER["speed"] += accel;
 	else
 	if (PLAYER["speed"] > 0)
-		PLAYER["speed"] -= DECELERATION;
+		PLAYER["speed"] -= accel;
 	else
 	if (PLAYER["speed"] < 0)
-		PLAYER["speed"] += DECELERATION;
+		PLAYER["speed"] += accel;
 
 	// ensure that you stop moving
 	if (

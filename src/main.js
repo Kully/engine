@@ -158,12 +158,30 @@ function followPlayerWithCamera() {
 	_moveCamera("y", "upThresh", "downThresh", "speedY");
 }
 
+
+
+
+let accelUserValue = document.getElementById("accel");
+accelUserValue.addEventListener("change", function(e) {
+	let val = parseFloat(e.target.value);
+	PLAYER["accelUserValue"] = val;
+});
+let maxSpeedUserValue = document.getElementById("max-speed");
+maxSpeedUserValue.addEventListener("change", function(e) {
+	let val = parseFloat(e.target.value);
+	PLAYER["maxSpeedUserValue"] = val;
+});
+
+
 let FRAME = 0;
 
 function gameLoop(e) {
 	followPlayerWithCamera();
 
-	updateHorizontalSpeed();
+	updateHorizontalSpeed(
+		PLAYER["accelUserValue"],
+		PLAYER["maxSpeedUserValue"],
+	);
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
 
