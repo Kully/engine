@@ -175,8 +175,9 @@ maxSpeedUserValue.addEventListener("change", function(e) {
 
 let FRAME = 0;
 
+drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 function gameLoop(e) {
-	followPlayerWithCamera();
+	// followPlayerWithCamera();
 
 	updateHorizontalSpeed(
 		PLAYER["accelUserValue"],
@@ -190,9 +191,9 @@ function gameLoop(e) {
 	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray);
 
-	clearCanvas(levelLayerCanvas, levelLayerCtx);
+	// clearCanvas(levelLayerCanvas, levelLayerCtx);
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
-	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
+	// drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
 	FRAME += 1;
 }
