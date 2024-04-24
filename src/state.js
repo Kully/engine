@@ -52,8 +52,8 @@ export const PLAYER = {
 	maxSpeedUserValue: 3,
 };
 
-let ENEMY2_X = 6;
-let ENEMY2_Y = 4;
+let ENEMY2_X = 9;
+let ENEMY2_Y = 3;
 export const ENEMY2 = {
 	x: GRID_WIDTH_PX * ENEMY2_X - CAMERA["xOffset"],
 	y: GRID_WIDTH_PX * ENEMY2_Y - CAMERA["yOffset"],
