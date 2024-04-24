@@ -102,7 +102,7 @@ function findAnimationCycle(FRAME) {
 	}
 	else
 	if (
-		Math.abs(PLAYER["speed"]) > 0 ||
+		Math.abs(PLAYER["speedSP"]) > 0 ||
 		(CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"]) ||
 		(!CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"])
 	) {
@@ -179,9 +179,24 @@ drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 function gameLoop(e) {
 	// followPlayerWithCamera();
 
+	// updateHorizontalSpeed(
+	// 	PLAYER["accelUserValue"],
+	// 	PLAYER["accelUserValue"],
+	// 	PLAYER["maxSpeedUserValue"],
+	// );
+
+	// let celesteMaxSpeed = 3.3;
+	let celesteMaxSpeed = 2.9;
+	let celesteAccel = celesteMaxSpeed / 6;
+	let celesteDecel = celesteAccel;  // divided by 3;
+
+	// let celesteMaxSpeed = 1;
+	// let celesteAccel = celesteMaxSpeed;
+	// let celesteDecel = celesteMaxSpeed;
 	updateHorizontalSpeed(
-		PLAYER["accelUserValue"],
-		PLAYER["maxSpeedUserValue"],
+		celesteAccel,
+		celesteDecel,
+		celesteMaxSpeed,
 	);
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
