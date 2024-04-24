@@ -34,9 +34,12 @@ export const CAMERA = {
 export const PLAYER = {
 	x: GRID_WIDTH_PX * PLAYER_TILE_X - CAMERA["xOffset"],
 	y: GRID_WIDTH_PX * PLAYER_TILE_Y - CAMERA["yOffset"],
+	xSP: GRID_WIDTH_PX * PLAYER_TILE_X - CAMERA["xOffset"],
+	ySP: GRID_WIDTH_PX * PLAYER_TILE_Y - CAMERA["yOffset"],
 	width: 16,
 	height: 16,
 	speed: 0,
+	speedSP: 0,
 	speedY: 0,
 	canJump: true,
 	jumpJuice: 1,
@@ -46,7 +49,7 @@ export const PLAYER = {
 	lastAnimationCycleCount: 0,
 	wasFacingLeftLastFrame: false,
 	accelUserValue: 0.2,
-	maxSpeedUserValue: 3
+	maxSpeedUserValue: 3,
 };
 
 let ENEMY2_X = 6;
