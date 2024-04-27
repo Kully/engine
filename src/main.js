@@ -223,7 +223,6 @@ function gameLoop(e) {
 	else
 	if(COUNTER === iterPerCalc * FPS)
 	{
-		console.log(` in here and  ${COUNTER}`);
 		let deltaTime = Date.now() - startTime;
 		let calcFPS = deltaTime / 1000 / iterPerCalc * FPS;
 		calcFPS = calcFPS.toFixed(2);
