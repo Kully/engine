@@ -14,6 +14,8 @@ export const VALID_CONTROLLER_KEYS = [
 	"ArrowDown",
 	"KeyZ",
 	"KeyX",
+	"ShiftLeft",
+	"ShiftRight",
 ];
 export const SCREEN_WIDTH_PX = 960;
 export const SCREEN_HEIGHT_PX = 540;
