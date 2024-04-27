@@ -64,7 +64,7 @@ export const LEVEL_LOOKUP = {
     },
     "new-stage": {
         "playerX": 1,
-        "playerY": 4,
+        "playerY": 5,
         "level": [
             [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
             [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
