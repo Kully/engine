@@ -182,24 +182,13 @@ drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 function gameLoop(e) {
 	// followPlayerWithCamera();
 
-	// updateHorizontalSpeed(
-	// 	PLAYER["accelUserValue"],
-	// 	PLAYER["accelUserValue"],
-	// 	PLAYER["maxSpeedUserValue"],
-	// );
-
-	// let celesteMaxSpeed = 3.3;
-	let celesteMaxSpeed = 2.9;
-	let celesteAccel = celesteMaxSpeed / 6;
-	let celesteDecel = celesteAccel;  // divided by 3;
-
-	// let celesteMaxSpeed = 1;
-	// let celesteAccel = celesteMaxSpeed;
-	// let celesteDecel = celesteMaxSpeed;
+	let maxSpeed = 2.9;
+	let accel = maxSpeed / 6;
+	let decel = maxSpeed / 3;
 	updateHorizontalSpeed(
-		celesteAccel,
-		celesteDecel,
-		celesteMaxSpeed,
+		accel,
+		decel,
+		maxSpeed,
 	);
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();

@@ -59,3 +59,8 @@ button.copy-to-clipboard {
 .control {
 	width: 40px;
 }
+
+.control-panel {
+	position: absolute;
+	visibility: hidden;
+}
