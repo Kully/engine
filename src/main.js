@@ -106,9 +106,18 @@ function findAnimationCycle(FRAME) {
 		(CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"]) ||
 		(!CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"])
 	) {
-		if (CONTROLLER["KeyZ"]) {
+		if (
+			   CONTROLLER["KeyZ"]
+			&& CONTROLLER["ShiftLeft"] === 0
+			&& CONTROLLER["ShiftRight"] === 0
+		) {
 			animationArray = SPRITES[PROTAGONIST]["WALK_SHOOT_CYCLE"];
 			animationCycle = "WALK_SHOOT_CYCLE";
+		}
+		else
+		if(CONTROLLER["ShiftLeft"] || CONTROLLER["ShiftRight"]) {
+			animationArray = SPRITES[PROTAGONIST]["WALK_CYCLE"];
+			animationCycle = "WALK_CYCLE";  // replace with run cycle
 		}
 		else {
 			animationArray = SPRITES[PROTAGONIST]["WALK_CYCLE"];
