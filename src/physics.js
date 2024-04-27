@@ -93,14 +93,12 @@ export function updateVerticalSpeed(level) {
 }
 
 export function translatePlayer() {
-	console.log('PLAYER["speedSP"] is ', PLAYER["speedSP"]);
 	PLAYER["speed"] = PLAYER["speedSP"];
 	PLAYER["xSP"] += PLAYER["speedSP"];       // true subpixel pos update
 	PLAYER["x"] = Math.round(PLAYER["xSP"]);  // this is what you see on the screen
 
 	// PLAYER["x"] += PLAYER["speed"];
 	// PLAYER["x"] = Math.floor(PLAYER["x"]);
-	console.log("xSP: ", PLAYER["xSP"], "x: ", PLAYER["x"]);
 
 	PLAYER["y"] += PLAYER["speedY"];
 	PLAYER["y"] = Math.round(PLAYER["y"]);
