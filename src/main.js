@@ -53,11 +53,9 @@ const levelLayerCanvas = document.getElementById("level-layer-canvas");
 const playerLayerCanvas = document.getElementById("player-layer-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 
-const levelLayerCtx = levelLayerCanvas.getContext("2d");
-const playerLayerCtx = playerLayerCanvas.getContext("2d");
-const spritesCtx = spritesCanvas.getContext("2d", {
-	willReadFrequently: true
-});
+const levelLayerCtx = levelLayerCanvas.getContext("2d", {willReadFrequently: true});
+const playerLayerCtx = playerLayerCanvas.getContext("2d", {willReadFrequently: true});
+const spritesCtx = spritesCanvas.getContext("2d", {willReadFrequently: true});
 
 levelLayerCanvas.width = CAMERA["width"];
 levelLayerCanvas.height = CAMERA["height"];
