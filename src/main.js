@@ -171,9 +171,12 @@ maxSpeedUserValue.addEventListener("change", function(e) {
 	let val = parseFloat(e.target.value);
 	PLAYER["maxSpeedUserValue"] = val;
 });
+let calcFpsValue = document.getElementById("fps");
 
 
 let FRAME = 0;
+let COUNTER = 0;
+let startTime;
 
 drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 function gameLoop(e) {
@@ -211,6 +214,31 @@ function gameLoop(e) {
 	// drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
 	FRAME += 1;
+
+
+	// calculate and update the approximate FPS
+	let iterPerCalc = 2;
+	if(COUNTER === 0)
+		startTime = Date.now();
+	else
+	if(COUNTER === iterPerCalc * FPS)
+	{
+		console.log(` in here and  ${COUNTER}`);
+		let deltaTime = Date.now() - startTime;
+		let calcFPS = deltaTime / 1000 / iterPerCalc * FPS;
+		calcFPS = calcFPS.toFixed(2);
+
+		let textColor = 0;
+		if(calcFPS < FPS)
+			textColor = "#66BB6A";
+		else
+			textColor = "#EF5350";
+
+		calcFpsValue.innerHTML = `FPS: ${calcFPS}`
+		calcFpsValue.style.color = textColor;
+		COUNTER = -1;
+	}
+	COUNTER += 1;
 }
 
 setInterval(gameLoop, 1000 / FPS);
