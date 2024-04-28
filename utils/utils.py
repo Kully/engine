@@ -5,6 +5,13 @@ import os
 import numpy as np
 from PIL import Image
 
+from padding import (
+    calc_top_padding,
+    calc_bottom_padding,
+    calc_left_padding,
+    calc_right_padding,
+)
+
 
 GREYSCALE_COLORS = [
     "#000000FF",
@@ -169,16 +176,15 @@ def extract_spritesheet_colors(filename, sprite_size):
             )
     return sprite_arr
 
-
 def get_sprite_data(filename, color_int_lookup):
-    """Return flattened sprite data that is compatible with the game engine.
+    """Parse out a PNG and create an engine-friendly blob.
 
     Args:
         filename (str): The filename of the sprite.
         color_int_lookup (dict): A dictionary that maps colors to integers.
 
     Returns:
-        output (list): A list of integers that represent the sprite.
+        output: ...
     """
 
     img = Image.open(filename)
@@ -200,13 +206,18 @@ def get_sprite_data(filename, color_int_lookup):
 
     greyscale_indices = np.digitize(x=luminance_arr, bins=bins, right=True)
 
-    output = []
+    sprite = []
     for idx, color in enumerate(sprite_colors):
         try:
-            output.append(color_int_lookup[color.lower()])
+            sprite.append(color_int_lookup[color.lower()])
         except KeyError:
-            output.append(color_int_lookup[color.upper()])
-    output = gridify(array=output, width=width)
+            sprite.append(color_int_lookup[color.upper()])
+
+    output = {
+        "sprite": sprite,
+        "width": width,
+        "height": height,
+    }
     return output
 
 
@@ -228,17 +239,26 @@ def generate_sprites(color_int_lookup, path_base):
             print(f"{directory}\n{'=' * len(directory)}\n")
             for filename in sorted(os.listdir(path)):
                 if filename.endswith(".png"):
-                    print(filename)
+                    print(f"({filename})")
                     file_pathname = os.path.join(
                         path_base,
                         directory,
                         filename,
                     )
-                    engine_sprite_blob = get_sprite_data(
+                    sprite_object = get_sprite_data(
                         filename=file_pathname,
                         color_int_lookup=color_int_lookup,
                     )
-                    print(engine_sprite_blob)
+                    array = sprite_object["sprite"]
+                    width = sprite_object["width"]
+                    height = sprite_object["height"]
+
+                    pretty_sprite = gridify(array=array, width=width)
+                    top = calc_top_padding(array=array, width=width, height=height)
+                    bottom = calc_bottom_padding(array=array, width=width, height=height)
+                    left = calc_left_padding(array=array, width=width, height=height)
+                    right = calc_right_padding(array=array, width=width, height=height)
+                    print(f"\nsprite: {pretty_sprite},\nwidth: {width},\nheight: {height},\ntPad: {top}\nbPad: {bottom}\nlPad: {left}\nrPad: {right}\n")
         print("")
 
 
