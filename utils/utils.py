@@ -1,5 +1,7 @@
 """Module of Utility Functions."""
 
+import os
+
 import numpy as np
 from PIL import Image
 
@@ -13,6 +15,27 @@ GREYSCALE_COLORS = [
     "#EEEEEEFF",
 ]
 num_of_bins = len(GREYSCALE_COLORS)
+
+PLAYER_COLOR_MAP = {
+    "#00000000": 0,
+    "#000000ff": 1,
+    "#472f0bff": 2,
+    "#a48d6dff": 3,
+    "#dc7373ff": 4,
+    "#e3b3b3ff": 5,
+    "#ffffffff": 6,
+    "#ebcd46ff": 7, # fire 1
+    "#e1622bff": 8, # fire 2
+}
+LEVEL_COLOR_MAP = {
+    "#0E121AFF": 0,
+    "#090909FF": 1,
+    "#042029FF": 2,
+    "#082D45FF": 3,
+    "#0D5675FF": 4,
+    "#1286B0FF": 5,
+    "#7BDAE3FF": 6,
+}
 
 
 def make_sprite_unit(
@@ -147,8 +170,16 @@ def extract_spritesheet_colors(filename, sprite_size):
     return sprite_arr
 
 
-def get_sprite_data(filename):
-    """Return flattened sprite data that is compatible with the game engine."""
+def get_sprite_data(filename, color_int_lookup):
+    """Return flattened sprite data that is compatible with the game engine.
+
+    Args:
+        filename (str): The filename of the sprite.
+        color_int_lookup (dict): A dictionary that maps colors to integers.
+
+    Returns:
+        output (list): A list of integers that represent the sprite.
+    """
 
     img = Image.open(filename)
     width = img.width
@@ -169,76 +200,53 @@ def get_sprite_data(filename):
 
     greyscale_indices = np.digitize(x=luminance_arr, bins=bins, right=True)
 
-    color_int_lookup = {
-        "#00000000": 0,
-        "#000000ff": 1,
-        "#472f0bff": 2,
-        "#a48d6dff": 3,
-        "#dc7373ff": 4,
-        "#e3b3b3ff": 5,
-        "#ffffffff": 6,
-        "#ebcd46ff": 7, # fire 1
-        "#e1622bff": 8, # fire 2
-    }
-
     output = []
     for idx, color in enumerate(sprite_colors):
-        output.append(color_int_lookup[color])
-        # if color == "#00000000":
-        #     output.append(0)
-        # elif color == "#000000ff":
-        #     output.append(1)
-        # else:
-        #     index = greyscale_indices[idx]
-        #     output.append(index)
+        try:
+            output.append(color_int_lookup[color.lower()])
+        except KeyError:
+            output.append(color_int_lookup[color.upper()])
     output = gridify(array=output, width=width)
     return output
 
 
+def generate_sprites(color_int_lookup, path_base):
+    """Traverse the sprite images in a directory and calculate the sprites.
+    
+    Args:
+        color_int_lookup (dict): The dictionary that maps colors to integers.
+            Make sure that you pick the right one depending on the directory
+            that you have.
+        path_base (str): The directory to look in.
+
+    Returns:
+        (None) This function only prints to the terminal.
+    """
+    for directory in os.listdir(path_base):
+        path = os.path.join(path_base, directory)
+        if os.path.isdir(path):
+            print(f"{directory}\n{'=' * len(directory)}\n")
+            for filename in sorted(os.listdir(path)):
+                if filename.endswith(".png"):
+                    print(filename)
+                    file_pathname = os.path.join(
+                        path_base,
+                        directory,
+                        filename,
+                    )
+                    engine_sprite_blob = get_sprite_data(
+                        filename=file_pathname,
+                        color_int_lookup=color_int_lookup,
+                    )
+                    print(engine_sprite_blob)
+        print("")
+
 if __name__ == "__main__":
-    print("Turn Animation")
-    filename = (
-        f"utils/media/sprites/Idle_Turn/Protagonist_IdleForward_01.png"
+    generate_sprites(
+        color_int_lookup=LEVEL_COLOR_MAP,
+        path_base="utils/media/level"
     )
-    engine_sprite_blob = get_sprite_data(filename)
-    print(engine_sprite_blob)
-
-    print("Idle Animation")
-    for index in range(4):
-        filename = (
-            f"utils/media/sprites/IdleAnim/Protagonist_IdleAnim_01_Idle_Animation_{index}.png"
-        )
-        engine_sprite_blob = get_sprite_data(filename)
-        print(engine_sprite_blob)
-
-    print("Jump Cycle")
-    for index in range(7):
-        filename = (
-            f"utils/media/sprites/JumpCycle/Protagonist_JumpCycle_01_JumpCycle_{index}.png"
-        )
-        engine_sprite_blob = get_sprite_data(filename)
-        print(engine_sprite_blob)
-
-    print("Shoot Cycle")
-    for index in range(6):
-        filename = (
-            f"utils/media/sprites/ShootingCycle_02/Protagonist_ShootCycle_02_ShootingAnimation_{index}.png"
-        )
-        engine_sprite_blob = get_sprite_data(filename)
-        print(engine_sprite_blob)
-
-    print("Walk Cycle")
-    for index in range(3):
-        filename = (
-            f"utils/media/sprites/WalkCycle/Protagonist_WalkCycle_01_Walk Cycle_{index}.png"
-        )
-        engine_sprite_blob = get_sprite_data(filename)
-        print(engine_sprite_blob)
-
-    print("Walk Shoot Cycle")
-    for index in range(3):
-        filename = (
-            f"utils/media/sprites/WalkShootCycle/Protagonist_WalkShootCycle_01_Walk Cycle_{index}.png"
-        )
-        engine_sprite_blob = get_sprite_data(filename)
-        print(engine_sprite_blob)
+    generate_sprites(
+        color_int_lookup=PLAYER_COLOR_MAP,
+        path_base="utils/media/sprites"
+    )
