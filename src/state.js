@@ -52,6 +52,29 @@ export const PLAYER = {
 	maxSpeedUserValue: 3,
 };
 
+export const SCREENSHAKE = {
+	ptr: 0,
+	array: [
+		[1, 0],
+		[0, -1],
+		[-3, 0],
+		[8, 2],
+		[-7, 0],
+		[4, 0],
+		[-4, 0],
+		[4, -2],
+		[-4, 0],
+		[3, 0],
+		[-3, 0],
+		[3, 1],
+		[-2, 0],
+		[1, 1],
+		[-1, 0],
+		[0, -1],
+		[0, 0],
+	],
+};
+
 let ENEMY2_X = 9;
 let ENEMY2_Y = 3;
 export const ENEMY2 = {
