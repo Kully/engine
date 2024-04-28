@@ -26,57 +26,36 @@ export function updateHorizontalSpeed(accel, decel, maxSpeed) {
 	let lastSpeed = PLAYER["speed"];
 
 	// accelerate the player
-	// if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
-	// 	PLAYER["speed"] -= accel;
-	// else
-	// if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
-	// 	PLAYER["speed"] += accel;
-	// else
-	// if (PLAYER["speed"] > 0)
-	// 	PLAYER["speed"] -= decel;
-	// else
-	// if (PLAYER["speed"] < 0)
-	// 	PLAYER["speed"] += decel;
-	
-
-
-	if (CONTROLLER["ArrowLeft"] === 1)
-	{
-		PLAYER["speedSP"] -= accel;
-	}
-	if (CONTROLLER["ArrowRight"] === 1)
-	{
-		PLAYER["speedSP"] += accel;
-	}
-
-	if(CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 0)
-	{
-		if (PLAYER["speedSP"] > 0)
-			PLAYER["speedSP"] -= decel;
-		else
-		if (PLAYER["speedSP"] < 0)
-			PLAYER["speedSP"] += decel;
-	}
+	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
+		PLAYER["speed"] -= accel;
+	else
+	if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
+		PLAYER["speed"] += accel;
+	else
+	if (PLAYER["speed"] > 0)
+		PLAYER["speed"] -= decel;
+	else
+	if (PLAYER["speed"] < 0)
+		PLAYER["speed"] += decel;
 
 	// ensure that you stop moving
-
 	if (
 		(
 			lastSpeed !== 0 &&
-			PLAYER["speedSP"] !== 0
+			PLAYER["speed"] !== 0
 		) &&
 		(
-			Math.sign(lastSpeed) != Math.sign(PLAYER["speedSP"])
+			Math.sign(lastSpeed) != Math.sign(PLAYER["speed"])
 		)
 	) {
-		PLAYER["speedSP"] = 0;
+		PLAYER["speed"] = 0;
 	}
 
 	// throttle the speed
-	if (PLAYER["speedSP"] > maxSpeed)
-		PLAYER["speedSP"] = maxSpeed;
-	if (PLAYER["speedSP"] < -maxSpeed)
-		PLAYER["speedSP"] = -maxSpeed;
+	if (PLAYER["speed"] > maxSpeed)
+		PLAYER["speed"] = maxSpeed;
+	if (PLAYER["speed"] < -maxSpeed)
+		PLAYER["speed"] = -maxSpeed;
 }
 
 export function updateVerticalSpeed(level) {
@@ -97,12 +76,8 @@ export function updateVerticalSpeed(level) {
 }
 
 export function translatePlayer() {
-	PLAYER["speed"] = PLAYER["speedSP"];
-	PLAYER["xSP"] += PLAYER["speedSP"];       // true subpixel pos update
-	PLAYER["x"] = Math.round(PLAYER["xSP"]);  // this is what you see on the screen
-
-	// PLAYER["x"] += PLAYER["speed"];
-	// PLAYER["x"] = Math.floor(PLAYER["x"]);
+	PLAYER["x"] += PLAYER["speed"];
+	PLAYER["x"] = Math.floor(PLAYER["x"]);
 
 	PLAYER["y"] += PLAYER["speedY"];
 	PLAYER["y"] = Math.round(PLAYER["y"]);

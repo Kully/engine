@@ -187,9 +187,9 @@ let startTime;
 
 drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 function gameLoop(e) {
-	// followPlayerWithCamera();
+	followPlayerWithCamera();
 
-	let maxSpeed = 2.9;
+	let maxSpeed = 3;
 	let accel = maxSpeed / 6;
 	let decel = maxSpeed / 3;
 	updateHorizontalSpeed(
@@ -205,12 +205,14 @@ function gameLoop(e) {
 	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray);
 
-	// clearCanvas(levelLayerCanvas, levelLayerCtx);
+	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
-	// drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
-	FRAME += 1;
 
+	// draw game level
+	clearCanvas(levelLayerCanvas, levelLayerCtx);
+	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
+	FRAME += 1;
 
 	// calculate and update the approximate FPS
 	let iterPerCalc = 2;
