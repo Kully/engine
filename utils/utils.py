@@ -24,8 +24,8 @@ PLAYER_COLOR_MAP = {
     "#dc7373ff": 4,
     "#e3b3b3ff": 5,
     "#ffffffff": 6,
-    "#ebcd46ff": 7, # fire 1
-    "#e1622bff": 8, # fire 2
+    "#ebcd46ff": 7,  # fire 1
+    "#e1622bff": 8,  # fire 2
 }
 LEVEL_COLOR_MAP = {
     "#0E121AFF": 0,
@@ -212,7 +212,7 @@ def get_sprite_data(filename, color_int_lookup):
 
 def generate_sprites(color_int_lookup, path_base):
     """Traverse the sprite images in a directory and calculate the sprites.
-    
+
     Args:
         color_int_lookup (dict): The dictionary that maps colors to integers.
             Make sure that you pick the right one depending on the directory
@@ -241,12 +241,7 @@ def generate_sprites(color_int_lookup, path_base):
                     print(engine_sprite_blob)
         print("")
 
+
 if __name__ == "__main__":
-    generate_sprites(
-        color_int_lookup=LEVEL_COLOR_MAP,
-        path_base="utils/media/level"
-    )
-    generate_sprites(
-        color_int_lookup=PLAYER_COLOR_MAP,
-        path_base="utils/media/sprites"
-    )
+    generate_sprites(color_int_lookup=LEVEL_COLOR_MAP, path_base="utils/media/level")
+    generate_sprites(color_int_lookup=PLAYER_COLOR_MAP, path_base="utils/media/sprites")
