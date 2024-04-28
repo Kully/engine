@@ -15,6 +15,7 @@ import {
 	SCREEN_WIDTH_PX,
 	SCREEN_HEIGHT_PX,
 	DRAW_SPRITES_WITH_COLOR,
+	PLAYER_SPAWN_DELAY,
 } from "./constants.js";
 
 import {
@@ -277,7 +278,13 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 				pixelColor = GREYSCALE_COLORS[colorPtr];
 
 			// spawn the player in via a glitchy effect
-			let warpPct = 1 - FRAME / 35;
+			let warpPct;
+			if(FRAME < PLAYER_SPAWN_DELAY) {
+				warpPct = 1;
+			}
+			else {
+				warpPct = 1 - (FRAME - PLAYER_SPAWN_DELAY) / 35;
+			}
 			warpPct = Math.min(1, warpPct);
 			pixelColor = mutatePixel(pixelColor, warpPct);
 
