@@ -86,11 +86,11 @@ function shakeScreenOnLand()
 {
 	if(PLAYER["jumpJuice"] === 1 && PLAYER["lastJumpJuice"] !== 1)
 	{
-		if(SCREENSHAKE["ptr"] >= SCREENSHAKE["array"].length - 1)
+		if(SCREENSHAKE["ptr"] > SCREENSHAKE["array"].length - 1)
 			SCREENSHAKE["ptr"] = 0;
 	}
 
-	if(SCREENSHAKE["ptr"] < SCREENSHAKE["array"].length - 1)
+	if(SCREENSHAKE["ptr"] <= SCREENSHAKE["array"].length - 1)
 	{
 		let ptr = SCREENSHAKE["ptr"];
 		let dx = SCREENSHAKE["array"][ptr][0];
