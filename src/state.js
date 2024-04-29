@@ -43,6 +43,7 @@ export const PLAYER = {
 	speedY: 0,
 	canJump: true,
 	jumpJuice: 1,
+	lastJumpJuice: 0,
 	frameCounter: 0,
 	spritePtr: 0,
 	lastAnimationCycle: null,
@@ -52,28 +53,31 @@ export const PLAYER = {
 	maxSpeedUserValue: 3,
 };
 
+
+// `ptr` needs to be larger than the length of the array
 export const SCREENSHAKE = {
-	ptr: 0,
+	ptr: 1000,
 	array: [
-		[1, 0],
+		[2, 0],
 		[0, -1],
-		[-3, 0],
-		[8, 2],
-		[-7, 0],
-		[4, 0],
+		[-6, 0],
+		[14, 2],
+		[-12, 0],
+		[8, 0],
+		[-8, 0],
+		[8, -2],
+		[-8, 0],
+		[6, 0],
+		[-6, 0],
+		[6, 1],
 		[-4, 0],
-		[4, -2],
-		[-4, 0],
-		[3, 0],
-		[-3, 0],
-		[3, 1],
+		[2, 1],
 		[-2, 0],
-		[1, 1],
+		[1, -1],
 		[-1, 0],
-		[0, -1],
-		[0, 0],
 	],
 };
+
 
 let ENEMY2_X = 9;
 let ENEMY2_Y = 3;

@@ -82,6 +82,23 @@ function updatePlayerPointers(animationArray) {
 	}
 }
 
+function shakeScreenOnLand()
+{
+	if(PLAYER["jumpJuice"] === 1 && PLAYER["lastJumpJuice"] !== 1)
+		SCREENSHAKE["ptr"] = 0;
+
+	if(SCREENSHAKE["ptr"] < SCREENSHAKE["array"].length - 1)
+	{
+		let ptr = SCREENSHAKE["ptr"];
+		let dx = SCREENSHAKE["array"][ptr][0];
+
+		CAMERA["xOffset"] += dx;
+		playerLayerCtx.translate(dx, 0);
+
+		SCREENSHAKE["ptr"] += 1;
+	}
+}
+
 function findAnimationCycle(FRAME) {
 	let animationArray;
 	let animationCycle;
@@ -206,21 +223,7 @@ function gameLoop(e) {
 	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray);
 
-	// apply screenshake events
-	if(!isPlayerStanding(LEVEL)) {
-		SCREENSHAKE["ptr"] = 0;
-	};
-	if(isPlayerStanding(LEVEL)) {
-		let ptr = SCREENSHAKE["ptr"];
-		if(ptr <= SCREENSHAKE["array"].length - 1)
-		{
-			let dx = SCREENSHAKE["array"][ptr][0];
-			let dy = SCREENSHAKE["array"][ptr][1];
-			levelLayerCtx.translate(dx, dy);
-			playerLayerCtx.translate(dx, dy);
-			SCREENSHAKE["ptr"] += 1;
-		}
-	}
+	shakeScreenOnLand();
 
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
