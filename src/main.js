@@ -96,7 +96,7 @@ function shakeScreenOnLand()
 		let dx = SCREENSHAKE["array"][ptr][0];
 
 		CAMERA["xOffset"] += dx;
-		playerLayerCtx.translate(dx, 0);
+		playerLayerCtx.translate(-dx, 0);
 
 		SCREENSHAKE["ptr"] += 1;
 	}
