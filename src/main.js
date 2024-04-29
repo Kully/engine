@@ -43,6 +43,7 @@ import {
 	CONTROLLER,
 	PLAYER,
 	ENEMY2,
+	SCREENSHAKE,
 } from "./state.js";
 
 
@@ -78,6 +79,27 @@ function updatePlayerPointers(animationArray) {
 	if (PLAYER["frameCounter"] > animationArray[PLAYER["spritePtr"]]["frameDuration"] - 1) {
 		PLAYER["frameCounter"] = 0;
 		PLAYER["spritePtr"] = (PLAYER["spritePtr"] + 1) % animationArray.length;
+	}
+}
+
+function shakeScreenOnLand()
+{
+	console.log(PLAYER["lastJumpJuice"]);
+	if(PLAYER["jumpJuice"] === 1 && PLAYER["lastJumpJuice"] < -38)
+	{
+		if(SCREENSHAKE["ptr"] > SCREENSHAKE["array"].length - 1)
+			SCREENSHAKE["ptr"] = 0;
+	}
+
+	if(SCREENSHAKE["ptr"] <= SCREENSHAKE["array"].length - 1)
+	{
+		let ptr = SCREENSHAKE["ptr"];
+		let dx = SCREENSHAKE["array"][ptr][0];
+
+		CAMERA["xOffset"] += dx;
+		playerLayerCtx.translate(-dx, 0);
+
+		SCREENSHAKE["ptr"] += 1;
 	}
 }
 
@@ -204,6 +226,8 @@ function gameLoop(e) {
 
 	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray);
+
+	shakeScreenOnLand();
 
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);

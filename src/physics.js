@@ -63,9 +63,11 @@ export function updateVerticalSpeed(level) {
 		PLAYER["speedY"] = 0;
 	}
 	if (CONTROLLER["KeyX"] === 0 & isPlayerStanding(level)) {
+		PLAYER["lastJumpJuice"] = PLAYER["jumpJuice"];
 		PLAYER["jumpJuice"] = 1;
 	} else
 	if (!isPlayerStanding(level)) {
+		PLAYER["lastJumpJuice"] = PLAYER["jumpJuice"];
 		PLAYER["jumpJuice"] -= 1;
 		PLAYER["speedY"] = Math.min(PLAYER["speedY"] + GRAVITY_ACCEL, TERMINAL_VELOCITY);
 	}

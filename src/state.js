@@ -43,6 +43,7 @@ export const PLAYER = {
 	speedY: 0,
 	canJump: true,
 	jumpJuice: 1,
+	lastJumpJuice: 0,
 	frameCounter: 0,
 	spritePtr: 0,
 	lastAnimationCycle: null,
@@ -51,6 +52,68 @@ export const PLAYER = {
 	accelUserValue: 0.2,
 	maxSpeedUserValue: 3,
 };
+
+
+const LARGE_SCREENSHAKE = {
+	ptr: 0,
+	array: [
+		[  2, 0],
+		[  0, 0],
+		[ -6, 0],
+		[ 14, 0],
+		[-12, 0],
+		[  8, 0],
+		[ -8, 0],
+		[  8, 0],
+		[ -8, 0],
+		[  6, 0],
+		[ -6, 0],
+		[  6, 0],
+		[ -4, 0],
+		[  2, 0],
+		[ -2, 0],
+		[  1, 0],
+		[ -1, 0],
+	],
+};
+const MEDIUM_SCREENSHAKE = {
+	ptr: 0,
+	array: [
+		[  2, 0],
+		[  0, 0],
+		[ -1, 0],
+		[  4, 0],
+		[ -6, 0],
+		[  3, 0],
+		[  4, 0],
+		[ -4, 0],
+		[  4, 0],
+		[ -4, 0],
+		[  3, 0],
+		[ -3, 0],
+		[  2, 0],
+		[ -2, 0],
+		[  1, 0],
+		[ -1, 0],
+	],
+};
+const SMALL_SCREENSHAKE = {
+	ptr: 0,
+	array: [
+		[ -1, 0],
+		[ 1, 0],
+		[ -2, 0],
+		[ 2, 0],
+		[  4, 0],
+		[ -4, 0],
+		[  3, 0],
+		[  -3, 0],
+		[  1, 0],
+		[ -1, 0],
+	],
+};
+export const SCREENSHAKE = MEDIUM_SCREENSHAKE;
+
 
 let ENEMY2_X = 9;
 let ENEMY2_Y = 3;
