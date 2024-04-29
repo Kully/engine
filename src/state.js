@@ -54,9 +54,8 @@ export const PLAYER = {
 };
 
 
-// `ptr` needs to be larger than the length of the array
-export const SCREENSHAKE = {
-	ptr: 1000,
+const LARGE_SCREENSHAKE = {
+	ptr: 0,
 	array: [
 		[  2, 0],
 		[  0, 0],
@@ -77,6 +76,22 @@ export const SCREENSHAKE = {
 		[ -1, 0],
 	],
 };
+const SMALL_SCREENSHAKE = {
+	ptr: 0,
+	array: [
+		[ -1, 0],
+		[ 1, 0],
+		[ -2, 0],
+		[ 2, 0],
+		[  4, 0],
+		[ -4, 0],
+		[  3, 0],
+		[  -3, 0],
+		[  1, 0],
+		[ -1, 0],
+	],
+};
+export const SCREENSHAKE = SMALL_SCREENSHAKE;
 
 
 let ENEMY2_X = 9;
