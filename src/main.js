@@ -84,7 +84,6 @@ function updatePlayerPointers(animationArray) {
 
 function shakeScreenOnLand()
 {
-	console.log(PLAYER["lastJumpJuice"]);
 	if(PLAYER["jumpJuice"] === 1 && PLAYER["lastJumpJuice"] < -38)
 	{
 		if(SCREENSHAKE["ptr"] > SCREENSHAKE["array"].length - 1)
