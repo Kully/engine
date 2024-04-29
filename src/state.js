@@ -76,6 +76,27 @@ const LARGE_SCREENSHAKE = {
 		[ -1, 0],
 	],
 };
+const MEDIUM_SCREENSHAKE = {
+	ptr: 0,
+	array: [
+		[  2, 0],
+		[  0, 0],
+		[ -1, 0],
+		[  4, 0],
+		[ -6, 0],
+		[  3, 0],
+		[  4, 0],
+		[ -4, 0],
+		[  4, 0],
+		[ -4, 0],
+		[  3, 0],
+		[ -3, 0],
+		[  2, 0],
+		[ -2, 0],
+		[  1, 0],
+		[ -1, 0],
+	],
+};
 const SMALL_SCREENSHAKE = {
 	ptr: 0,
 	array: [
@@ -91,7 +112,7 @@ const SMALL_SCREENSHAKE = {
 		[ -1, 0],
 	],
 };
-export const SCREENSHAKE = SMALL_SCREENSHAKE;
+export const SCREENSHAKE = MEDIUM_SCREENSHAKE;
 
 
 let ENEMY2_X = 9;
