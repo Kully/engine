@@ -14,9 +14,9 @@ export const GREYSCALE_COLORS = [
 /* LEVEL THEMES
 ========================= */
 
-// brown hues
-export const LEVEL_COLOR_MAP = {
-	0: "#223748CC",
+export let LEVEL_COLOR_MAP;
+const LIGHT_BROWN_LEVEL_COLOR_MAP = {
+	0: "#226798FF",
 	1: "#19100EFF",
 	2: "#290F04FF",
 	3: "#451608FF",
@@ -24,19 +24,17 @@ export const LEVEL_COLOR_MAP = {
 	5: "#B03912FF",
 	6: "#E38F7BFF",
 };
-// blue hues
-export const BLUE_LEVEL_COLOR_MAP = {
-	0: "#0E121AFF",
+const SEA_BLUES_LEVEL_COLOR_MAP = {
+	0: "#010A0AFF",
 	1: "#090909FF",
 	2: "#042029FF",
 	3: "#082D45FF",
-	4: "#0D5675FF",
-	5: "#1286B0FF",
+	4: "#0D5659FF",
+	5: "#0086B0FF",
 	6: "#7BDAE3FF",
 };
-// green hues
-export const GREEN_LEVEL_COLOR_MAP = {
-	0: "#0E121AFF",
+const DARK_GREEN_LEVEL_COLOR_MAP = {
+	0: "#0E121AFF",  // #021A1AFF
 	1: "#0A0A0AFF",
 	2: "#042529FF",
 	3: "#084543FF",
@@ -49,7 +47,8 @@ export const GREEN_LEVEL_COLOR_MAP = {
 /* PLAYER THEMES
 ========================= */
 
-export const PLAYER_COLOR_MAP = {
+export let PLAYER_COLOR_MAP;
+const OG_PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#000000FF",
 	2: "#47300BFF",
@@ -60,7 +59,18 @@ export const PLAYER_COLOR_MAP = {
 	7: "#ebcd46ff",  // fire 1
     8: "#e1622bff",  // fire 2
 };
-export const SCRUFFY_PLAYER_COLOR_MAP = {
+const DARK_PLAYER_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#000000FF",
+	2: "#402b26FF",
+	3: "#5f523fFF",
+	4: "##B15D5DFF",
+	5: "#ab8686FF",
+	6: "#dededeFF",
+	7: "#ebcd46ff",
+    8: "#e1622bff",
+};
+const SCRUFFY_PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#000000FF",
 	2: "#00471DFF",
@@ -71,18 +81,18 @@ export const SCRUFFY_PLAYER_COLOR_MAP = {
 	7: "#ebcd46ff",  // fire 1
     8: "#e1622bff",  // fire 2
 };
-export const DARK_RED_PLAYER_COLOR_MAP = {
+const DARK_RED_PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#880000FF",
 	2: "#880000FF",
 	3: "#880000FF",
 	4: "#880000FF",
-	5: "#88000FF",
+	5: "#880000FF",
 	6: "#880000FF",
 	7: "#ebcd46ff",  // fire 1
     8: "#e1622bff",  // fire 2
 };
-export const BROWN_PLAYER_COLOR_MAP = {
+const BROWN_PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#421F19ff",
 	2: "#724632ff",
@@ -93,7 +103,7 @@ export const BROWN_PLAYER_COLOR_MAP = {
 	7: "#ebcd46ff",  // fire 1
     8: "#e1622bff",  // fire 2
 };
-export const SEAWEED_PLAYER_COLOR_MAP = {
+const SEAWEED_PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#023e8aff",
 	2: "#0077b6ff",
@@ -109,8 +119,8 @@ export const SEAWEED_PLAYER_COLOR_MAP = {
 /* ENEMY SPRITES
 ========================= */
 
-// regular blue hue
-export const ENEMY2_COLOR_MAP = {
+export let ENEMY2_COLOR_MAP;
+export const OG_ENEMY2_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#0F4061FF",
 	2: "#135985FF",
@@ -119,13 +129,30 @@ export const ENEMY2_COLOR_MAP = {
 	5: "#FF0000FF",
 	6: "#FF0000FF",
 };
-// bright blue hue
-export const BRIGHT_BLUE_ENEMY2_COLOR_MAP = {
+export const LIGHT_ENEMY2_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
-	1: "#023e8aff",
-	2: "#0077b6ff",
-	3: "#0096c7ff",
+	1: "#290F04FF",
+	2: "#B03912FF",
+	3: "#E38F7BFF",
 	4: "#00b4d8ff",
 	5: "#48cae4ff",
 	6: "#90e0efff",
 };
+
+
+// set colors depending on the time of day
+const now = new Date();
+const hour = now.getHours();
+
+if(hour < 7 || hour > 20)
+{
+	LEVEL_COLOR_MAP = SEA_BLUES_LEVEL_COLOR_MAP;
+	PLAYER_COLOR_MAP = DARK_PLAYER_COLOR_MAP;
+	ENEMY2_COLOR_MAP = OG_ENEMY2_COLOR_MAP;
+}
+else
+{
+	LEVEL_COLOR_MAP = LIGHT_BROWN_LEVEL_COLOR_MAP;
+	PLAYER_COLOR_MAP = OG_PLAYER_COLOR_MAP;
+	ENEMY2_COLOR_MAP = LIGHT_ENEMY2_COLOR_MAP;
+}
