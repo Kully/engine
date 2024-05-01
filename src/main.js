@@ -110,6 +110,11 @@ function findAnimationCycle(FRAME) {
 		animationArray = SPRITES[PROTAGONIST]["JUMP_CYCLE"];
 		animationCycle = "JUMP_CYCLE";
 	} else
+	if(CONTROLLER["ArrowDown"] === 1) {
+		animationArray = SPRITES[PROTAGONIST]["CROUCH_CYCLE"];
+		animationCycle = "CROUCH_CYCLE";
+	}
+	else
 	if(
 		playerFacingLeft() !== PLAYER["wasFacingLeftLastFrame"] ||
 		(PLAYER["lastAnimationCycle"] === "TURN_CYCLE" &&
