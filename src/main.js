@@ -215,6 +215,9 @@ drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 function gameLoop(e) {
 	followPlayerWithCamera();
 
+	let animationArray = findAnimationCycle(FRAME);
+	updatePlayerPointers(animationArray);
+
 	let maxSpeed = 3;
 	let accel = maxSpeed / 6;
 	let decel = maxSpeed / 3;
@@ -227,9 +230,6 @@ function gameLoop(e) {
 	translatePlayer();
 
 	handleBoundaryCollision(LEVEL);
-
-	let animationArray = findAnimationCycle(FRAME);
-	updatePlayerPointers(animationArray);
 
 	shakeScreenOnLand();
 

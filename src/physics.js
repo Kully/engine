@@ -26,6 +26,9 @@ export function updateHorizontalSpeed(accel, decel, maxSpeed) {
 	let lastSpeed = PLAYER["speed"];
 
 	// accelerate the player
+	if (PLAYER["lastAnimationCycle"] === "CROUCH_CYCLE")
+		PLAYER["speed"] = 0;
+	else
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
 		PLAYER["speed"] -= accel;
 	else
