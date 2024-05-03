@@ -11,13 +11,29 @@ export const GREYSCALE_COLORS = [
 ];
 
 
-/* BACKGROUND THEMES
+/* BACKGROUND THEMES - not ordered by luminance
 ========================= */
 
-export const BKGD_COLOR_MAP = {
+export let BKGD_COLOR_MAP;
+const NIGHT_BKGD_COLOR_MAP = {
+	1: '#1b263bff',  // medium
+	2: '#415a77ff',  // high
+	3: "#0d1b2aff",  // low
+};
+const EVE_BKGD_COLOR_MAP = {
 	1: '#3b6b9cff',
 	2: '#2e5a89ff',
 	3: '#4e89c6ff',
+};
+const DAWN_BKGD_COLOR_MAP = {
+	1: '#FFAB8CFF',
+	2: '#CF726DFF',
+	3: '#FFECA6FF',
+};
+const DAYTIME_BKGD_COLOR_MAP = {
+	1: '#FFAB8CFF',
+	2: '#FFECA6FF',
+	3: '#CF726DFF',
 };
 
 /* LEVEL THEMES
@@ -158,10 +174,12 @@ if(hour < 7 || hour > 20)
 	LEVEL_COLOR_MAP = SEA_BLUES_LEVEL_COLOR_MAP;
 	PLAYER_COLOR_MAP = DARK_PLAYER_COLOR_MAP;
 	ENEMY2_COLOR_MAP = OG_ENEMY2_COLOR_MAP;
+	BKGD_COLOR_MAP = NIGHT_BKGD_COLOR_MAP;
 }
 else
 {
 	LEVEL_COLOR_MAP = LIGHT_BROWN_LEVEL_COLOR_MAP;
 	PLAYER_COLOR_MAP = OG_PLAYER_COLOR_MAP;
 	ENEMY2_COLOR_MAP = LIGHT_ENEMY2_COLOR_MAP;
+	BKGD_COLOR_MAP = DAWN_BKGD_COLOR_MAP;
 }
