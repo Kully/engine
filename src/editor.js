@@ -233,11 +233,9 @@ const levelSelector = document.getElementById("level-dropdown");
 const widthSelector = document.getElementById("tile-width");
 const heightSelector = document.getElementById("tile-height");
 
-const ctx = canvas.getContext("2d");
-const hoverCtx = hoverCanvas.getContext("2d");
-const spritesCtx = spritesCanvas.getContext("2d", {
-	willReadFrequently: true
-});
+const ctx = canvas.getContext("2d", {willReadFrequently: true});
+const hoverCtx = hoverCanvas.getContext("2d", {willReadFrequently: true});
+const spritesCtx = spritesCanvas.getContext("2d", {willReadFrequently: true});
 
 canvas.width = CAMERA["width"];
 canvas.height = CAMERA["height"];
