@@ -21,7 +21,6 @@ GREYSCALE_COLORS = [
     "#CCCCCCFF",
     "#EEEEEEFF",
 ]
-num_of_bins = len(GREYSCALE_COLORS)
 
 PLAYER_COLOR_MAP = {
     "#00000000": 0,
@@ -198,13 +197,11 @@ def get_sprite_data(filename, color_int_lookup):
         hex_color = rgb_to_hex(tuple_color)
         sprite_colors.append(hex_color)
 
-    # We want to convert our transparent colors and our pure black colors differently.
-    luminance_arr = [get_luminance(hex_to_rgb(c)) for c in sprite_colors]
-
-    bins = list(range(0, 255, int(255 / (num_of_bins - 1))))
-    bins.append(255)
-
-    greyscale_indices = np.digitize(x=luminance_arr, bins=bins, right=True)
+    if color_int_lookup is None:
+        unique_colors = list(set(sprite_colors))
+        ranked_colors = sorted(unique_colors, key=lambda x: get_luminance(hex_to_rgb(x)))
+        color_int_lookup = {c:idx+1 for idx, c in enumerate(ranked_colors)}
+        print(f"color_int_lookup generated: {color_int_lookup}")
 
     sprite = []
     for idx, color in enumerate(sprite_colors):
@@ -263,5 +260,6 @@ def generate_sprites(color_int_lookup, path_base):
 
 
 if __name__ == "__main__":
-    generate_sprites(color_int_lookup=LEVEL_COLOR_MAP, path_base="utils/media/level")
-    generate_sprites(color_int_lookup=PLAYER_COLOR_MAP, path_base="utils/media/sprites")
+    generate_sprites(color_int_lookup=None, path_base="utils/media/background")
+    # generate_sprites(color_int_lookup=LEVEL_COLOR_MAP, path_base="utils/media/level")
+    # generate_sprites(color_int_lookup=PLAYER_COLOR_MAP, path_base="utils/media/sprites")
