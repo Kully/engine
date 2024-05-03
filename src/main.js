@@ -14,6 +14,7 @@ import {
 	createHiddenSpriteLookups,
 	clearCanvas,
 	playerFacingLeft,
+	drawBkgdLayer,
 	drawLevelLayer,
 	drawPlayerLayer,
 } from "./helpers.js";
@@ -50,10 +51,12 @@ import {
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
 
+const bkgdLayerCanvas = document.getElementById("bkgd-layer-canvas");
 const levelLayerCanvas = document.getElementById("level-layer-canvas");
 const playerLayerCanvas = document.getElementById("player-layer-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 
+const bkgdLayerCtx = bkgdLayerCanvas.getContext("2d", {willReadFrequently: true});
 const levelLayerCtx = levelLayerCanvas.getContext("2d", {willReadFrequently: true});
 const playerLayerCtx = playerLayerCanvas.getContext("2d", {willReadFrequently: true});
 const spritesCtx = spritesCanvas.getContext("2d", {willReadFrequently: true});
@@ -62,6 +65,8 @@ levelLayerCanvas.width = CAMERA["width"];
 levelLayerCanvas.height = CAMERA["height"];
 playerLayerCanvas.width = levelLayerCanvas.width;
 playerLayerCanvas.height = levelLayerCanvas.height;
+bkgdLayerCanvas.width = levelLayerCanvas.width;
+bkgdLayerCanvas.height = levelLayerCanvas.height;
 
 let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
@@ -207,11 +212,11 @@ maxSpeedUserValue.addEventListener("change", function(e) {
 let calcFpsValue = document.getElementById("fps");
 
 
+drawBkgdLayer(bkgdLayerCtx);
+
 let FRAME = 0;
 let COUNTER = 0;
 let startTime;
-
-drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 function gameLoop(e) {
 	followPlayerWithCamera();
 

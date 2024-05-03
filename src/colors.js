@@ -11,6 +11,15 @@ export const GREYSCALE_COLORS = [
 ];
 
 
+/* BACKGROUND THEMES
+========================= */
+
+export const BKGD_COLOR_MAP = {
+	1: '#3b6b9cff',
+	2: '#2e5a89ff',
+	3: '#4e89c6ff',
+};
+
 /* LEVEL THEMES
 ========================= */
 

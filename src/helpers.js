@@ -1,6 +1,7 @@
 /* Helper Functions */
 
 import {
+	BKGD_COLOR_MAP,
 	PLAYER_COLOR_MAP,
 	ENEMY2_COLOR_MAP,
 	LEVEL_COLOR_MAP,
@@ -28,6 +29,7 @@ import {
 import {
 	SPRITE_LOOKUP,
 	SPRITES,
+	BKGD_SPRITES,
 } from "./sprites.js";
 
 
@@ -142,6 +144,8 @@ export function saveSpriteToHiddenCanvas(spritesCtx, spritePtr, scale, slotX) {
 			pixelColor = LEVEL_COLOR_MAP[colorPtr];
 		else
 			pixelColor = GREYSCALE_COLORS[colorPtr];
+		if(colorPtr===0)
+			pixelColor = "#00000000";
 
 		let rgbArray = hexToRgb(pixelColor);
 
@@ -236,6 +240,33 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 				savedData,
 				putImageDataX,
 				putImageDataY,
+			);
+		}
+}
+
+export function drawBkgdLayer(bkgdLayerCtx) {
+	let spriteArray = BKGD_SPRITES["DARK_SKY"][0]["sprite"];
+	let spriteWidth = BKGD_SPRITES["DARK_SKY"][0]["width"];
+	let spriteHeight = BKGD_SPRITES["DARK_SKY"][0]["height"];
+
+	for (let i = 0; i < spriteWidth; i += 1)
+		for (let j = 0; j < spriteHeight; j += 1) {
+			let colorPtr = spriteArray[i + j * spriteWidth];
+
+			let pixelColor;
+			if (DRAW_SPRITES_WITH_COLOR)
+				pixelColor = BKGD_COLOR_MAP[colorPtr];
+			else
+				pixelColor = GREYSCALE_COLORS[colorPtr];
+
+			let x = i * SCALE;
+			let y = j * SCALE;
+			bkgdLayerCtx.fillStyle = pixelColor;
+			bkgdLayerCtx.fillRect(
+				x,
+				y,
+				SCALE,
+				SCALE,
 			);
 		}
 }
