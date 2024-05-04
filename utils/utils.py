@@ -255,7 +255,7 @@ def generate_sprites(color_int_lookup, path_base):
                     bottom = calc_bottom_padding(array=array, width=width, height=height)
                     left = calc_left_padding(array=array, width=width, height=height)
                     right = calc_right_padding(array=array, width=width, height=height)
-                    print(f"\nsprite: {pretty_sprite},\nwidth: {width},\nheight: {height},\ntPad: {top}\nbPad: {bottom}\nlPad: {left}\nrPad: {right}\n")
+                    print(f"\nsprite: {pretty_sprite},\nwidth: {width},\nheight: {height},\ntPad: {top},\nbPad: {bottom},\nlPad: {left},\nrPad: {right},\n")
         print("")
 
 

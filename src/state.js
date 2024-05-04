@@ -13,6 +13,8 @@ import {
 } from "./levels.js";
 
 
+export const STATE = {resetGame: false};
+
 export const CONTROLLER = {};
 for (let key of VALID_CONTROLLER_KEYS)
 	CONTROLLER[key] = 0;
@@ -49,8 +51,8 @@ export const PLAYER = {
 	lastAnimationCycle: null,
 	lastAnimationCycleCount: 0,
 	wasFacingLeftLastFrame: false,
-	accelUserValue: 0.2,
-	maxSpeedUserValue: 3,
+	accelUserValue: 0.2,   // can remove since obsolete
+	maxSpeedUserValue: 3,  // can remove since obsolete
 };
 
 
