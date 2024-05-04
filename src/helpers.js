@@ -17,6 +17,7 @@ import {
 	SCREEN_HEIGHT_PX,
 	DRAW_SPRITES_WITH_COLOR,
 	PLAYER_SPAWN_DELAY,
+	DEBUG_MODE,
 } from "./constants.js";
 
 import {
@@ -307,6 +308,19 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 				pixelColor = PLAYER_COLOR_MAP[colorPtr];
 			else
 				pixelColor = GREYSCALE_COLORS[colorPtr];
+
+			// color the corner pixels in red for debugging
+			if(DEBUG_MODE)
+			{
+				if(i === 0 && j === 0)
+					pixelColor = "#FF0000FF";
+				if(i === spriteWidth - 1 && j === 0)
+					pixelColor = "#FF0000FF";
+				if(i === 0 && j === spriteHeight - 1)
+					pixelColor = "#FF0000FF";
+				if(i === spriteWidth - 1 && j === spriteHeight - 1)
+					pixelColor = "#FF0000FF";
+			}
 
 			// spawn the player in via a glitchy effect
 			let warpPct;
