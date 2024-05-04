@@ -45,6 +45,7 @@ import {
 	PLAYER,
 	ENEMY2,
 	SCREENSHAKE,
+	STATE,
 } from "./state.js";
 
 
@@ -218,6 +219,13 @@ let FRAME = 0;
 let COUNTER = 0;
 let startTime;
 function gameLoop(e) {
+	if(STATE["resetGame"] === true)
+	{
+		FRAME = 0;
+		COUNTER = 0;
+		STATE["resetGame"] = false;
+	}
+
 	followPlayerWithCamera();
 
 	let animationArray = findAnimationCycle(FRAME);

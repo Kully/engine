@@ -2,6 +2,7 @@
 
 import {
 	GRID_WIDTH_PX,
+	VALID_CONTROLLER_KEYS,
 } from "./constants.js";
 
 import {
@@ -9,8 +10,15 @@ import {
 } from "./helpers.js";
 
 import {
+	PLAYER_TILE_X,
+	PLAYER_TILE_Y,
+} from "./levels.js";
+
+import {
 	PLAYER,
 	CAMERA,
+	STATE,
+	CONTROLLER,
 } from "./state.js";
 
 import {
@@ -108,6 +116,36 @@ export function handleBoundaryCollision(level) {
 
 	// deal with boundaries below you
 	let currentSpritePtr = getSpritePtrPlayerInside(level);
+
+	// reset game if you fall out of the level
+	if(currentSpritePtr === undefined) {
+
+		// reset player state
+		PLAYER["x"] = GRID_WIDTH_PX * PLAYER_TILE_X - CAMERA["xOffset"];
+		PLAYER["y"] = GRID_WIDTH_PX * PLAYER_TILE_Y - CAMERA["yOffset"];
+		PLAYER["xSP"] = GRID_WIDTH_PX * PLAYER_TILE_X - CAMERA["xOffset"];
+		PLAYER["ySP"] = GRID_WIDTH_PX * PLAYER_TILE_Y - CAMERA["yOffset"];
+		PLAYER["speed"] = 0;
+		PLAYER["speedSP"] = 0;
+		PLAYER["speedY"] = 0;
+		PLAYER["canJump"] = true;
+		PLAYER["jumpJuice"] = 1;
+		PLAYER["lastJumpJuice"] = 0;
+		PLAYER["frameCounter"] = 0;
+		PLAYER["spritePtr"] = 0;
+		PLAYER["lastAnimationCycle"] = null;
+		PLAYER["lastAnimationCycleCount"] = 0;
+		PLAYER["wasFacingLeftLastFrame"] = false;
+
+		// reset controller inputs
+		for (let key of VALID_CONTROLLER_KEYS)
+			CONTROLLER[key] = 0;
+		CONTROLLER["lastKeyUp"] = "ArrowRight";
+		CONTROLLER["lastLeftOrRight"] = "ArrowRight";
+
+		STATE["resetGame"] = true;
+	}
+	else
 	if (SPRITE_LOOKUP[currentSpritePtr]["hitbox"] === true) {
 		let playerGridFloatY = getPlayerGridY();
 		PLAYER["y"] = Math.floor(playerGridFloatY) * GRID_WIDTH_PX - CAMERA["yOffset"];
