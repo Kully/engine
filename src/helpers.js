@@ -39,6 +39,10 @@ let OUTOFBOUNDS_SPIRTE_IDX = 3;
 let PLAYER_SPIRTE_IDX = 10;
 
 
+let period = 30;
+let amp = 2;
+let wobble = 0.2;
+
 export function hexToNumber(hexString) {
 	return parseInt(hexString, 16);
 }
@@ -288,6 +292,36 @@ export function playerFacingLeft()
 	}
 }
 
+export function drawAnimatingBkgdLayer(bkgdLayerCtx, FRAME) {
+	let squareWidth = 8;
+	for (let i = 0; i < SCREEN_WIDTH_PX; i += squareWidth)
+	for (let j = 0; j < SCREEN_HEIGHT_PX; j += squareWidth)
+	{
+		// -- inside of some water
+		let g = j + Math.sin(i + 0.0002 * j * FRAME) * 80;
+		// let g = j + Math.sin( 0.0005 * j * FRAME) * 20;
+
+		g = Math.round(g);
+		if(g > 255)
+			g = 255
+		if(g < 0)
+			g = 0
+
+		g = Math.round(
+			-1 * (g - (255 / 2) ) + (255/2)
+		);
+		let pixelColor = `rgb(12,10,${g})`;
+		bkgdLayerCtx.fillStyle = pixelColor;
+		bkgdLayerCtx.fillRect(
+			i,
+			j,
+			squareWidth,
+			squareWidth,
+		);
+	}
+
+}
+
 export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
@@ -369,6 +403,8 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 
 			let x = ENEMY2["x"] + i * SCALE;
 			let y = ENEMY2["y"] + (j - spriteHeight + yShift) * SCALE;
+			x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
+
 			playerLayerCtx.fillStyle = pixelColor;
 			playerLayerCtx.fillRect(
 				x,

@@ -8,6 +8,7 @@ import {
 
 import {
 	FPS,
+	SHOW_BACKGROUND_LAYER,
 } from "./constants.js";
 
 import {
@@ -15,6 +16,7 @@ import {
 	clearCanvas,
 	playerFacingLeft,
 	drawBkgdLayer,
+	drawAnimatingBkgdLayer,
 	drawLevelLayer,
 	drawPlayerLayer,
 } from "./helpers.js";
@@ -213,7 +215,6 @@ maxSpeedUserValue.addEventListener("change", function(e) {
 let calcFpsValue = document.getElementById("fps");
 
 
-drawBkgdLayer(bkgdLayerCtx);
 
 let FRAME = 0;
 let COUNTER = 0;
@@ -245,6 +246,12 @@ function gameLoop(e) {
 	handleBoundaryCollision(LEVEL);
 
 	shakeScreenOnLand();
+
+	if(SHOW_BACKGROUND_LAYER)
+	{
+		clearCanvas(bkgdLayerCanvas, bkgdLayerCtx);
+		drawAnimatingBkgdLayer(bkgdLayerCtx, FRAME);
+	}
 
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
