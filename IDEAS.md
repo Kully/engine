@@ -141,5 +141,5 @@ We create separate level objects to deal with the browser's cache limitations. G
 TEXT = "Hey, how's it going over there? What are you doing?"
 ```
 
-## Milestones
+## Journal
 - (Nov 26, 2023) Improving the color coding was challenging. I ported over from hard-coded colors in a list into a monochromeMapper type solution. The mental RAM required for some of the Ctlr+F sequencing was pretty tricky (6 has to go to 4, and 17 to 6, so do the 6 to 4 one first so doing 16->6 will not interfere with the next step)
