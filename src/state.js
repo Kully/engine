@@ -114,10 +114,16 @@ const SMALL_SCREENSHAKE = {
 		[ -1, 0],
 	],
 };
-export const SCREENSHAKE = MEDIUM_SCREENSHAKE;
+const NO_SCREENSHAKE = {
+	ptr: 0,
+	array: [
+		[0, 0],
+	],
+};
+export const SCREENSHAKE = NO_SCREENSHAKE;
 
 
-let ENEMY2_X = 9;
+let ENEMY2_X = 12;
 let ENEMY2_Y = 3;
 export const ENEMY2 = {
 	x: GRID_WIDTH_PX * ENEMY2_X - CAMERA["xOffset"],
