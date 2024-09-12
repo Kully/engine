@@ -12,7 +12,7 @@ import {
 import {
 	PLAYER_TILE_X,
 	PLAYER_TILE_Y,
-} from "./levels.js";
+} from "./data/levels.js";
 
 import {
 	PLAYER,
@@ -23,7 +23,7 @@ import {
 
 import {
 	SPRITE_LOOKUP,
-} from "./sprites.js";
+} from "./data/sprites.js";
 
 
 export function getPlayerGridX() {

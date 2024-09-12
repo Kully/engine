@@ -20,7 +20,7 @@ import {
 
 import {
 	LEVEL_LOOKUP,
-} from "./levels.js"
+} from "./data/levels.js"
 
 import {
 	handleKeyDown,
@@ -29,7 +29,7 @@ import {
 
 import {
 	SPRITE_LOOKUP,
-} from "./sprites.js";
+} from "./data/sprites.js";
 
 import {
 	CAMERA,

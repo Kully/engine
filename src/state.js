@@ -10,7 +10,7 @@ import {
 import {
 	PLAYER_TILE_X,
 	PLAYER_TILE_Y,
-} from "./levels.js";
+} from "./data/levels.js";
 
 
 export const STATE = {resetGame: false};

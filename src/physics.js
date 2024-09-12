@@ -18,7 +18,7 @@ import {
 
 import {
 	SPRITE_LOOKUP,
-} from "./sprites.js";
+} from "./data/sprites.js";
 
 import {
 	CONTROLLER,

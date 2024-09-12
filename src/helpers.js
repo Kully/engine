@@ -31,7 +31,7 @@ import {
 	SPRITE_LOOKUP,
 	SPRITES,
 	BKGD_SPRITES,
-} from "./sprites.js";
+} from "./data/sprites.js";
 
 
 let INVISIBLE_SPIRTE_IDX = 0;
@@ -249,31 +249,35 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 		}
 }
 
-export function drawBkgdLayer(bkgdLayerCtx) {
+export function drawBkgdLayer(bkgdLayerCtx, isMosaic=false) {
 	let spriteArray = BKGD_SPRITES["DARK_SKY"][0]["sprite"];
 	let spriteWidth = BKGD_SPRITES["DARK_SKY"][0]["width"];
 	let spriteHeight = BKGD_SPRITES["DARK_SKY"][0]["height"];
 
-	for (let i = 0; i < spriteWidth; i += 1)
-		for (let j = 0; j < spriteHeight; j += 1) {
-			let colorPtr = spriteArray[i + j * spriteWidth];
+	let step = 1;
+	if(isMosaic)
+		step = 2
+	for (let i = 0; i < spriteWidth; i += step)
+	for (let j = 0; j < spriteHeight; j += step)
+	{
+		let colorPtr = spriteArray[i + j * spriteWidth];
 
-			let pixelColor;
-			if (DRAW_SPRITES_WITH_COLOR)
-				pixelColor = BKGD_COLOR_MAP[colorPtr];
-			else
-				pixelColor = GREYSCALE_COLORS[colorPtr];
+		let pixelColor;
+		if (DRAW_SPRITES_WITH_COLOR)
+			pixelColor = BKGD_COLOR_MAP[colorPtr];
+		else
+			pixelColor = GREYSCALE_COLORS[colorPtr];
 
-			let x = i * SCALE;
-			let y = j * SCALE;
-			bkgdLayerCtx.fillStyle = pixelColor;
-			bkgdLayerCtx.fillRect(
-				x,
-				y,
-				SCALE,
-				SCALE,
-			);
-		}
+		let x = i * SCALE;
+		let y = j * SCALE;
+		bkgdLayerCtx.fillStyle = pixelColor;
+		bkgdLayerCtx.fillRect(
+			x,
+			y,
+			SCALE,
+			SCALE,
+		);
+	}
 }
 
 export function playerFacingLeft()

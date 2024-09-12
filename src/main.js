@@ -24,7 +24,7 @@ import {
 
 import {
 	LEVEL,
-} from "./levels.js";
+} from "./data/levels.js";
 
 import {
 	handleKeyDown,
@@ -40,7 +40,7 @@ import {
 import {
 	PROTAGONIST,
 	SPRITES,
-} from "./sprites.js";
+} from "./data/sprites.js";
 
 import {
 	CAMERA,
@@ -216,6 +216,8 @@ maxSpeedUserValue.addEventListener("change", function(e) {
 });
 let calcFpsValue = document.getElementById("fps");
 
+
+// drawBkgdLayer(bkgdLayerCtx, true);
 
 
 let FRAME = 0;
