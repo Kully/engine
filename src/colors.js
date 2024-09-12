@@ -67,6 +67,15 @@ const DARK_GREEN_LEVEL_COLOR_MAP = {
 	5: "#12B083FF",
 	6: "#7BDAE3FF",
 };
+const CYBERPUNK_LEVEL_COLOR_MAP = {
+	0: "#000000FF",
+	1: "#000000FF",
+	2: "#020314FF",
+	3: "#560badFF",
+	4: "#7209b7FF",
+	5: "#b5179eFF",
+	6: "#f72585FF",
+}
 
 
 /* PLAYER THEMES
@@ -139,6 +148,17 @@ const SEAWEED_PLAYER_COLOR_MAP = {
 	7: "#ebcd46ff",  // fire 1
     8: "#e1622bff",  // fire 2
 };
+const CYBERPUNK_PLAYER_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#000000FF",
+	2: "#020314FF",
+	3: "#560badFF",
+	4: "#7209b7FF",
+	5: "#b5179eFF",
+	6: "#f72585FF",
+	7: "#ebcd46ff",  // fire 1
+    8: "#e1622bff",  // fire 2
+}
 
 
 /* ENEMY SPRITES
