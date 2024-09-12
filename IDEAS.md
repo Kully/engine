@@ -14,6 +14,40 @@ One idea is to vary our layers' respective color palette by movements along any 
 
 GREYSCALE → COLOR MAPPING → SPRITES → LEVELS → SEQUENCES
 
+## Editor
+
+#### Q. How do you define a level?
+
+```javascript
+
+let LEVEL = {
+	"new-stage": {
+    "playerX": 1,
+    "playerY": 5,
+    "boundaryMap": [  // this is where collisions happen
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+    ],
+    "enemyMap": [     // this is the initial spawn of bad guys
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+    ],
+    "itemMap": [      // this is where collectibles appear
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+    ],
+}
+```
+
 
 ## Cycles
 
