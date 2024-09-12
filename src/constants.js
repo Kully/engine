@@ -24,3 +24,5 @@ export const DEBUG_MODE = false;
 export const DRAW_SPRITES_WITH_COLOR = true;
 export const PLAYER_SPAWN_DELAY = 14;
 export const SHOW_BACKGROUND_LAYER = false;
+export const ENABLE_RUNNING = false;
+export const ENABLE_SHOOTING_WHILE_RUNNING = false;

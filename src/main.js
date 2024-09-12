@@ -9,6 +9,7 @@ import {
 import {
 	FPS,
 	SHOW_BACKGROUND_LAYER,
+	ENABLE_SHOOTING_WHILE_RUNNING,
 } from "./constants.js";
 
 import {
@@ -142,6 +143,7 @@ function findAnimationCycle(FRAME) {
 			   CONTROLLER["KeyZ"]
 			&& CONTROLLER["ShiftLeft"] === 0
 			&& CONTROLLER["ShiftRight"] === 0
+			&& ENABLE_SHOOTING_WHILE_RUNNING
 		) {
 			animationArray = SPRITES[PROTAGONIST]["WALK_SHOOT_CYCLE"];
 			animationCycle = "WALK_SHOOT_CYCLE";

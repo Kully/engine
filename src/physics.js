@@ -9,6 +9,7 @@ import {
 import {
 	SCALE,
 	GRID_WIDTH_PX,
+	ENABLE_RUNNING,
 } from "./constants.js";
 
 import {
@@ -25,14 +26,17 @@ import {
 } from "./state.js";
 
 
-const JUMP_ACCEL = 8;
+const JUMP_ACCEL = 11;
 const GRAVITY_ACCEL = 0.5;
 const TERMINAL_VELOCITY = 130;
 
 export function updateHorizontalSpeed(accel, decel, maxSpeed) {
 	// enable running mode
-	if(CONTROLLER["ShiftLeft"] === 1 || CONTROLLER["ShiftRight"] === 1)
-		maxSpeed *= 2;
+	if(ENABLE_RUNNING)
+	{
+		if(CONTROLLER["ShiftLeft"] === 1 || CONTROLLER["ShiftRight"] === 1)
+			maxSpeed *= 2;
+	}
 
 	let lastSpeed = PLAYER["speed"];
 
