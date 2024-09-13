@@ -68,11 +68,11 @@ export const LEVEL_LOOKUP = {
         "level": [
             [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
             [4, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 4],
-            [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
-            [4, 0, 0, 0, 0, 42, 0, 0, 0, 44, 0, 0, 0, 0, 4],
+            [4, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+            [4, 0, 0, 11, 0, 42, 0, 0, 0, 44, 0, 0, 0, 0, 4],
             [4, 0, 0, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
             [4, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 4],
-            [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42, 4],
+            [4, 0, 0, 0, 0, 0, 0, 0, 0, 11, 11, 0, 11, 42, 4],
             [4, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 4],
         ],
         "itemMap": [
@@ -144,7 +144,7 @@ export const LEVEL_LOOKUP = {
     }
 };
 
-const levelName = "metroidvania";
+const levelName = "new-stage";
 export const PLAYER_TILE_X = LEVEL_LOOKUP[levelName]["playerX"];
 export const PLAYER_TILE_Y = LEVEL_LOOKUP[levelName]["playerY"];
 export const LEVEL = LEVEL_LOOKUP[levelName]["level"];

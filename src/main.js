@@ -3,6 +3,7 @@
 
 import {
 	handleBoundaryCollision,
+	handleItemCollision,
 	isPlayerStanding,
 } from "./boundaries.js";
 
@@ -248,6 +249,7 @@ function gameLoop(e) {
 	translatePlayer();
 
 	handleBoundaryCollision(LEVEL);
+	handleItemCollision(LEVEL);
 
 	shakeScreenOnLand();
 

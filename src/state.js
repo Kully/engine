@@ -53,6 +53,9 @@ export const PLAYER = {
 	wasFacingLeftLastFrame: false,
 	accelUserValue: 0.2,   // can remove since obsolete
 	maxSpeedUserValue: 3,  // can remove since obsolete
+	items: {
+		gold: 0,
+	},
 };
 
 

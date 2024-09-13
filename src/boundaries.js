@@ -151,3 +151,30 @@ export function handleBoundaryCollision(level) {
 		PLAYER["y"] = Math.floor(playerGridFloatY) * GRID_WIDTH_PX - CAMERA["yOffset"];
 	}
 }
+
+
+function incrementPlayerItemCount(itemName, amount)
+{
+	PLAYER["items"][itemName] += amount;
+}
+
+
+export function handleItemCollision(level)
+{
+	// set up the variables
+	let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
+	let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
+	playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
+	playerGridY += CAMERA["yOffset"] / GRID_WIDTH_PX;
+
+	let xTileCurrent = Math.round(playerGridX);
+	let yTileCurrent = Math.round(playerGridY);
+
+	let thisSprite = level[yTileCurrent - 1][xTileCurrent];
+	if (thisSprite !== undefined && SPRITE_LOOKUP[thisSprite]["name"] === "gold") {
+		incrementPlayerItemCount("gold", 1);
+
+		// remove the item and replace with invisible sprite
+		level[yTileCurrent - 1][xTileCurrent] = 0;
+	}
+}
