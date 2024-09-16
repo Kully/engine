@@ -26,3 +26,4 @@ export const PLAYER_SPAWN_DELAY = 14;
 export const SHOW_BACKGROUND_LAYER = false;
 export const ENABLE_RUNNING = false;
 export const ENABLE_SHOOTING_WHILE_RUNNING = false;
+export const CHANGE_COLORS_BY_TIME = false;
