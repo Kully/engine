@@ -204,20 +204,7 @@ function followPlayerWithCamera() {
 
 
 
-
-let accelUserValue = document.getElementById("accel");
-accelUserValue.addEventListener("change", function(e) {
-	let val = parseFloat(e.target.value);
-	PLAYER["accelUserValue"] = val;
-});
-let maxSpeedUserValue = document.getElementById("max-speed");
-maxSpeedUserValue.addEventListener("change", function(e) {
-	let val = parseFloat(e.target.value);
-	PLAYER["maxSpeedUserValue"] = val;
-});
 let calcFpsValue = document.getElementById("fps");
-
-
 // drawBkgdLayer(bkgdLayerCtx, true);
 
 
@@ -237,14 +224,7 @@ function gameLoop(e) {
 	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray);
 
-	let maxSpeed = 3;
-	let accel = maxSpeed / 6;
-	let decel = maxSpeed / 3;
-	updateHorizontalSpeed(
-		accel,
-		decel,
-		maxSpeed,
-	);
+	updateHorizontalSpeed(3, 0.5, 1);
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
 
