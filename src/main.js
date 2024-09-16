@@ -224,7 +224,7 @@ function gameLoop(e) {
 	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray);
 
-	updateHorizontalSpeed(3, 0.5, 1);
+	updateHorizontalSpeed(0.5, 1, 3);
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
 
