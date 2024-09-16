@@ -42,6 +42,13 @@ LEVEL_COLOR_MAP = {
     "#1286B0FF": 5,
     "#7BDAE3FF": 6,
 }
+METROID_COLOR_MAP = {
+    "#00000000": 0,
+    "#000000FF": 1,  # black
+    "#3F7F00FF": 2,  # green
+    "#FF301FFF": 3,  # red
+    "#FF905FFF": 4,  # pink
+}
 
 
 def make_sprite_unit(
@@ -205,10 +212,13 @@ def get_sprite_data(filename, color_int_lookup):
 
     sprite = []
     for idx, color in enumerate(sprite_colors):
-        try:
-            sprite.append(color_int_lookup[color.lower()])
-        except KeyError:
-            sprite.append(color_int_lookup[color.upper()])
+        if color.endswith("00"):
+            sprite.append(0)
+        else:
+            try:
+                sprite.append(color_int_lookup[color.lower()])
+            except KeyError:
+                sprite.append(color_int_lookup[color.upper()])
 
     output = {
         "sprite": sprite,
@@ -260,6 +270,7 @@ def generate_sprites(color_int_lookup, path_base):
 
 
 if __name__ == "__main__":
-    generate_sprites(color_int_lookup=None, path_base="utils/media/background")
+    # generate_sprites(color_int_lookup=None, path_base="utils/media/background")
     # generate_sprites(color_int_lookup=LEVEL_COLOR_MAP, path_base="utils/media/level")
-    # generate_sprites(color_int_lookup=PLAYER_COLOR_MAP, path_base="utils/media/sprites")
+    # generate_sprites(color_int_lookup=PLAYER_COLOR_MAP, path_base="utils/media/characters/james")
+    generate_sprites(color_int_lookup=METROID_COLOR_MAP, path_base="utils/media/characters/metroid")
