@@ -4,6 +4,7 @@
 import {
 	handleBoundaryCollision,
 	handleItemCollision,
+	handleBulletCollision,
 	isPlayerStanding,
 } from "./boundaries.js";
 
@@ -11,6 +12,7 @@ import {
 	FPS,
 	SHOW_BACKGROUND_LAYER,
 	ENABLE_SHOOTING_WHILE_RUNNING,
+	GRID_WIDTH_PX,
 } from "./constants.js";
 
 import {
@@ -21,6 +23,7 @@ import {
 	drawAnimatingBkgdLayer,
 	drawLevelLayer,
 	drawPlayerLayer,
+	drawBullets,
 } from "./helpers.js";
 
 import {
@@ -50,6 +53,7 @@ import {
 	ENEMY2,
 	SCREENSHAKE,
 	STATE,
+	ACTIVE_BULLETS,
 } from "./state.js";
 
 
@@ -202,6 +206,47 @@ function followPlayerWithCamera() {
 	_moveCamera("y", "upThresh", "downThresh", "speedY");
 }
 
+function addBulletsToScene() {
+	if(
+		   PLAYER["spritePtr"] === 1  // TODO: Make sure this happens on 0
+		&& PLAYER["frameCounter"] === 0
+		&& PLAYER["lastAnimationCycle"] === "SHOOT_CYCLE"
+	)
+	{
+		let bulletX = PLAYER["x"] + CAMERA["xOffset"];
+		let bulletY = PLAYER["y"] + CAMERA["yOffset"];
+		bulletY -= 40;  // shift the bullet up to be aligned with the gun
+
+		let bulletBaseSpeed = 12;
+		let velocity;
+		if(playerFacingLeft())
+		{
+			velocity = -1 * bulletBaseSpeed;
+		}
+		else
+		{
+			velocity = bulletBaseSpeed;
+			bulletX += GRID_WIDTH_PX;
+		}
+
+		let bullet = {
+			x: bulletX,
+			y: bulletY,
+			velocity: velocity,
+		}
+		if(ACTIVE_BULLETS.length < 10)
+		{
+			ACTIVE_BULLETS.push(bullet);
+		}
+	}
+}
+
+function updateBulletPositions() {
+	for(let bullet of ACTIVE_BULLETS)
+	{
+		bullet["x"] += bullet["velocity"];
+	}
+}
 
 
 let calcFpsValue = document.getElementById("fps");
@@ -228,6 +273,10 @@ function gameLoop(e) {
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
 
+	addBulletsToScene();
+	updateBulletPositions();
+	handleBulletCollision(LEVEL);
+
 	handleBoundaryCollision(LEVEL);
 	handleItemCollision(LEVEL);
 
@@ -242,6 +291,9 @@ function gameLoop(e) {
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
+
+	// draw active bullets
+	drawBullets(playerLayerCtx, FRAME);
 
 	// draw game level
 	clearCanvas(levelLayerCanvas, levelLayerCtx);

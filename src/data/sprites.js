@@ -1,5 +1,7 @@
 /* Sprites */
 
+import {BULLET_SPRITES} from "./objects.js";
+
 export const SPRITE_LOOKUP = {
 	0: {
 		sprite: [
@@ -1693,7 +1695,7 @@ const METROID_SPRITES = {
 			],
 			width: 16,
 			height: 16,
-			frameDuration: 12,
+			frameDuration: 3,
 			tPad: 0,
 			bPad: 0,
 			lPad: 3,
@@ -1984,6 +1986,7 @@ export const SPRITES = {
 	"neptune": NEPTUNE_SPRITES,
 	"enemy2": ENEMY2_SPRITES,
 	"metroid": METROID_SPRITES,
+	"bullet": BULLET_SPRITES,
 };
 
 export const PROTAGONIST = "metroid";

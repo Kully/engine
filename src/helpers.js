@@ -24,6 +24,7 @@ import {
 	CAMERA,
 	CONTROLLER,
 	PLAYER,
+	ACTIVE_BULLETS,
 	ENEMY2,
 } from "./state.js";
 
@@ -417,4 +418,39 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 				SCALE,
 			);
 		}
+}
+
+export function drawBullets(playerLayerCtx, FRAME)
+{
+	for(let bullet of ACTIVE_BULLETS)
+	{
+		let spriteArray = SPRITES["bullet"]["IDLE_CYCLE"][0]["sprite"];
+		let spriteWidth = SPRITES["bullet"]["IDLE_CYCLE"][0]["width"];
+		let spriteHeight = SPRITES["bullet"]["IDLE_CYCLE"][0]["height"];
+
+		let bulletX = bullet["x"];
+		let bulletY = bullet["y"];
+
+		for (let i = 0; i < spriteWidth; i += 1)
+			for (let j = 0; j < spriteHeight; j += 1) {
+				let colorPtr = spriteArray[i + j * spriteWidth];
+
+				let pixelColor;
+				if (DRAW_SPRITES_WITH_COLOR)
+					pixelColor = PLAYER_COLOR_MAP[colorPtr];
+				else
+					pixelColor = GREYSCALE_COLORS[colorPtr];
+
+				let x = (bulletX - CAMERA["xOffset"]) + i * SCALE;
+				let y = (bulletY - CAMERA["yOffset"]) + (j - spriteHeight) * SCALE;
+
+				playerLayerCtx.fillStyle = pixelColor;
+				playerLayerCtx.fillRect(
+					x,
+					y,
+					SCALE,
+					SCALE,
+				);
+			}
+	}
 }

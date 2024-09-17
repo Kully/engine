@@ -58,6 +58,8 @@ export const PLAYER = {
 	},
 };
 
+export const ACTIVE_BULLETS = [];
+
 
 const LARGE_SCREENSHAKE = {
 	ptr: 0,

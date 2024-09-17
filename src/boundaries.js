@@ -15,6 +15,7 @@ import {
 } from "./data/levels.js";
 
 import {
+	ACTIVE_BULLETS,
 	PLAYER,
 	CAMERA,
 	STATE,
@@ -176,5 +177,29 @@ export function handleItemCollision(level)
 
 		// remove the item and replace with invisible sprite
 		level[yTileCurrent - 1][xTileCurrent] = 0;
+	}
+}
+
+export function handleBulletCollision(level)
+{
+	for(let idx = ACTIVE_BULLETS.length - 1; idx >= 0; idx -= 1)
+	{
+		let thisBullet = ACTIVE_BULLETS[idx];
+
+		let xTileCurrent;
+		let yTileCurrent = Math.ceil(thisBullet["y"] / GRID_WIDTH_PX);
+		if(thisBullet["velocity"] > 0)
+		{
+			xTileCurrent = Math.floor(thisBullet["x"] / GRID_WIDTH_PX);
+		}
+		else
+		{
+			xTileCurrent = Math.floor(thisBullet["x"] / GRID_WIDTH_PX);
+		}
+		let thisSpritePtr = level[yTileCurrent - 1][xTileCurrent];
+		if(thisSpritePtr === undefined || SPRITE_LOOKUP[thisSpritePtr]["hitbox"] === true)
+		{
+			ACTIVE_BULLETS.splice(idx, 1);
+		}
 	}
 }
