@@ -49,63 +49,6 @@ let LEVEL = {
 ```
 
 
-## Cycles
-
-This section is meant to brainstorm the best way or ways of implementing animations that can play, start, and stop, wihtin the gameLoop. There are a variety of animations (or cycles) that could play in the game:
-
-- Deciding how many frames to move if you are holding RIGHT in moving the player
-- Figuring out which frame to draw a water animation loop
-- Figure out how long you have been holding a button down for
-
-The big question here is how to conceptualize these objects so as to keep the design paradigm as cohesive as possible.
-
-```javascript
-const SCREEN_SHAKE_LOOKUPS = {
-	"fallFromHigh": {
-		ptr: 0,
-		rule: "sequence",  // can be 'sequence' or 'func'
-		array: [0, 1, 1, 2, 1, -1, 1, 2, 1, 0, 1, 2, 1],
-	}
-}
-
-const WATER = {
-	"lookups": {
-		"waterAnimation": {
-			ptr: 0,
-			array: [0, 1, 2, 3, 4, 5, 6, 7],
-		},
-	}
-}
-
-const PLAYER = {
-	...
-	"lookups": {
-		"horizontalSpeed": {
-			ptr: 0,
-			array: [0, 1, 1, 2, 1],
-		},
-		"walkSprite": {
-			ptr: 0,
-			array: [0, 1, 2,],
-		},
-		"standSprite": {
-			ptr: 0,
-			array: [0, 1],
-		},
-	}
-}
-
-let FRAME = 0;
-gameLoop()
-{
-	updatePlayerPointers(FRAME);
-	drawSprites();
-	drawLevelLayer();
-	FRAME += 1;
-}
-```
-
-
 ## Spaces
 
 There are different ways to allow a player to explore spaces. A space is any physical 3D volume that has a non-zero volume: worlds, lands, rooms, offices, beaches, cities, and galaxies are all exampls of spaces.
@@ -137,43 +80,7 @@ Think about video games you have played. Implicit spaces exist based on the way 
 - Maybe we can leverage the aversion of right-leaning people's dissolution of borders to create a game where your HUB world starts very small and clostrophobic, only to expand a little bit more, and then when you feel the most comfortable, you can cash out the space and the region of growing.
 	- Indications of Comfort in a Space could be that you have a friend who you can chat with in the corner, who comes in and out at their own pace.
 
-**Levels**
-
-```javascript
-const FIRST_CAVE = [
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-]
-const GRASSY_PLAIN = [
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-]
-const UNDERGROUND = [
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,8],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-	[0,0,0,0,0,0],
-]
-```
-
 We create separate level objects to deal with the browser's cache limitations. Given the proper computing enviornment, we could theoretically have one large contiguous level (eg. 1000 x 1000 tiles) and intelligently load and unload metatiles as the player moves around.
-
-
-## Dialouge
-
-```javascript
-TEXT = "Hey, how's it going over there? What are you doing?"
-```
 
 ## Journal
 - (Nov 26, 2023) Improving the color coding was challenging. I ported over from hard-coded colors in a list into a monochromeMapper type solution. The mental RAM required for some of the Ctlr+F sequencing was pretty tricky (6 has to go to 4, and 17 to 6, so do the 6 to 4 one first so doing 16->6 will not interfere with the next step)
