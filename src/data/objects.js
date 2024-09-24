@@ -14,8 +14,6 @@ export const BULLET_SPRITES = {
             lPad: 0,
             rPad: 0,
             frameDuration: 0,
-            xShift: 0,
-            yShift: 0,
         },
     ]
 };
@@ -55,8 +53,6 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
         {
             sprite: [
@@ -84,8 +80,6 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
         {
             sprite: [
@@ -113,8 +107,6 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
         {
             sprite: [
@@ -142,8 +134,6 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
         {
             sprite: [
@@ -171,8 +161,6 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
         {
             sprite: [
@@ -200,8 +188,6 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
         {
             sprite: [
@@ -229,8 +215,6 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
         
 
@@ -260,8 +244,11 @@ const COIN_SPRITES = {
             bPad: 0,
             lPad: 3,
             rPad: 0,
-            xShift: 0,
-            yShift: 0,
         },
     ],
+}
+
+
+export const ITEM_LOOKUP = {
+    0: COIN_SPRITES,
 }

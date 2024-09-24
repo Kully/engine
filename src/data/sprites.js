@@ -433,8 +433,6 @@ export const BKGD_SPRITES = {
 			width: 288,
 			height: 180,
 			frameDuration: 0,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 };
@@ -480,8 +478,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_STAND_CYCLE[0],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -509,8 +505,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_STAND_CYCLE[2],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	CROUCH_CYCLE: [
@@ -540,8 +534,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_CROUCH_CYCLE[0],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -569,8 +561,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_CROUCH_CYCLE[1],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -598,8 +588,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_CROUCH_CYCLE[2],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -627,8 +615,6 @@ const RANGER_SPRITES = {
 			lPad: 4,
 			rPad: 2,
 			frameDuration: RANGER_CROUCH_CYCLE[3],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -656,8 +642,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_CROUCH_CYCLE[4],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -685,8 +669,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_CROUCH_CYCLE[5],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -714,8 +696,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_CROUCH_CYCLE[6],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	JUMP_CYCLE: [
@@ -745,8 +725,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_JUMP_CYCLE[0],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -774,8 +752,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_JUMP_CYCLE[1],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -803,8 +779,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_JUMP_CYCLE[2],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -832,8 +806,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_JUMP_CYCLE[3],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -861,8 +833,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_JUMP_CYCLE[4],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -890,8 +860,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_JUMP_CYCLE[5],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -919,8 +887,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_JUMP_CYCLE[6],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	TURN_CYCLE: [
@@ -950,8 +916,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 4,
 			frameDuration: RANGER_TURN_CYCLE[0],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	SLIDE_CYCLE: [
@@ -981,8 +945,6 @@ const RANGER_SPRITES = {
 			lPad: 4,
 			rPad: 3,
 			frameDuration: RANGER_SLIDE_CYCLE[0],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	WALK_CYCLE: [
@@ -1012,8 +974,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_WALK_FRAMES[0],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1041,8 +1001,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_WALK_FRAMES[1],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1070,8 +1028,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_WALK_FRAMES[2],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	SHOOT_CYCLE: [
@@ -1101,8 +1057,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_SHOOT_FRAMES[0],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1130,8 +1084,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 1,
 			frameDuration: RANGER_SHOOT_FRAMES[1],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1159,8 +1111,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 0,
 			frameDuration: RANGER_SHOOT_FRAMES[2],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1188,8 +1138,6 @@ const RANGER_SPRITES = {
 			lPad: 3,
 			rPad: 3,
 			frameDuration: RANGER_SHOOT_FRAMES[3],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1217,8 +1165,6 @@ const RANGER_SPRITES = {
 			lPad: 4,
 			rPad: 4,
 			frameDuration: RANGER_SHOOT_FRAMES[4],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1246,8 +1192,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 2,
 			frameDuration: RANGER_SHOOT_FRAMES[5],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	WALK_SHOOT_CYCLE: [
@@ -1277,8 +1221,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 1,
 			frameDuration: RANGER_WALK_SHOOT_FRAMES[0],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1306,8 +1248,6 @@ const RANGER_SPRITES = {
 			lPad: 5,
 			rPad: 0,
 			frameDuration: RANGER_WALK_SHOOT_FRAMES[1],
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1335,8 +1275,6 @@ const RANGER_SPRITES = {
 			lPad: 4,
 			rPad: 3,
 			frameDuration: RANGER_WALK_SHOOT_FRAMES[2],
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 };
@@ -1371,8 +1309,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 3,
 			rPad: 0,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	WALK_CYCLE: [
@@ -1402,8 +1338,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 4,
 			rPad: 5,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1431,8 +1365,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 2,
 			rPad: 4,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1460,8 +1392,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 1,
 			rPad: 4,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	JUMP_CYCLE: [
@@ -1491,8 +1421,6 @@ const METROID_SPRITES = {
 			bPad: 3,
 			lPad: 4,
 			rPad: 4,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1520,8 +1448,6 @@ const METROID_SPRITES = {
 			bPad: 4,
 			lPad: 3,
 			rPad: 2,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1549,8 +1475,6 @@ const METROID_SPRITES = {
 			bPad: 2,
 			lPad: 4,
 			rPad: 4,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1578,8 +1502,6 @@ const METROID_SPRITES = {
 			bPad: 4,
 			lPad: 2,
 			rPad: 3,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	TURN_CYCLE: [
@@ -1609,8 +1531,6 @@ const METROID_SPRITES = {
 			lPad: 5,
 			rPad: 4,
 			frameDuration: 2,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	CROUCH_CYCLE: [
@@ -1640,8 +1560,6 @@ const METROID_SPRITES = {
 			lPad: 3,
 			rPad: 0,
 			frameDuration: 400,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	SHOOT_CYCLE: [
@@ -1671,8 +1589,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 3,
 			rPad: 0,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1700,8 +1616,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 3,
 			rPad: 0,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1729,8 +1643,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 3,
 			rPad: 0,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1758,8 +1670,6 @@ const METROID_SPRITES = {
 			bPad: 0,
 			lPad: 3,
 			rPad: 0,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 }
@@ -1788,8 +1698,6 @@ const ENEMY2_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: 80,
-			xShift: 0,
-			yShift: 0,
 		},
 	]
 };
@@ -1818,8 +1726,6 @@ const NEPTUNE_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: 100,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	TURN_CYCLE: [
@@ -1845,8 +1751,6 @@ const NEPTUNE_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: 100,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	JUMP_CYCLE: [
@@ -1872,8 +1776,6 @@ const NEPTUNE_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: undefined,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 	WALK_CYCLE: [
@@ -1899,8 +1801,6 @@ const NEPTUNE_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: 10,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1924,8 +1824,6 @@ const NEPTUNE_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: 3,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1949,8 +1847,6 @@ const NEPTUNE_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: 10,
-			xShift: 0,
-			yShift: 0,
 		},
 		{
 			sprite: [
@@ -1974,8 +1870,6 @@ const NEPTUNE_SPRITES = {
 			width: 16,
 			height: 16,
 			frameDuration: 3,
-			xShift: 0,
-			yShift: 0,
 		},
 	],
 };

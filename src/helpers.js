@@ -331,7 +331,6 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
 	let spriteHeight = animationArray[PLAYER["spritePtr"]]["height"];
-	let yShift = animationArray[PLAYER["spritePtr"]]["yShift"];
 
 	for (let i = 0; i < spriteWidth; i += 1)
 		for (let j = 0; j < spriteHeight; j += 1) {
@@ -373,7 +372,7 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 			pixelColor = mutatePixel(pixelColor, warpPct);
 
 			let x = PLAYER["x"] + i * SCALE;
-			let y = PLAYER["y"] + (j - spriteHeight + yShift) * SCALE;
+			let y = PLAYER["y"] + (j - spriteHeight) * SCALE;
 			playerLayerCtx.fillStyle = pixelColor;
 			playerLayerCtx.fillRect(
 				x,
@@ -388,7 +387,6 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	spriteArray = SPRITES["enemy2"]["STAND_CYCLE"][0]["sprite"];
 	spriteWidth = SPRITES["enemy2"]["STAND_CYCLE"][0]["width"];
 	spriteHeight = SPRITES["enemy2"]["STAND_CYCLE"][0]["height"];
-	yShift = SPRITES["enemy2"]["STAND_CYCLE"][0]["yShift"];
 
 	let enemyFacingLeft = false;
 	for (let i = 0; i < spriteWidth; i += 1)
@@ -407,7 +405,7 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 				pixelColor = GREYSCALE_COLORS[colorPtr];
 
 			let x = ENEMY2["x"] + i * SCALE;
-			let y = ENEMY2["y"] + (j - spriteHeight + yShift) * SCALE;
+			let y = ENEMY2["y"] + (j - spriteHeight) * SCALE;
 			x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
 
 			playerLayerCtx.fillStyle = pixelColor;
