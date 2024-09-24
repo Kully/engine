@@ -206,6 +206,17 @@ export const LIGHT_ENEMY2_COLOR_MAP = {
 };
 
 
+/* OBJECT THEMES
+========================= */
+
+export const GOLD_COIN_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#d82800FF",
+	2: "#fc9838FF",
+	3: "#fcfcfcFF",
+}
+
+
 // set colors depending on the time of day
 const now = new Date();
 const hour = now.getHours();
