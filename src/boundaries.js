@@ -174,6 +174,7 @@ export function handleItemCollision(level)
 	let thisSprite = level[yTileCurrent - 1][xTileCurrent];
 	if (thisSprite !== undefined && SPRITE_LOOKUP[thisSprite]["name"] === "gold") {
 		incrementPlayerItemCount("gold", 1);
+		console.log("Gold: ", PLAYER["items"]["gold"])
 
 		// remove the item and replace with invisible sprite
 		level[yTileCurrent - 1][xTileCurrent] = 0;
