@@ -5,6 +5,7 @@ import {
 	PLAYER_COLOR_MAP,
 	ENEMY2_COLOR_MAP,
 	LEVEL_COLOR_MAP,
+	GOLD_COIN_COLOR_MAP,
 	GREYSCALE_COLORS,
 } from "./colors.js";
 
@@ -32,12 +33,10 @@ import {
 	SPRITE_LOOKUP,
 	SPRITES,
 	BKGD_SPRITES,
+	INVISIBLE_SPIRTE_IDX,
+	OUTOFBOUNDS_SPIRTE_IDX,
+	PLAYER_SPIRTE_IDX,
 } from "./data/sprites.js";
-
-
-let INVISIBLE_SPIRTE_IDX = 0;
-let OUTOFBOUNDS_SPIRTE_IDX = 3;
-let PLAYER_SPIRTE_IDX = 10;
 
 
 let period = 30;
@@ -139,18 +138,25 @@ export function getSpriteFromHiddenCanvas(spritesCtx, spritePtr, spriteSlotLooku
 	return savedData;
 }
 
-export function saveSpriteToHiddenCanvas(spritesCtx, spritePtr, scale, slotX) {
+/*
+	Depending on the layer, decide what
+	the color map should be.
+*/
+export function decideColorMap(spritePtr)
+{
+	if(spritePtr >= 900 && spritePtr <= 907)
+		return GOLD_COIN_COLOR_MAP;
+	return LEVEL_COLOR_MAP;
+}
+
+export function saveSpriteToHiddenCanvas(spritesCtx, spritePtr, colorMap, scale, slotX) {
 	let spriteData = SPRITE_LOOKUP[spritePtr]["sprite"];
 	for (let i = 0; i < spriteData.length; i += 1) {
 		let imageData = spritesCtx.createImageData(2 * SCALE, 2 * SCALE);
 		let colorPtr = spriteData[i];
+		let pixelColor = colorMap[colorPtr]
 
-		let pixelColor;
-		if (DRAW_SPRITES_WITH_COLOR)
-			pixelColor = LEVEL_COLOR_MAP[colorPtr];
-		else
-			pixelColor = GREYSCALE_COLORS[colorPtr];
-		if(colorPtr===0)
+		if(colorPtr === 0)  // TODO: Justify the 0 here
 			pixelColor = "#00000000";
 
 		let rgbArray = hexToRgb(pixelColor);
@@ -182,11 +188,13 @@ export function createHiddenSpriteLookups(spritesCanvas, spritesCtx) {
 		}
 	}
 	for (let ptr in spriteSlotLookup) {
+		let colorMap = decideColorMap(ptr);
 		saveSpriteToHiddenCanvas(
 			spritesCtx,
 			ptr,
+			colorMap,
 			GRID_WIDTH_PX / SPRITE_WIDTH,
-			spriteSlotLookup[ptr]
+			spriteSlotLookup[ptr],
 		);
 	}
 	return [spriteSlotLookup, slotSpriteLookup];
@@ -247,6 +255,78 @@ export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLooku
 				putImageDataX,
 				putImageDataY,
 			);
+		}
+}
+
+
+export function drawItemLayer(itemLayerCtx, spritesCtx, level, spriteSlotLookup, FRAME) {
+	let xTiles = SCREEN_WIDTH_PX / GRID_WIDTH_PX;
+	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
+	for (let x = 0; x < xTiles + 1; x += 1)
+		for (let y = 0; y < yTiles + 1; y += 1) {
+			let shiftXPtr;
+			if (CAMERA["xOffset"] >= 0)
+				shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
+			else
+				shiftXPtr = Math.ceil(CAMERA["xOffset"] / GRID_WIDTH_PX);
+
+			let shiftYPtr;
+			if (CAMERA["yOffset"] >= 0)
+				shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
+			else
+				shiftYPtr = Math.ceil(CAMERA["yOffset"] / GRID_WIDTH_PX);
+
+			let spritePtr = getValueFrom2DArray(
+				level,
+				x + shiftXPtr,
+				y + shiftYPtr,
+			);
+			
+
+			if (spritePtr === undefined) {
+				spritePtr = OUTOFBOUNDS_SPIRTE_IDX;
+			}
+
+			// animate the rotating gold coins
+			if(
+				   spritePtr !== OUTOFBOUNDS_SPIRTE_IDX &&
+				   SPRITE_LOOKUP[spritePtr]["name"] == "gold"
+			)
+			{
+				if(FRAME % 10 === 0)
+				{
+					SPRITE_LOOKUP[spritePtr]["currentFrame"] = 0;
+					spritePtr = SPRITE_LOOKUP[spritePtr]["nextPtr"];
+
+					// print the next animation frame of the gold coin
+					putValueTo2DArray(
+						level,
+						x + shiftXPtr,
+						y + shiftYPtr,
+						spritePtr,
+					)
+				}
+			}
+
+			if (spritePtr === undefined) {
+				spritePtr = OUTOFBOUNDS_SPIRTE_IDX;
+			}
+			if(spritePtr !== OUTOFBOUNDS_SPIRTE_IDX && spritePtr !== INVISIBLE_SPIRTE_IDX) {
+				let savedData = getSpriteFromHiddenCanvas(
+					spritesCtx,
+					spritePtr,
+					spriteSlotLookup,
+				);
+				let tileX = x;
+				let tileY = y;
+				let putImageDataX = tileX * GRID_WIDTH_PX - (CAMERA["xOffset"] % GRID_WIDTH_PX);
+				let putImageDataY = tileY * GRID_WIDTH_PX - (CAMERA["yOffset"] % GRID_WIDTH_PX);
+				itemLayerCtx.putImageData(
+					savedData,
+					putImageDataX,
+					putImageDataY,
+				);
+			}
 		}
 }
 

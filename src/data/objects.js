@@ -216,8 +216,6 @@ const COIN_SPRITES = {
             lPad: 3,
             rPad: 0,
         },
-        
-
         {
             sprite: [
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -250,5 +248,5 @@ const COIN_SPRITES = {
 
 
 export const ITEM_LOOKUP = {
-    0: COIN_SPRITES,
+    1: COIN_SPRITES,
 }

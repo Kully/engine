@@ -23,11 +23,13 @@ import {
 	drawAnimatingBkgdLayer,
 	drawLevelLayer,
 	drawPlayerLayer,
+	drawItemLayer,
 	drawBullets,
 } from "./helpers.js";
 
 import {
 	LEVEL,
+	ITEM_LEVEL,
 } from "./data/levels.js";
 
 import {
@@ -63,17 +65,22 @@ document.addEventListener("keyup", handleKeyUp);
 const bkgdLayerCanvas = document.getElementById("bkgd-layer-canvas");
 const levelLayerCanvas = document.getElementById("level-layer-canvas");
 const playerLayerCanvas = document.getElementById("player-layer-canvas");
+const itemLayerCanvas = document.getElementById("item-layer-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 
 const bkgdLayerCtx = bkgdLayerCanvas.getContext("2d", {willReadFrequently: true});
 const levelLayerCtx = levelLayerCanvas.getContext("2d", {willReadFrequently: true});
 const playerLayerCtx = playerLayerCanvas.getContext("2d", {willReadFrequently: true});
+const itemLayerCtx = itemLayerCanvas.getContext("2d", {willReadFrequently: true});
 const spritesCtx = spritesCanvas.getContext("2d", {willReadFrequently: true});
 
 levelLayerCanvas.width = CAMERA["width"];
 levelLayerCanvas.height = CAMERA["height"];
+
 playerLayerCanvas.width = levelLayerCanvas.width;
 playerLayerCanvas.height = levelLayerCanvas.height;
+itemLayerCanvas.width = levelLayerCanvas.width;
+itemLayerCanvas.height = levelLayerCanvas.height;
 bkgdLayerCanvas.width = levelLayerCanvas.width;
 bkgdLayerCanvas.height = levelLayerCanvas.height;
 
@@ -278,7 +285,7 @@ function gameLoop(e) {
 	handleBulletCollision(LEVEL);
 
 	handleBoundaryCollision(LEVEL);
-	handleItemCollision(LEVEL);
+	handleItemCollision(ITEM_LEVEL);
 
 	shakeScreenOnLand();
 
@@ -288,6 +295,14 @@ function gameLoop(e) {
 		drawAnimatingBkgdLayer(bkgdLayerCtx, FRAME);
 	}
 
+	// draw game level
+	clearCanvas(levelLayerCanvas, levelLayerCtx);
+	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
+
+	// draw colletible items
+	clearCanvas(itemLayerCanvas, itemLayerCtx);
+	drawItemLayer(itemLayerCtx, spritesCtx, ITEM_LEVEL, spriteSlotLookup, FRAME);
+
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
@@ -295,9 +310,6 @@ function gameLoop(e) {
 	// draw active bullets
 	drawBullets(playerLayerCtx, FRAME);
 
-	// draw game level
-	clearCanvas(levelLayerCanvas, levelLayerCtx);
-	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
 	FRAME += 1;
 
 	// calculate and update the approximate FPS
