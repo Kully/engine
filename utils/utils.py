@@ -127,6 +127,34 @@ def gridify(array, width):
     return output
 
 
+def neo_gridify(array, width, indents=None):
+    """Visually arrange a series of numbers into a grid.
+
+    Args:
+        array (list): A list of numbers.
+        width (int): How many numbers make up a row in the grid.
+        intends (int): The number of indents (4 spaces) to
+            shift the output by. Defaults to 0.
+
+    Returns:
+        output (str): A formatted string that evaluates to a list.
+    """
+    if indents is None:
+        indents = 0
+
+    max_digit_count = max([len(str(n)) for n in array])
+    zfill_char = " "
+
+    space = indents * 4 * ' '
+    output = f"[\n{space}    "
+    for idx, val in enumerate(array):
+        if (idx) % width == 0 and idx != 0:
+            output += f"\n{space}    "
+        val_pad = " " * (max_digit_count - len(str(val))) + str(val)
+        output += f"{val_pad},"
+    output += f"\n{space}]"
+    return output
+
 def extract_greyscale_mapping(filename):
     """Reduce the colorway of a sprite to greyscale of 6 colors.
 
@@ -150,6 +178,30 @@ def invert_values(array):
     """Assume a mirror at 3 and reflect values about this."""
     return [(-1 * (val + -3)) + 3 for val in array]
 
+
+def gen_color_int_lookup(filename):
+    """Extract the colors out of a spritesheet of sprites.
+
+    Args:
+        filename (str): The filename to open.
+
+    Returns:
+        color_int_lookup (dict): A mapping between
+            hex colors and integers.
+    """
+    try:
+        image = Image.open(filename)
+    except FileNotFoundError:
+        print(f"File '{filename}' not found.")
+        return
+
+    colors = list(set([pixel for pixel in image.getdata()]))
+    colors = sorted(colors, key=get_luminance)
+    colors = [rgb_to_hex(c) for c in colors]
+
+    color_int_lookup = {colors[idx]: idx for idx in range(len(colors))}
+    color_int_lookup["#00000000"] = 0
+    return color_int_lookup
 
 def extract_spritesheet_colors(filename, sprite_size):
     """Extract the colors out of a spritesheet of sprites.
@@ -182,6 +234,122 @@ def extract_spritesheet_colors(filename, sprite_size):
             )
     return sprite_arr
 
+def get_sprite_colors(img):
+    """Get the colors of an image.
+
+    Args:
+        img (PIL Image):
+
+    Returns:
+        sprite_colors (list) An array of the sprite
+            colors in hex format.
+    """
+    sprite_colors = []
+    data = img.getdata()
+    for idx, tuple_color in enumerate(data):
+        hex_color = rgb_to_hex(tuple_color)
+        sprite_colors.append(hex_color)
+    return sprite_colors
+
+def print_for_engine(color_pointer_array, sprite_width, sprite_height):
+    """Formats the sprite so compatible with the game engine.
+
+    Example:
+        ...
+
+    Args:
+        color_pointer_array (list):
+        sprite_width (int):
+        sprite_height (int):
+
+    Returns:
+        output (str):
+    """
+    pretty_sprite = neo_gridify(
+        array=color_pointer_array,
+        width=sprite_width,
+        indents=1,
+    )
+    top = calc_top_padding(
+        array=color_pointer_array,
+        width=sprite_width,
+        height=sprite_height,
+    )
+    bottom = calc_bottom_padding(
+        array=color_pointer_array,
+        width=sprite_width,
+        height=sprite_height,
+    )
+    left = calc_left_padding(
+        array=color_pointer_array,
+        width=sprite_width,
+        height=sprite_height,
+    )
+    right = calc_right_padding(
+        array=color_pointer_array,
+        width=sprite_width,
+        height=sprite_height,
+    )
+    output = f"""{{
+    sprite: {pretty_sprite},
+    width: {sprite_width},
+    frameDuration: 10,
+    height: {sprite_height},
+    tPad: {top},
+    bPad: {bottom},
+    lPad: {left},
+    rPad: {right},
+}},"""
+    return output
+
+def neo_extract_spritesheet_colors(filename, sprite_size):
+    """Extract the colors out of a spritesheet of sprites.
+
+    Args:
+        filename (str): The filename to open.
+        sprite_size (int): The width and height in pixels of
+            each sprite in the spritesheet.
+
+    Returns:
+        sprite_arr (list): An array of colors.
+    """
+    try:
+        image = Image.open(filename)
+    except FileNotFoundError:
+        print(f"File '{filename}' not found.")
+        return
+
+    width, height = image.size
+    if width % sprite_size != 0 or height % sprite_size != 0:
+        print("Spritesheet dimensions are not divisible by sprite size.")
+        return
+
+    color_int_lookup = gen_color_int_lookup(filename)
+    print(color_int_lookup)
+
+    for y in range(0, height, sprite_size):
+        for x in range(0, width, sprite_size):
+            img = image.crop((x, y, x + sprite_size, y + sprite_size))
+            sprite_colors = get_sprite_colors(img)
+
+            color_pointer_array = []
+            for idx, color in enumerate(sprite_colors):
+                if color.endswith("00"):
+                    color_pointer_array.append(0)
+                else:
+                    try:
+                        color_pointer_array.append(color_int_lookup[color.lower()])
+                    except KeyError:
+                        color_pointer_array.append(color_int_lookup[color.upper()])
+
+            formatted_sprite = print_for_engine(
+                color_pointer_array=color_pointer_array,
+                sprite_width=sprite_size,
+                sprite_height=sprite_size,
+            )
+            print(formatted_sprite)
+    return ""
+
 def get_sprite_data(filename, color_int_lookup):
     """Parse out a PNG and create an engine-friendly blob.
 
@@ -197,12 +365,7 @@ def get_sprite_data(filename, color_int_lookup):
     width = img.width
     height = img.height
 
-    # get the colors of a sprite
-    sprite_colors = []
-    data = img.getdata()
-    for idx, tuple_color in enumerate(data):
-        hex_color = rgb_to_hex(tuple_color)
-        sprite_colors.append(hex_color)
+    sprite_colors = get_sprite_colors(img)
 
     if color_int_lookup is None:
         unique_colors = list(set(sprite_colors))
@@ -227,16 +390,14 @@ def get_sprite_data(filename, color_int_lookup):
     }
     return output
 
-
-def generate_sprites(color_int_lookup, path_base):
+def generate_sprites(path_base, color_int_lookup=None):
     """Traverse the sprite images in a directory and calculate the sprites.
 
     Args:
-        color_int_lookup (dict): The dictionary that maps colors to integers.
+        path_base (str): The directory to look in.
+        color_int_lookup (dict, optional): The dictionary that maps colors to integers.
             Make sure that you pick the right one depending on the directory
             that you have.
-        path_base (str): The directory to look in.
-
     Returns:
         (None) This function only prints to the terminal.
     """
@@ -252,6 +413,11 @@ def generate_sprites(color_int_lookup, path_base):
                         directory,
                         filename,
                     )
+
+                    if color_int_lookup is None:
+                        color_int_lookup = gen_color_int_lookup(file_pathname)
+                    print(f"    COLOR_LOOKUP = {color_int_lookup}")
+
                     sprite_object = get_sprite_data(
                         filename=file_pathname,
                         color_int_lookup=color_int_lookup,
@@ -260,12 +426,12 @@ def generate_sprites(color_int_lookup, path_base):
                     width = sprite_object["width"]
                     height = sprite_object["height"]
 
-                    pretty_sprite = gridify(array=array, width=width)
-                    top = calc_top_padding(array=array, width=width, height=height)
-                    bottom = calc_bottom_padding(array=array, width=width, height=height)
-                    left = calc_left_padding(array=array, width=width, height=height)
-                    right = calc_right_padding(array=array, width=width, height=height)
-                    print(f"\nsprite: {pretty_sprite},\nwidth: {width},\nheight: {height},\ntPad: {top},\nbPad: {bottom},\nlPad: {left},\nrPad: {right},\n")
+                    output = print_for_engine(
+                        color_pointer_array=array,
+                        sprite_width=width,
+                        sprite_height=height,
+                    )
+                    print(output)
         print("")
 
 
@@ -273,4 +439,7 @@ if __name__ == "__main__":
     # generate_sprites(color_int_lookup=None, path_base="utils/media/background")
     # generate_sprites(color_int_lookup=LEVEL_COLOR_MAP, path_base="utils/media/level")
     # generate_sprites(color_int_lookup=PLAYER_COLOR_MAP, path_base="utils/media/characters/james")
-    generate_sprites(color_int_lookup=METROID_COLOR_MAP, path_base="utils/media/characters/metroid")
+    # generate_sprites(color_int_lookup=METROID_COLOR_MAP, path_base="utils/media/characters/metroid")
+    # generate_sprites(color_int_lookup=METROID_COLOR_MAP, path_base="utils/media/objects")
+    # generate_sprites(path_base="utils/media/objects")
+    # neo_extract_spritesheet_colors(filename="utils/media/gold_coin_spritesheet.png", sprite_size=8)
