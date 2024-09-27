@@ -215,6 +215,19 @@ export const LIGHT_ENEMY2_COLOR_MAP = {
 };
 
 
+export let SLOTH_COLOR_MAP;
+export const OG_SLOTH_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: '#000000FF',
+	2: '#771717ff',
+	3: '#9d2020ff',
+	4: '#893f11ff',
+	5: '#b04e12ff',
+	6: '#303030ff',
+	7: '#f3c612ff',
+}
+
+
 /* OBJECT THEMES
 ========================= */
 
@@ -253,5 +266,6 @@ else
 	LEVEL_COLOR_MAP = CORAL_LEVEL_COLOR_MAP;
 	PLAYER_COLOR_MAP = METROID_PLAYER_COLOR_MAP;
 	ENEMY2_COLOR_MAP = OG_ENEMY2_COLOR_MAP;
+	SLOTH_COLOR_MAP = OG_SLOTH_COLOR_MAP;
 	BKGD_COLOR_MAP = NIGHT_BKGD_COLOR_MAP;
 }

@@ -53,6 +53,7 @@ import {
 	CONTROLLER,
 	PLAYER,
 	ENEMY2,
+	SLOTH,
 	SCREENSHAKE,
 	STATE,
 	ACTIVE_BULLETS,
@@ -199,6 +200,7 @@ function followPlayerWithCamera() {
 
 			PLAYER[variable] -= dist;
 			ENEMY2[variable] -= dist;
+			SLOTH[variable] -= dist;
 		} else
 		if ((PLAYER[variable]) < CAMERA[lowThresh]) {
 			let distPastThresh = Math.abs(PLAYER[variable] - CAMERA[lowThresh]);
@@ -207,6 +209,7 @@ function followPlayerWithCamera() {
 
 			PLAYER[variable] += dist;
 			ENEMY2[variable] += dist;
+			SLOTH[variable] += dist;
 		}
 	}
 	_moveCamera("x", "leftThresh", "rightThresh", "speed");

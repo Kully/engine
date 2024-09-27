@@ -138,3 +138,15 @@ export const ENEMY2 = {
 	frameCounter: 0,
 	spritePtr: 0,
 };
+
+
+let SLOTH_X = 1;
+let SLOTH_Y = 7;
+export const SLOTH = {
+	x: GRID_WIDTH_PX * SLOTH_X - CAMERA["xOffset"],
+	y: GRID_WIDTH_PX * SLOTH_Y - CAMERA["yOffset"],
+	width: 16,
+	height: 16,
+	frameCounter: 0,
+	spritePtr: 0,
+};

@@ -4,6 +4,7 @@ import {
 	BKGD_COLOR_MAP,
 	PLAYER_COLOR_MAP,
 	ENEMY2_COLOR_MAP,
+	SLOTH_COLOR_MAP,
 	LEVEL_COLOR_MAP,
 	GOLD_COIN_COLOR_MAP,
 	GREYSCALE_COLORS,
@@ -27,6 +28,7 @@ import {
 	PLAYER,
 	ACTIVE_BULLETS,
 	ENEMY2,
+	SLOTH,
 } from "./state.js";
 
 import {
@@ -200,23 +202,23 @@ export function createHiddenSpriteLookups(spritesCanvas, spritesCtx) {
 	return [spriteSlotLookup, slotSpriteLookup];
 }
 
+function getShiftPtr(eitherXOrY)
+{
+	let shiftPtr;
+	if (CAMERA[eitherXOrY + "Offset"] >= 0)
+		shiftPtr = Math.floor(CAMERA[eitherXOrY + "Offset"] / GRID_WIDTH_PX);
+	else
+		shiftPtr = Math.ceil(CAMERA[eitherXOrY + "Offset"] / GRID_WIDTH_PX);
+	return shiftPtr;
+}
+
 export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLookup) {
 	let xTiles = SCREEN_WIDTH_PX / GRID_WIDTH_PX;
 	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
 		for (let y = 0; y < yTiles + 1; y += 1) {
-			let shiftXPtr;
-			if (CAMERA["xOffset"] >= 0)
-				shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
-			else
-				shiftXPtr = Math.ceil(CAMERA["xOffset"] / GRID_WIDTH_PX);
-
-			let shiftYPtr;
-			if (CAMERA["yOffset"] >= 0)
-				shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
-			else
-				shiftYPtr = Math.ceil(CAMERA["yOffset"] / GRID_WIDTH_PX);
-
+			let shiftXPtr = getShiftPtr("x");
+			let shiftYPtr = getShiftPtr("y");
 			let spritePtr = getValueFrom2DArray(
 				level,
 				x + shiftXPtr,
@@ -264,24 +266,14 @@ export function drawItemLayer(itemLayerCtx, spritesCtx, level, spriteSlotLookup,
 	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
 		for (let y = 0; y < yTiles + 1; y += 1) {
-			let shiftXPtr;
-			if (CAMERA["xOffset"] >= 0)
-				shiftXPtr = Math.floor(CAMERA["xOffset"] / GRID_WIDTH_PX);
-			else
-				shiftXPtr = Math.ceil(CAMERA["xOffset"] / GRID_WIDTH_PX);
-
-			let shiftYPtr;
-			if (CAMERA["yOffset"] >= 0)
-				shiftYPtr = Math.floor(CAMERA["yOffset"] / GRID_WIDTH_PX);
-			else
-				shiftYPtr = Math.ceil(CAMERA["yOffset"] / GRID_WIDTH_PX);
-
+			let shiftXPtr = getShiftPtr("x");
+			let shiftYPtr = getShiftPtr("y");
 			let spritePtr = getValueFrom2DArray(
 				level,
 				x + shiftXPtr,
 				y + shiftYPtr,
 			);
-			
+
 
 			if (spritePtr === undefined) {
 				spritePtr = OUTOFBOUNDS_SPIRTE_IDX;
@@ -487,6 +479,40 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 			let x = ENEMY2["x"] + i * SCALE;
 			let y = ENEMY2["y"] + (j - spriteHeight) * SCALE;
 			x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
+
+			playerLayerCtx.fillStyle = pixelColor;
+			playerLayerCtx.fillRect(
+				x,
+				y,
+				SCALE,
+				SCALE,
+			);
+		}
+
+
+	// removed the `let` on these variables since already declared
+	spriteArray = SPRITES["sloth"]["STAND_CYCLE"][0]["sprite"];
+	spriteWidth = SPRITES["sloth"]["STAND_CYCLE"][0]["width"];
+	spriteHeight = SPRITES["sloth"]["STAND_CYCLE"][0]["height"];
+
+	let enemyFacingRight = true;
+	for (let i = 0; i < spriteWidth; i += 1)
+		for (let j = 0; j < spriteHeight; j += 1) {
+			let colorPtr;
+
+			if(enemyFacingRight)
+				colorPtr = spriteArray[i + j * spriteWidth];
+			else
+				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+
+			let pixelColor;
+			if (DRAW_SPRITES_WITH_COLOR)
+				pixelColor = SLOTH_COLOR_MAP[colorPtr];
+			else
+				pixelColor = GREYSCALE_COLORS[colorPtr];
+
+			let x = SLOTH["x"] + i * SCALE;
+			let y = SLOTH["y"] + (j - spriteHeight) * SCALE;
 
 			playerLayerCtx.fillStyle = pixelColor;
 			playerLayerCtx.fillRect(
