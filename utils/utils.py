@@ -203,6 +203,11 @@ def gen_color_int_lookup(filename):
     color_int_lookup["#00000000"] = 0
     return color_int_lookup
 
+
+def print_int_color_lookup(color_int_lookup):
+    """Print the engine-compatible color mapping."""
+    output = {val: key for key,val in color_int_lookup.items()}
+
 def extract_spritesheet_colors(filename, sprite_size):
     """Extract the colors out of a spritesheet of sprites.
 
@@ -436,10 +441,6 @@ def generate_sprites(path_base, color_int_lookup=None):
 
 
 if __name__ == "__main__":
-    # generate_sprites(color_int_lookup=None, path_base="utils/media/background")
-    # generate_sprites(color_int_lookup=LEVEL_COLOR_MAP, path_base="utils/media/level")
-    # generate_sprites(color_int_lookup=PLAYER_COLOR_MAP, path_base="utils/media/characters/james")
-    # generate_sprites(color_int_lookup=METROID_COLOR_MAP, path_base="utils/media/characters/metroid")
-    # generate_sprites(color_int_lookup=METROID_COLOR_MAP, path_base="utils/media/objects")
-    # generate_sprites(path_base="utils/media/objects")
-    # neo_extract_spritesheet_colors(filename="utils/media/gold_coin_spritesheet.png", sprite_size=8)
+    color_int_lookup = gen_color_int_lookup("utils/media/enemy/creature0/Enemy_Creature_01_v1.png")
+    generate_sprites(color_int_lookup=color_int_lookup, path_base="utils/media/enemy/")
+    print_int_color_lookup(color_int_lookup=color_int_lookup)
