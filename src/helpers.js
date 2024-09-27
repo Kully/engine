@@ -8,6 +8,7 @@ import {
 	LEVEL_COLOR_MAP,
 	GOLD_COIN_COLOR_MAP,
 	GREYSCALE_COLORS,
+	COLOR_MAP_LOOKUP,
 } from "./colors.js";
 
 import {
@@ -29,6 +30,7 @@ import {
 	ACTIVE_BULLETS,
 	ENEMY2,
 	SLOTH,
+	CHARACTER_LOOKUP,
 } from "./state.js";
 
 import {
@@ -399,6 +401,48 @@ export function drawAnimatingBkgdLayer(bkgdLayerCtx, FRAME) {
 
 }
 
+
+export function drawEnemy(playerLayerCtx, spriteName, doesWobble, FRAME)
+{
+	// removed the `let` on these variables since already declared
+	let spriteArray = SPRITES[spriteName]["STAND_CYCLE"][0]["sprite"];
+	let spriteWidth = SPRITES[spriteName]["STAND_CYCLE"][0]["width"];
+	let spriteHeight = SPRITES[spriteName]["STAND_CYCLE"][0]["height"];
+
+	let enemyFacingRight = true;
+	for (let i = 0; i < spriteWidth; i += 1)
+		for (let j = 0; j < spriteHeight; j += 1) {
+			let colorPtr;
+
+			if(enemyFacingRight)
+				colorPtr = spriteArray[i + j * spriteWidth];
+			else
+				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+
+			let pixelColor;
+			if (DRAW_SPRITES_WITH_COLOR) {
+				let colorMap = COLOR_MAP_LOOKUP[spriteName]
+				pixelColor = colorMap[colorPtr];
+			}
+			else {
+				pixelColor = GREYSCALE_COLORS[colorPtr];
+			}
+
+			let x = CHARACTER_LOOKUP[spriteName]["x"] + i * SCALE;
+			let y = CHARACTER_LOOKUP[spriteName]["y"] + (j - spriteHeight) * SCALE;
+			if(doesWobble)
+				x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
+
+			playerLayerCtx.fillStyle = pixelColor;
+			playerLayerCtx.fillRect(
+				x,
+				y,
+				SCALE,
+				SCALE,
+			);
+		}
+}
+
 export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
@@ -454,74 +498,8 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 			);
 		}
 
-
-	// removed the `let` on these variables since already declared
-	spriteArray = SPRITES["enemy2"]["STAND_CYCLE"][0]["sprite"];
-	spriteWidth = SPRITES["enemy2"]["STAND_CYCLE"][0]["width"];
-	spriteHeight = SPRITES["enemy2"]["STAND_CYCLE"][0]["height"];
-
-	let enemyFacingLeft = false;
-	for (let i = 0; i < spriteWidth; i += 1)
-		for (let j = 0; j < spriteHeight; j += 1) {
-			let colorPtr;
-
-			if(enemyFacingLeft)
-				colorPtr = spriteArray[i + j * spriteWidth];
-			else
-				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
-
-			let pixelColor;
-			if (DRAW_SPRITES_WITH_COLOR)
-				pixelColor = ENEMY2_COLOR_MAP[colorPtr];
-			else
-				pixelColor = GREYSCALE_COLORS[colorPtr];
-
-			let x = ENEMY2["x"] + i * SCALE;
-			let y = ENEMY2["y"] + (j - spriteHeight) * SCALE;
-			x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
-
-			playerLayerCtx.fillStyle = pixelColor;
-			playerLayerCtx.fillRect(
-				x,
-				y,
-				SCALE,
-				SCALE,
-			);
-		}
-
-
-	// removed the `let` on these variables since already declared
-	spriteArray = SPRITES["sloth"]["STAND_CYCLE"][0]["sprite"];
-	spriteWidth = SPRITES["sloth"]["STAND_CYCLE"][0]["width"];
-	spriteHeight = SPRITES["sloth"]["STAND_CYCLE"][0]["height"];
-
-	let enemyFacingRight = true;
-	for (let i = 0; i < spriteWidth; i += 1)
-		for (let j = 0; j < spriteHeight; j += 1) {
-			let colorPtr;
-
-			if(enemyFacingRight)
-				colorPtr = spriteArray[i + j * spriteWidth];
-			else
-				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
-
-			let pixelColor;
-			if (DRAW_SPRITES_WITH_COLOR)
-				pixelColor = SLOTH_COLOR_MAP[colorPtr];
-			else
-				pixelColor = GREYSCALE_COLORS[colorPtr];
-
-			let x = SLOTH["x"] + i * SCALE;
-			let y = SLOTH["y"] + (j - spriteHeight) * SCALE;
-
-			playerLayerCtx.fillStyle = pixelColor;
-			playerLayerCtx.fillRect(
-				x,
-				y,
-				SCALE,
-				SCALE,
-			);
-		}
+	drawEnemy(playerLayerCtx, "enemy2", true, FRAME)
+	drawEnemy(playerLayerCtx, "sloth", false, FRAME)
 }
 
 export function drawBullets(playerLayerCtx, FRAME)

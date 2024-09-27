@@ -150,3 +150,10 @@ export const SLOTH = {
 	frameCounter: 0,
 	spritePtr: 0,
 };
+
+
+export const CHARACTER_LOOKUP = {
+	"player": PLAYER,
+	"sloth": SLOTH,
+	"enemy2": ENEMY2,
+};

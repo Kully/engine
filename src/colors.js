@@ -243,7 +243,7 @@ export const GOLD_COIN_COLOR_MAP = {
 const now = new Date();
 const hour = now.getHours();
 
-
+export let COLOR_MAP_LOOKUP;
 if(CHANGE_COLORS_BY_TIME)
 {
 	if(hour < 7 || hour > 20)
@@ -268,4 +268,9 @@ else
 	ENEMY2_COLOR_MAP = OG_ENEMY2_COLOR_MAP;
 	SLOTH_COLOR_MAP = OG_SLOTH_COLOR_MAP;
 	BKGD_COLOR_MAP = NIGHT_BKGD_COLOR_MAP;
+
+	COLOR_MAP_LOOKUP = {
+		"enemy2": ENEMY2_COLOR_MAP,
+		"sloth": SLOTH_COLOR_MAP,
+	}
 }
