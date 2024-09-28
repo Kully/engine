@@ -28,7 +28,7 @@ import {
 
 const ACCEL = 0.5;
 const DECEL = 1;
-const MAXSPEED = 5;
+const MAXSPEED = 3;
 
 const JUMP_ACCEL = 11;
 const GRAVITY_ACCEL = 0.5;
