@@ -26,16 +26,20 @@ import {
 } from "./state.js";
 
 
+const ACCEL = 0.5;
+const DECEL = 1;
+const MAXSPEED = 5;
+
 const JUMP_ACCEL = 11;
 const GRAVITY_ACCEL = 0.5;
 const TERMINAL_VELOCITY = 130;
 
-export function updateHorizontalSpeed(accel, decel, maxSpeed) {
+export function updateHorizontalSpeed() {
 	// enable running mode
 	if(ENABLE_RUNNING)
 	{
 		if(CONTROLLER["ShiftLeft"] === 1 || CONTROLLER["ShiftRight"] === 1)
-			maxSpeed *= 2;
+			MAXSPEED *= 2;
 	}
 
 	let lastSpeed = PLAYER["speed"];
@@ -45,16 +49,16 @@ export function updateHorizontalSpeed(accel, decel, maxSpeed) {
 		PLAYER["speed"] = 0;
 	else
 	if (CONTROLLER["ArrowLeft"] === 1 && CONTROLLER["ArrowRight"] === 0)
-		PLAYER["speed"] -= accel;
+		PLAYER["speed"] -= ACCEL;
 	else
 	if (CONTROLLER["ArrowLeft"] === 0 && CONTROLLER["ArrowRight"] === 1)
-		PLAYER["speed"] += accel;
+		PLAYER["speed"] += ACCEL;
 	else
 	if (PLAYER["speed"] > 0)
-		PLAYER["speed"] -= decel;
+		PLAYER["speed"] -= DECEL;
 	else
 	if (PLAYER["speed"] < 0)
-		PLAYER["speed"] += decel;
+		PLAYER["speed"] += DECEL;
 
 	// ensure that you stop moving
 	if (
@@ -70,10 +74,10 @@ export function updateHorizontalSpeed(accel, decel, maxSpeed) {
 	}
 
 	// throttle the speed
-	if (PLAYER["speed"] > maxSpeed)
-		PLAYER["speed"] = maxSpeed;
-	if (PLAYER["speed"] < -maxSpeed)
-		PLAYER["speed"] = -maxSpeed;
+	if (PLAYER["speed"] > MAXSPEED)
+		PLAYER["speed"] = MAXSPEED;
+	if (PLAYER["speed"] < -MAXSPEED)
+		PLAYER["speed"] = -MAXSPEED;
 }
 
 export function updateVerticalSpeed(level) {

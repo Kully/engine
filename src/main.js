@@ -307,7 +307,7 @@ function gameLoop(e) {
 	for(let enemyObject of ACTIVE_ENEMIES)
 		updateCyclePointers(enemyObject);
 
-	updateHorizontalSpeed(0.5, 1, 3);
+	updateHorizontalSpeed();
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
 
