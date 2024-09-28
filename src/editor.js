@@ -178,6 +178,16 @@ function populateLevelDropdown() {
 	}
 }
 
+function getMouseTilePosition(e) {
+	let xPixel = e.offsetX;
+	let yPixel = e.offsetY;
+
+	let xTile = Math.floor(xPixel / GRID_WIDTH_PX);
+	let yTile = Math.floor(yPixel / GRID_WIDTH_PX);
+
+	return [xTile, yTile];
+}
+
 function getClickedCoordinates(e) {
 	let xPixel = e.offsetX;
 	let yPixel = e.offsetY;
@@ -225,12 +235,24 @@ function updateCanvasOnMouseMove(e) {
 
 	displayCurrentMouseCorrdinates(xLevel, yLevel);
 
+	// display preview tile
+	let tileCoords = getMouseTilePosition(e);
+	let xTile = tileCoords[0];
+	let yTile = tileCoords[1];
+	previewOutline.style.left = `calc(64px * ${xTile})`;
+	previewOutline.style.transform = `translateY(calc(64px * ${yTile}))`;
+
 	CANVAS_XLEVEL = xLevel;
 	CANVAS_YLEVEL = yLevel;
 
 	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN) {
 		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
 	}
+}
+
+function updateCanvasOnMouseUp(e)
+{
+	MOUSEDOWN = false;
 }
 
 function getSpriteCount(spritesCanvas) {
@@ -244,6 +266,7 @@ const canvas = document.getElementById("canvas");
 const hoverCanvas = document.getElementById("hover-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 const selection = document.getElementById("selection");
+const previewOutline = document.getElementById("preview-outline");
 const currentCoords = document.getElementById("editor-mouse-coords");
 
 const levelSelector = document.getElementById("level-dropdown");
@@ -272,7 +295,7 @@ document.addEventListener("keyup", handleKeyUp);
 spritesCanvas.addEventListener("mousedown", selectSpriteToPaintWith);
 canvas.addEventListener("mousedown", updateCanvasOnMouseDown);
 canvas.addEventListener("mousemove", updateCanvasOnMouseMove);
-canvas.addEventListener("mouseup", function(e) {MOUSEDOWN = false;})
+canvas.addEventListener("mouseup", updateCanvasOnMouseUp);
 levelSelector.addEventListener("change", loadCanvasLevel);
 
 heightSelector.addEventListener("change", function(e) {

@@ -112,15 +112,22 @@ canvas#hover-canvas {
 	pointer-events: none !important;
 }
 
-.selection {
+.selection, .preview-outline {
 	pointer-events: none;
 	height: calc(var(--displayed-sprite-width) - var(--selection-border-width));
 	width: calc(var(--displayed-sprite-width) - var(--selection-border-width));
 	border: var(--selection-border-width) solid var(--selection-color);
 	border-radius: 2px;
 	position: absolute;
+}
+
+.selection {
 	top: calc(0.5rem + 38px);
 }
+.preview-outline {
+	top: calc(0.5rem + var(--widget-height) + var(--margin) + 64px + 2px);
+}
+
 
 .popup-message {
 	opacity: 0;
