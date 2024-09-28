@@ -313,14 +313,28 @@ widthSelector.addEventListener("change", function(e) {
 
 
 document.addEventListener("keydown", function(e) {
-	if (e.code == "KeyA") {
-		CLICKED_SPRITE_INT -= 1;
-	} else
-	if (e.code == "KeyD") {
-		CLICKED_SPRITE_INT += 1;
-	}
+	if (e.code == "KeyA")
+		CAMERA["xOffset"] -= GRID_WIDTH_PX;
+	if (e.code == "KeyD")
+		CAMERA["xOffset"] += GRID_WIDTH_PX;
+	if (e.code == "KeyW")
+		CAMERA["yOffset"] -= GRID_WIDTH_PX;
+	if (e.code == "KeyS")
+		CAMERA["yOffset"] += GRID_WIDTH_PX;
 
-	let spriteCount = getSpriteCount(spritesCanvas);
+	updateActiveSprite(CLICKED_SPRITE_INT);
+	displayPreviewTile();
+})
+
+
+window.addEventListener("wheel", function(event) {
+    if (event.deltaY < 0) {
+        CLICKED_SPRITE_INT -= 1;
+    } else {
+        CLICKED_SPRITE_INT += 1;
+    }
+
+    let spriteCount = getSpriteCount(spritesCanvas);
 	if (CLICKED_SPRITE_INT < 0) {
 		CLICKED_SPRITE_INT = spriteCount - 1;
 	}
@@ -328,9 +342,9 @@ document.addEventListener("keydown", function(e) {
 		CLICKED_SPRITE_INT = 0;
 	}
 
-	updateActiveSprite(CLICKED_SPRITE_INT);
+    updateActiveSprite(CLICKED_SPRITE_INT);
 	displayPreviewTile();
-})
+});
 
 function gameLoop() {
 	if(
@@ -339,17 +353,6 @@ function gameLoop() {
 	)
 		return;
 
-	if(!MOUSEDOWN)
-	{
-		if (CONTROLLER["ArrowLeft"])
-			CAMERA["xOffset"] -= GRID_WIDTH_PX;
-		if (CONTROLLER["ArrowRight"])
-			CAMERA["xOffset"] += GRID_WIDTH_PX;
-		if (CONTROLLER["ArrowUp"])
-			CAMERA["yOffset"] -= GRID_WIDTH_PX;
-		if (CONTROLLER["ArrowDown"])
-			CAMERA["yOffset"] += GRID_WIDTH_PX;
-	}
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 	displayPreviewTile();
 }
