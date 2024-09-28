@@ -442,6 +442,4 @@ def generate_sprites(path_base, color_int_lookup=None):
 
 
 if __name__ == "__main__":
-    color_int_lookup = gen_color_int_lookup("utils/media/enemy/creature0/Enemy_Creature_01_v1.png")
-    generate_sprites(color_int_lookup=color_int_lookup, path_base="utils/media/enemy/")
-    print_int_color_lookup(color_int_lookup=color_int_lookup)
+    pass
