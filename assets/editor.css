@@ -148,6 +148,10 @@ canvas#hover-canvas {
 	padding: 0.25rem;
 }
 
+.editor-mouse-coords {
+	color: #EEE;
+	align-self: center;
+}
 
 /* Animations */
 

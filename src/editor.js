@@ -214,10 +214,16 @@ function displayPreviewTile() {
 }
 
 
+function displayCurrentMouseCorrdinates(x, y) {
+	currentCoords.innerHTML = `(${x}, ${y})`;
+}
+
 function updateCanvasOnMouseMove(e) {
 	let coords = getClickedCoordinates(e);
 	let xLevel = coords[0];
 	let yLevel = coords[1];
+
+	displayCurrentMouseCorrdinates(xLevel, yLevel);
 
 	CANVAS_XLEVEL = xLevel;
 	CANVAS_YLEVEL = yLevel;
@@ -239,6 +245,7 @@ const canvas = document.getElementById("canvas");
 const hoverCanvas = document.getElementById("hover-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 const selection = document.getElementById("selection");
+const currentCoords = document.getElementById("editor-mouse-coords");
 
 const levelSelector = document.getElementById("level-dropdown");
 const widthSelector = document.getElementById("tile-width");
