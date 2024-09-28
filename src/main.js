@@ -44,8 +44,8 @@ import {
 } from "./physics.js"
 
 import {
-	PROTAGONIST,
 	SPRITES,
+	PROTAGONIST,
 } from "./data/sprites.js";
 
 import {

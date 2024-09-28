@@ -36,11 +36,14 @@ import {
 import {
 	SPRITE_LOOKUP,
 	SPRITES,
-	BKGD_SPRITES,
 	INVISIBLE_SPIRTE_IDX,
 	OUTOFBOUNDS_SPIRTE_IDX,
 	PLAYER_SPIRTE_IDX,
 } from "./data/sprites.js";
+
+import {
+	BKGD_SPRITES,
+} from "./data/background.js";
 
 
 let period = 22;
