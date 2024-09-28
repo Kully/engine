@@ -8,9 +8,23 @@ import {
 } from "./constants.js";
 
 import {
+	COLOR_MAP_LOOKUP,
+} from "./colors.js";
+
+import {
 	PLAYER_TILE_X,
 	PLAYER_TILE_Y,
+	LEVEL_LOOKUP,
+	levelName,
 } from "./data/levels.js";
+
+import {
+	getValueFrom2DArray,
+} from "./pure.js"
+
+import {
+	ENEMY_LOOKUP,
+} from "./data/enemy.js"
 
 
 export const STATE = {resetGame: false};
@@ -58,102 +72,32 @@ export const PLAYER = {
 	},
 };
 
+export const ACTIVE_ENEMIES = [];
+let enemyMap = LEVEL_LOOKUP[levelName]["enemy"];
+for(let rowIndex=0; rowIndex < LEVEL_LOOKUP[levelName]["enemy"][0].length; rowIndex += 1)
+for(let colIndex=0; colIndex < LEVEL_LOOKUP[levelName]["enemy"].length; colIndex += 1)
+{
+	let ptr = getValueFrom2DArray(enemyMap, rowIndex, colIndex);
+	if(ptr in ENEMY_LOOKUP)
+	{
+		let enemyPtr = ptr;
+		let enemyName = ENEMY_LOOKUP[ptr]["name"];
+		let enemyX = rowIndex;
+		let enemyY = colIndex;
+		let enemyObject = {
+			name: enemyName,  // This is a redundant property. Included for convenience.
+			ptr: enemyPtr,
+			x: GRID_WIDTH_PX * enemyX - CAMERA["xOffset"],
+			y: GRID_WIDTH_PX * enemyY - CAMERA["yOffset"],
+			width: 16,
+			height: 16,
+			frameCounter: 0,
+			animationCycleName: "STAND_CYCLE",
+			spritePtr: 0,
+			colorMap: COLOR_MAP_LOOKUP[enemyName],
+		}
+		ACTIVE_ENEMIES.push(enemyObject);
+	}
+}
+
 export const ACTIVE_BULLETS = [];
-
-
-const LARGE_SCREENSHAKE = {
-	ptr: 0,
-	array: [
-		[  2, 0],
-		[  0, 0],
-		[ -6, 0],
-		[ 14, 0],
-		[-12, 0],
-		[  8, 0],
-		[ -8, 0],
-		[  8, 0],
-		[ -8, 0],
-		[  6, 0],
-		[ -6, 0],
-		[  6, 0],
-		[ -4, 0],
-		[  2, 0],
-		[ -2, 0],
-		[  1, 0],
-		[ -1, 0],
-	],
-};
-const MEDIUM_SCREENSHAKE = {
-	ptr: 0,
-	array: [
-		[  2, 0],
-		[  0, 0],
-		[ -1, 0],
-		[  4, 0],
-		[ -6, 0],
-		[  3, 0],
-		[  4, 0],
-		[ -4, 0],
-		[  4, 0],
-		[ -4, 0],
-		[  3, 0],
-		[ -3, 0],
-		[  2, 0],
-		[ -2, 0],
-		[  1, 0],
-		[ -1, 0],
-	],
-};
-const SMALL_SCREENSHAKE = {
-	ptr: 0,
-	array: [
-		[ -1, 0],
-		[ 1, 0],
-		[ -2, 0],
-		[ 2, 0],
-		[  4, 0],
-		[ -4, 0],
-		[  3, 0],
-		[  -3, 0],
-		[  1, 0],
-		[ -1, 0],
-	],
-};
-const NO_SCREENSHAKE = {
-	ptr: 0,
-	array: [
-		[0, 0],
-	],
-};
-export const SCREENSHAKE = NO_SCREENSHAKE;
-
-
-let ENEMY2_X = 12;
-let ENEMY2_Y = 3;
-export const ENEMY2 = {
-	x: GRID_WIDTH_PX * ENEMY2_X - CAMERA["xOffset"],
-	y: GRID_WIDTH_PX * ENEMY2_Y - CAMERA["yOffset"],
-	width: 16,
-	height: 16,
-	frameCounter: 0,
-	spritePtr: 0,
-};
-
-
-let SLOTH_X = 1;
-let SLOTH_Y = 7;
-export const SLOTH = {
-	x: GRID_WIDTH_PX * SLOTH_X - CAMERA["xOffset"],
-	y: GRID_WIDTH_PX * SLOTH_Y - CAMERA["yOffset"],
-	width: 16,
-	height: 16,
-	frameCounter: 0,
-	spritePtr: 0,
-};
-
-
-export const CHARACTER_LOOKUP = {
-	"player": PLAYER,
-	"sloth": SLOTH,
-	"enemy2": ENEMY2,
-};

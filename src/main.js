@@ -31,6 +31,13 @@ import {
 	LEVEL,
 	ITEM_LEVEL,
 } from "./data/levels.js";
+import {
+	SPRITES,
+	PROTAGONIST,
+} from "./data/sprites.js"
+import {
+	ENEMY_LOOKUP,
+} from "./data/enemy.js";;
 
 import {
 	handleKeyDown,
@@ -44,20 +51,17 @@ import {
 } from "./physics.js"
 
 import {
-	SPRITES,
-	PROTAGONIST,
-} from "./data/sprites.js";
-
-import {
 	CAMERA,
 	CONTROLLER,
 	PLAYER,
-	ENEMY2,
-	SLOTH,
-	SCREENSHAKE,
 	STATE,
 	ACTIVE_BULLETS,
+	ACTIVE_ENEMIES,
 } from "./state.js";
+
+import {
+	SCREENSHAKE,
+} from "./screenshake.js";
 
 
 document.addEventListener("keydown", handleKeyDown);
@@ -89,22 +93,26 @@ let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
-// function updatePlayerPointers(animationArray) {
-// 	// move to first frame of animation if we reach the end
-// 	if (PLAYER["spritePtr"] >= animationArray.length) {
-// 		PLAYER["spritePtr"] = 0;
-// 		PLAYER["frameCounter"] = 0;
-// 	}
-
-// 	// move through duration of a single animation frame
-// 	PLAYER["frameCounter"] += 1;
-// 	if (PLAYER["frameCounter"] > animationArray[PLAYER["spritePtr"]]["frameDuration"] - 1) {
-// 		PLAYER["frameCounter"] = 0;
-// 		PLAYER["spritePtr"] = (PLAYER["spritePtr"] + 1) % animationArray.length;
-// 	}
-// }
 
 function updatePlayerPointers(animationArray, spriteObject) {
+	// move to first frame of animation if we reach the end
+	if (spriteObject["spritePtr"] >= animationArray.length) {
+		spriteObject["spritePtr"] = 0;
+		spriteObject["frameCounter"] = 0;
+	}
+
+	// move through duration of a single animation frame
+	spriteObject["frameCounter"] += 1;
+	if (spriteObject["frameCounter"] > animationArray[spriteObject["spritePtr"]]["frameDuration"] - 1) {
+		spriteObject["frameCounter"] = 0;
+		spriteObject["spritePtr"] = (spriteObject["spritePtr"] + 1) % animationArray.length;
+	}
+}
+
+function updateCyclePointers(spriteObject) {
+	let animationCycleName = spriteObject["animationCycleName"];
+	let animationArray = ENEMY_LOOKUP[spriteObject["ptr"]][animationCycleName];
+
 	// move to first frame of animation if we reach the end
 	if (spriteObject["spritePtr"] >= animationArray.length) {
 		spriteObject["spritePtr"] = 0;
@@ -206,42 +214,25 @@ function findAnimationCycle(FRAME) {
 	return animationArray;
 }
 
-
-function findEnemyAnimationCycle(FRAME) {
-	let animationArray;
-	let animationCycle;
-
-	animationArray = SPRITES["sloth"]["STAND_CYCLE"];
-	animationCycle = "STAND_CYCLE";
-
-	// manage state
-	// if(PLAYER["lastAnimationCycle"] !== animationCycle)
-	// 	PLAYER["lastAnimationCycleCount"] = 0
-	// PLAYER["lastAnimationCycle"] = animationCycle;
-	// PLAYER["lastAnimationCycleCount"] += 1;
-	return animationArray;
-}
-
-
-function followPlayerWithCamera() {
+function moveCamera(player, activeEnemies) {
+	let combinedAnima = [player];
+	combinedAnima.push(...activeEnemies)
 	function _moveCamera(variable, lowThresh, highThresh, speedVar) {
 		if (PLAYER[variable] > CAMERA[highThresh]) {
 			let distPastThresh = Math.abs(PLAYER[variable] - CAMERA[highThresh]);
 			let dist = Math.floor(distPastThresh / CAMERA["easeIn"]);
 			CAMERA[variable + "Offset"] += dist;
 
-			PLAYER[variable] -= dist;
-			ENEMY2[variable] -= dist;
-			SLOTH[variable] -= dist;
+			for (let obj of combinedAnima)
+				obj[variable] -= dist;
 		} else
 		if ((PLAYER[variable]) < CAMERA[lowThresh]) {
 			let distPastThresh = Math.abs(PLAYER[variable] - CAMERA[lowThresh]);
 			let dist = Math.floor(distPastThresh / CAMERA["easeIn"]);
 			CAMERA[variable + "Offset"] -= dist;
 
-			PLAYER[variable] += dist;
-			ENEMY2[variable] += dist;
-			SLOTH[variable] += dist;
+			for (let obj of combinedAnima)
+				obj[variable] += dist;
 		}
 	}
 	_moveCamera("x", "leftThresh", "rightThresh", "speed");
@@ -306,14 +297,15 @@ function gameLoop(e) {
 		STATE["resetGame"] = false;
 	}
 
-	followPlayerWithCamera();
+	moveCamera(PLAYER, ACTIVE_ENEMIES);
 
+	// update player cycles
 	let animationArray = findAnimationCycle(FRAME);
 	updatePlayerPointers(animationArray, PLAYER);
 
-	// update enemies
-	let enemyAnimationArray = findEnemyAnimationCycle(FRAME);
-	updatePlayerPointers(enemyAnimationArray, SLOTH);
+	// update enemy cycles
+	for(let enemyObject of ACTIVE_ENEMIES)
+		updateCyclePointers(enemyObject);
 
 	updateHorizontalSpeed(0.5, 1, 3);
 	updateVerticalSpeed(LEVEL);
@@ -344,7 +336,7 @@ function gameLoop(e) {
 
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
-	drawPlayerLayer(playerLayerCtx, animationArray, enemyAnimationArray, FRAME);
+	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
 
 	// draw active bullets
 	drawBullets(playerLayerCtx, FRAME);

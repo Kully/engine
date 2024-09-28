@@ -14,7 +14,7 @@ import {
 
 import {
 	getValueFrom2DArray,
-} from "./helpers.js";
+} from "./pure.js";
 
 import {
 	SPRITE_LOOKUP,

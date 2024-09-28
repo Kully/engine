@@ -7,7 +7,7 @@ import {
 
 import {
 	getValueFrom2DArray,
-} from "./helpers.js";
+} from "./pure.js";
 
 import {
 	PLAYER_TILE_X,

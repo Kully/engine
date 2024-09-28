@@ -3,8 +3,6 @@
 import {
 	BKGD_COLOR_MAP,
 	PLAYER_COLOR_MAP,
-	ENEMY2_COLOR_MAP,
-	SLOTH_COLOR_MAP,
 	LEVEL_COLOR_MAP,
 	GOLD_COIN_COLOR_MAP,
 	GREYSCALE_COLORS,
@@ -28,9 +26,7 @@ import {
 	CONTROLLER,
 	PLAYER,
 	ACTIVE_BULLETS,
-	ENEMY2,
-	SLOTH,
-	CHARACTER_LOOKUP,
+	ACTIVE_ENEMIES,
 } from "./state.js";
 
 import {
@@ -42,21 +38,28 @@ import {
 } from "./data/sprites.js";
 
 import {
+	ENEMY_LOOKUP,
+} from "./data/enemy.js";
+
+import {
 	BKGD_SPRITES,
 } from "./data/background.js";
+
+import {
+	hexToNumber,
+	numberToHex,
+	hexToRgb,
+	getValueFrom2DArray,
+	getWidth2DArray,
+	getHeight2DArray,
+	isValidIndex,
+	putValueTo2DArray,
+} from "./pure.js";
 
 
 let period = 22;
 let amp = 2;
 let wobble = 0.4;
-
-export function hexToNumber(hexString) {
-	return parseInt(hexString, 16);
-}
-
-export function numberToHex(number) {
-	return number.toString(16).padEnd(2, "0");
-}
 
 function mutatePixel(pixelColor, warpPct) {
 	function perturb(hexNumber)
@@ -89,47 +92,6 @@ function mutatePixel(pixelColor, warpPct) {
 	}
 	return pixelColor;
 }
-
-export function hexToRgb(hex) {
-	let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-	if (result) {
-		let r = parseInt(result[1], 16);
-		let g = parseInt(result[2], 16);
-		let b = parseInt(result[3], 16);
-		let a = parseInt(result[4], 16);
-		return [r, g, b, a];
-	}
-	return null;
-}
-
-export function getValueFrom2DArray(array_2d, x, y) {
-	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
-		return undefined;
-	return array_2d[y][x];
-}
-
-export function getWidth2DArray(array_2d) {
-	return array_2d[0].length;
-}
-
-export function getHeight2DArray(array_2d) {
-	return array_2d.length;
-}
-
-export function isValidIndex(array_2d, x, y) {
-	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
-		return false;
-	return true;
-}
-
-
-export function putValueTo2DArray(array_2d, x, y, val) {
-	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
-		return undefined;
-	array_2d[y][x] = val;
-	return array_2d
-}
-
 
 export function clearCanvas(canvas, ctx) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -418,13 +380,13 @@ export function drawAnimatingBkgdLayer(bkgdLayerCtx, FRAME) {
 
 }
 
-
-export function drawEnemy(playerLayerCtx, spriteName, doesWobble, FRAME)
+export function drawAnimatingEnemy(playerLayerCtx, enemyObject, doesWobble, FRAME)
 {
-	// removed the `let` on these variables since already declared
-	let spriteArray = SPRITES[spriteName]["STAND_CYCLE"][0]["sprite"];
-	let spriteWidth = SPRITES[spriteName]["STAND_CYCLE"][0]["width"];
-	let spriteHeight = SPRITES[spriteName]["STAND_CYCLE"][0]["height"];
+	let thisEnemyData = ENEMY_LOOKUP[enemyObject["ptr"]];
+	let thisCycle = thisEnemyData[enemyObject["animationCycleName"]];
+	let spriteArray = thisCycle[enemyObject["spritePtr"]]["sprite"];
+	let spriteWidth = thisCycle[enemyObject["spritePtr"]]["width"];
+	let spriteHeight = thisCycle[enemyObject["spritePtr"]]["height"];
 
 	let enemyFacingRight = true;
 	for (let i = 0; i < spriteWidth; i += 1)
@@ -436,17 +398,11 @@ export function drawEnemy(playerLayerCtx, spriteName, doesWobble, FRAME)
 			else
 				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
 
-			let pixelColor;
-			if (DRAW_SPRITES_WITH_COLOR) {
-				let colorMap = COLOR_MAP_LOOKUP[spriteName]
-				pixelColor = colorMap[colorPtr];
-			}
-			else {
-				pixelColor = GREYSCALE_COLORS[colorPtr];
-			}
+			let colorMap = enemyObject["colorMap"];
+			let pixelColor = colorMap[colorPtr];
 
-			let x = CHARACTER_LOOKUP[spriteName]["x"] + i * SCALE;
-			let y = CHARACTER_LOOKUP[spriteName]["y"] + (j - spriteHeight) * SCALE;
+			let x = enemyObject["x"] + i * SCALE;
+			let y = enemyObject["y"] + (j - spriteHeight) * SCALE;
 			if(doesWobble)
 				x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
 
@@ -460,48 +416,8 @@ export function drawEnemy(playerLayerCtx, spriteName, doesWobble, FRAME)
 		}
 }
 
-
-export function drawAnimatingEnemy(playerLayerCtx, spriteName, animationArray, doesWobble, FRAME)
-{
-	let spriteArray = animationArray[CHARACTER_LOOKUP[spriteName]["spritePtr"]]["sprite"];
-	let spriteWidth = animationArray[CHARACTER_LOOKUP[spriteName]["spritePtr"]]["width"];
-	let spriteHeight = animationArray[CHARACTER_LOOKUP[spriteName]["spritePtr"]]["height"];
-
-	let enemyFacingRight = true;
-	for (let i = 0; i < spriteWidth; i += 1)
-		for (let j = 0; j < spriteHeight; j += 1) {
-			let colorPtr;
-
-			if(enemyFacingRight)
-				colorPtr = spriteArray[i + j * spriteWidth];
-			else
-				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
-
-			let pixelColor;
-			if (DRAW_SPRITES_WITH_COLOR) {
-				let colorMap = COLOR_MAP_LOOKUP[spriteName]
-				pixelColor = colorMap[colorPtr];
-			}
-			else {
-				pixelColor = GREYSCALE_COLORS[colorPtr];
-			}
-
-			let x = CHARACTER_LOOKUP[spriteName]["x"] + i * SCALE;
-			let y = CHARACTER_LOOKUP[spriteName]["y"] + (j - spriteHeight) * SCALE;
-			if(doesWobble)
-				x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
-
-			playerLayerCtx.fillStyle = pixelColor;
-			playerLayerCtx.fillRect(
-				x,
-				y,
-				SCALE,
-				SCALE,
-			);
-		}
-}
-
-export function drawPlayerLayer(playerLayerCtx, animationArray, enemyAnimationArray, FRAME) {
+// export function drawPlayerLayer(playerLayerCtx, animationArray, enemyAnimationArray, FRAME) {
+export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
 	let spriteHeight = animationArray[PLAYER["spritePtr"]]["height"];
@@ -557,8 +473,14 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, enemyAnimationAr
 			);
 		}
 
-	drawEnemy(playerLayerCtx, "enemy2", false, FRAME);
-	drawAnimatingEnemy(playerLayerCtx, "sloth", enemyAnimationArray, false, FRAME);
+	for(let enemyObject of ACTIVE_ENEMIES) {
+		drawAnimatingEnemy(
+			playerLayerCtx,
+			enemyObject,
+			false,
+			FRAME,
+		);
+	}
 }
 
 export function drawBullets(playerLayerCtx, FRAME)

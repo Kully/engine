@@ -7,16 +7,19 @@ import {
 } from "./constants.js";
 
 import {
-	hexToRgb,
-	getValueFrom2DArray,
-	isValidIndex,
 	getSpriteFromHiddenCanvas,
 	saveSpriteToHiddenCanvas,
 	createHiddenSpriteLookups,
 	drawLevelLayer,
+} from "./helpers.js";
+
+import {
+	hexToRgb,
+	getValueFrom2DArray,
 	getWidth2DArray,
 	getHeight2DArray,
-} from "./helpers.js";
+	isValidIndex,
+} from "./pure.js";
 
 import {
 	LEVEL_LOOKUP,
