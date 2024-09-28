@@ -231,7 +231,6 @@ function updateCanvasOnMouseMove(e) {
 	if (isValidIndex(TEMP_LEVEL, xLevel, yLevel) && MOUSEDOWN) {
 		TEMP_LEVEL[yLevel][xLevel] = CLICKED_SPRITE;
 	}
-	displayPreviewTile();
 }
 
 function getSpriteCount(spritesCanvas) {
@@ -348,7 +347,6 @@ document.addEventListener("keydown", function(e) {
 		CAMERA["yOffset"] += GRID_WIDTH_PX;
 
 	updateActiveSprite(CLICKED_SPRITE_INT);
-	displayPreviewTile();
 })
 
 
@@ -368,7 +366,6 @@ window.addEventListener("wheel", function(event) {
 	}
 
     updateActiveSprite(CLICKED_SPRITE_INT);
-	displayPreviewTile();
 });
 
 function gameLoop() {
@@ -379,7 +376,6 @@ function gameLoop() {
 		return;
 
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
-	displayPreviewTile();
 }
 
 updateActiveSprite(CLICKED_SPRITE_INT);
