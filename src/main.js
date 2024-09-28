@@ -1,5 +1,10 @@
 "use strict";
 
+import {
+	findAnimationCycle,
+	updatePlayerPointers,
+	updateCyclePointers,
+} from "./animation.js";
 
 import {
 	handleBoundaryCollision,
@@ -59,10 +64,6 @@ import {
 	ACTIVE_ENEMIES,
 } from "./state.js";
 
-import {
-	SCREENSHAKE,
-} from "./screenshake.js";
-
 
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
@@ -92,127 +93,6 @@ bkgdLayerCanvas.height = levelLayerCanvas.height;
 let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
-
-
-function updatePlayerPointers(animationArray, spriteObject) {
-	// move to first frame of animation if we reach the end
-	if (spriteObject["spritePtr"] >= animationArray.length) {
-		spriteObject["spritePtr"] = 0;
-		spriteObject["frameCounter"] = 0;
-	}
-
-	// move through duration of a single animation frame
-	spriteObject["frameCounter"] += 1;
-	if (spriteObject["frameCounter"] > animationArray[spriteObject["spritePtr"]]["frameDuration"] - 1) {
-		spriteObject["frameCounter"] = 0;
-		spriteObject["spritePtr"] = (spriteObject["spritePtr"] + 1) % animationArray.length;
-	}
-}
-
-function updateCyclePointers(spriteObject) {
-	let animationCycleName = spriteObject["animationCycleName"];
-	let animationArray = ENEMY_LOOKUP[spriteObject["ptr"]][animationCycleName];
-
-	// move to first frame of animation if we reach the end
-	if (spriteObject["spritePtr"] >= animationArray.length) {
-		spriteObject["spritePtr"] = 0;
-		spriteObject["frameCounter"] = 0;
-	}
-
-	// move through duration of a single animation frame
-	spriteObject["frameCounter"] += 1;
-	if (spriteObject["frameCounter"] > animationArray[spriteObject["spritePtr"]]["frameDuration"] - 1) {
-		spriteObject["frameCounter"] = 0;
-		spriteObject["spritePtr"] = (spriteObject["spritePtr"] + 1) % animationArray.length;
-	}
-}
-
-function shakeScreenOnLand()
-{
-	if(PLAYER["jumpJuice"] === 1 && PLAYER["lastJumpJuice"] < -38)
-	{
-		if(SCREENSHAKE["ptr"] > SCREENSHAKE["array"].length - 1)
-			SCREENSHAKE["ptr"] = 0;
-	}
-
-	if(SCREENSHAKE["ptr"] <= SCREENSHAKE["array"].length - 1)
-	{
-		let ptr = SCREENSHAKE["ptr"];
-		let dx = SCREENSHAKE["array"][ptr][0];
-
-		CAMERA["xOffset"] += dx;
-		playerLayerCtx.translate(-dx, 0);
-
-		SCREENSHAKE["ptr"] += 1;
-	}
-}
-
-function findAnimationCycle(FRAME) {
-	let animationArray;
-	let animationCycle;
-
-	if (!isPlayerStanding(LEVEL)) {
-		animationArray = SPRITES[PROTAGONIST]["JUMP_CYCLE"];
-		animationCycle = "JUMP_CYCLE";
-	} else
-	if(CONTROLLER["ArrowDown"] === 1) {
-		animationArray = SPRITES[PROTAGONIST]["CROUCH_CYCLE"];
-		animationCycle = "CROUCH_CYCLE";
-	}
-	else
-	if(
-		playerFacingLeft() !== PLAYER["wasFacingLeftLastFrame"] ||
-		(PLAYER["lastAnimationCycle"] === "TURN_CYCLE" &&
-		PLAYER["lastAnimationCycleCount"] < SPRITES[PROTAGONIST]["TURN_CYCLE"][0]["frameDuration"])
-	)
-	{
-		animationArray = SPRITES[PROTAGONIST]["TURN_CYCLE"];
-		animationCycle = "TURN_CYCLE";
-	}
-	else
-	if (
-		Math.abs(PLAYER["speedSP"]) > 0 ||
-		(CONTROLLER["ArrowLeft"] && !CONTROLLER["ArrowRight"]) ||
-		(!CONTROLLER["ArrowLeft"] && CONTROLLER["ArrowRight"])
-	) {
-		if (
-			   CONTROLLER["KeyZ"]
-			&& CONTROLLER["ShiftLeft"] === 0
-			&& CONTROLLER["ShiftRight"] === 0
-			&& ENABLE_SHOOTING_WHILE_RUNNING
-		) {
-			animationArray = SPRITES[PROTAGONIST]["WALK_SHOOT_CYCLE"];
-			animationCycle = "WALK_SHOOT_CYCLE";
-		}
-		else
-		if(CONTROLLER["ShiftLeft"] || CONTROLLER["ShiftRight"]) {
-			animationArray = SPRITES[PROTAGONIST]["WALK_CYCLE"];
-			animationCycle = "WALK_CYCLE";  // replace with run cycle
-		}
-		else {
-			animationArray = SPRITES[PROTAGONIST]["WALK_CYCLE"];
-			animationCycle = "WALK_CYCLE";
-		}
-	} else {
-		if (CONTROLLER["KeyZ"]) {
-			animationArray = SPRITES[PROTAGONIST]["SHOOT_CYCLE"];
-			animationCycle = "SHOOT_CYCLE";
-		}
-		else
-		{
-			animationArray = SPRITES[PROTAGONIST]["STAND_CYCLE"];
-			animationCycle = "STAND_CYCLE";
-		}
-	}
-
-	// manage state
-	if(PLAYER["lastAnimationCycle"] !== animationCycle)
-		PLAYER["lastAnimationCycleCount"] = 0
-	PLAYER["lastAnimationCycle"] = animationCycle;
-	PLAYER["lastAnimationCycleCount"] += 1;
-	PLAYER["wasFacingLeftLastFrame"] = playerFacingLeft();
-	return animationArray;
-}
 
 function moveCamera(player, activeEnemies) {
 	let combinedAnima = [player];
@@ -300,7 +180,7 @@ function gameLoop(e) {
 	moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 	// update player cycles
-	let animationArray = findAnimationCycle(FRAME);
+	let animationArray = findAnimationCycle(LEVEL);
 	updatePlayerPointers(animationArray, PLAYER);
 
 	// update enemy cycles
@@ -317,8 +197,6 @@ function gameLoop(e) {
 
 	handleBoundaryCollision(LEVEL);
 	handleItemCollision(ITEM_LEVEL);
-
-	shakeScreenOnLand();
 
 	if(SHOW_BACKGROUND_LAYER)
 	{
