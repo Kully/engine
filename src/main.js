@@ -89,18 +89,33 @@ let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
 let slotSpriteLookup = lookups[1];
 
-function updatePlayerPointers(animationArray) {
+// function updatePlayerPointers(animationArray) {
+// 	// move to first frame of animation if we reach the end
+// 	if (PLAYER["spritePtr"] >= animationArray.length) {
+// 		PLAYER["spritePtr"] = 0;
+// 		PLAYER["frameCounter"] = 0;
+// 	}
+
+// 	// move through duration of a single animation frame
+// 	PLAYER["frameCounter"] += 1;
+// 	if (PLAYER["frameCounter"] > animationArray[PLAYER["spritePtr"]]["frameDuration"] - 1) {
+// 		PLAYER["frameCounter"] = 0;
+// 		PLAYER["spritePtr"] = (PLAYER["spritePtr"] + 1) % animationArray.length;
+// 	}
+// }
+
+function updatePlayerPointers(animationArray, spriteObject) {
 	// move to first frame of animation if we reach the end
-	if (PLAYER["spritePtr"] >= animationArray.length) {
-		PLAYER["spritePtr"] = 0;
-		PLAYER["frameCounter"] = 0;
+	if (spriteObject["spritePtr"] >= animationArray.length) {
+		spriteObject["spritePtr"] = 0;
+		spriteObject["frameCounter"] = 0;
 	}
 
 	// move through duration of a single animation frame
-	PLAYER["frameCounter"] += 1;
-	if (PLAYER["frameCounter"] > animationArray[PLAYER["spritePtr"]]["frameDuration"] - 1) {
-		PLAYER["frameCounter"] = 0;
-		PLAYER["spritePtr"] = (PLAYER["spritePtr"] + 1) % animationArray.length;
+	spriteObject["frameCounter"] += 1;
+	if (spriteObject["frameCounter"] > animationArray[spriteObject["spritePtr"]]["frameDuration"] - 1) {
+		spriteObject["frameCounter"] = 0;
+		spriteObject["spritePtr"] = (spriteObject["spritePtr"] + 1) % animationArray.length;
 	}
 }
 
@@ -191,6 +206,23 @@ function findAnimationCycle(FRAME) {
 	return animationArray;
 }
 
+
+function findEnemyAnimationCycle(FRAME) {
+	let animationArray;
+	let animationCycle;
+
+	animationArray = SPRITES["sloth"]["STAND_CYCLE"];
+	animationCycle = "STAND_CYCLE";
+
+	// manage state
+	// if(PLAYER["lastAnimationCycle"] !== animationCycle)
+	// 	PLAYER["lastAnimationCycleCount"] = 0
+	// PLAYER["lastAnimationCycle"] = animationCycle;
+	// PLAYER["lastAnimationCycleCount"] += 1;
+	return animationArray;
+}
+
+
 function followPlayerWithCamera() {
 	function _moveCamera(variable, lowThresh, highThresh, speedVar) {
 		if (PLAYER[variable] > CAMERA[highThresh]) {
@@ -277,7 +309,11 @@ function gameLoop(e) {
 	followPlayerWithCamera();
 
 	let animationArray = findAnimationCycle(FRAME);
-	updatePlayerPointers(animationArray);
+	updatePlayerPointers(animationArray, PLAYER);
+
+	// update enemies
+	let enemyAnimationArray = findEnemyAnimationCycle(FRAME);
+	updatePlayerPointers(enemyAnimationArray, SLOTH);
 
 	updateHorizontalSpeed(0.5, 1, 3);
 	updateVerticalSpeed(LEVEL);
@@ -300,7 +336,7 @@ function gameLoop(e) {
 
 	// draw game level
 	clearCanvas(levelLayerCanvas, levelLayerCtx);
-	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup);
+	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup, false, FRAME);
 
 	// draw colletible items
 	clearCanvas(itemLayerCanvas, itemLayerCtx);
@@ -308,7 +344,7 @@ function gameLoop(e) {
 
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
-	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
+	drawPlayerLayer(playerLayerCtx, animationArray, enemyAnimationArray, FRAME);
 
 	// draw active bullets
 	drawBullets(playerLayerCtx, FRAME);

@@ -43,9 +43,9 @@ import {
 } from "./data/sprites.js";
 
 
-let period = 30;
+let period = 22;
 let amp = 2;
-let wobble = 0.2;
+let wobble = 0.4;
 
 export function hexToNumber(hexString) {
 	return parseInt(hexString, 16);
@@ -214,12 +214,26 @@ function getShiftPtr(eitherXOrY)
 	return shiftPtr;
 }
 
-export function drawLevelLayer(levelLayerCtx, spritesCtx, level, spriteSlotLookup) {
+export function drawLevelLayer(
+	levelLayerCtx,
+	spritesCtx,
+	level,
+	spriteSlotLookup,
+	doesWobble,
+	FRAME,
+) {
 	let xTiles = SCREEN_WIDTH_PX / GRID_WIDTH_PX;
 	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
 	for (let x = 0; x < xTiles + 1; x += 1)
 		for (let y = 0; y < yTiles + 1; y += 1) {
 			let shiftXPtr = getShiftPtr("x");
+			if(doesWobble)
+			{
+				let period = 30;
+				let amp = 1;
+				let wobble = 0;
+				shiftXPtr += Math.floor( amp * Math.sin(wobble * y + FRAME/period) );
+			}
 			let shiftYPtr = getShiftPtr("y");
 			let spritePtr = getValueFrom2DArray(
 				level,
@@ -443,7 +457,48 @@ export function drawEnemy(playerLayerCtx, spriteName, doesWobble, FRAME)
 		}
 }
 
-export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
+
+export function drawAnimatingEnemy(playerLayerCtx, spriteName, animationArray, doesWobble, FRAME)
+{
+	let spriteArray = animationArray[CHARACTER_LOOKUP[spriteName]["spritePtr"]]["sprite"];
+	let spriteWidth = animationArray[CHARACTER_LOOKUP[spriteName]["spritePtr"]]["width"];
+	let spriteHeight = animationArray[CHARACTER_LOOKUP[spriteName]["spritePtr"]]["height"];
+
+	let enemyFacingRight = true;
+	for (let i = 0; i < spriteWidth; i += 1)
+		for (let j = 0; j < spriteHeight; j += 1) {
+			let colorPtr;
+
+			if(enemyFacingRight)
+				colorPtr = spriteArray[i + j * spriteWidth];
+			else
+				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+
+			let pixelColor;
+			if (DRAW_SPRITES_WITH_COLOR) {
+				let colorMap = COLOR_MAP_LOOKUP[spriteName]
+				pixelColor = colorMap[colorPtr];
+			}
+			else {
+				pixelColor = GREYSCALE_COLORS[colorPtr];
+			}
+
+			let x = CHARACTER_LOOKUP[spriteName]["x"] + i * SCALE;
+			let y = CHARACTER_LOOKUP[spriteName]["y"] + (j - spriteHeight) * SCALE;
+			if(doesWobble)
+				x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
+
+			playerLayerCtx.fillStyle = pixelColor;
+			playerLayerCtx.fillRect(
+				x,
+				y,
+				SCALE,
+				SCALE,
+			);
+		}
+}
+
+export function drawPlayerLayer(playerLayerCtx, animationArray, enemyAnimationArray, FRAME) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
 	let spriteHeight = animationArray[PLAYER["spritePtr"]]["height"];
@@ -489,6 +544,7 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 
 			let x = PLAYER["x"] + i * SCALE;
 			let y = PLAYER["y"] + (j - spriteHeight) * SCALE;
+
 			playerLayerCtx.fillStyle = pixelColor;
 			playerLayerCtx.fillRect(
 				x,
@@ -498,8 +554,8 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 			);
 		}
 
-	drawEnemy(playerLayerCtx, "enemy2", true, FRAME)
-	drawEnemy(playerLayerCtx, "sloth", false, FRAME)
+	drawEnemy(playerLayerCtx, "enemy2", false, FRAME);
+	drawAnimatingEnemy(playerLayerCtx, "sloth", enemyAnimationArray, false, FRAME);
 }
 
 export function drawBullets(playerLayerCtx, FRAME)

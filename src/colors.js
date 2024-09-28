@@ -216,16 +216,17 @@ export const LIGHT_ENEMY2_COLOR_MAP = {
 
 
 export let SLOTH_COLOR_MAP;
-export const OG_SLOTH_COLOR_MAP = {
-	0: GREYSCALE_COLORS[0],
-	1: '#000000FF',
-	2: '#771717ff',
-	3: '#9d2020ff',
-	4: '#893f11ff',
-	5: '#b04e12ff',
-	6: '#303030ff',
-	7: '#f3c612ff',
-}
+export const OG_SLOTH_COLOR_MAP = {0: '#00000000', 1: '#421B1BFF', 2: '#771717ff', 3: '#9d2020ff', 4: '#893f11ff', 5: '#b04e12ff', 6: '#f3c612ff'}
+// export const OG_SLOTH_COLOR_MAP = {
+// 	0: GREYSCALE_COLORS[0],
+// 	1: '#000000FF',
+// 	2: '#771717ff',
+// 	3: '#9d2020ff',
+// 	4: '#893f11ff',
+// 	5: '#b04e12ff',
+// 	6: '#303030ff',
+// 	7: '#f3c612ff',
+// }
 
 
 /* OBJECT THEMES
