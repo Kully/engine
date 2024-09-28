@@ -206,7 +206,8 @@ def gen_color_int_lookup(filename):
 
 def print_int_color_lookup(color_int_lookup):
     """Print the engine-compatible color mapping."""
-    output = {val: key for key,val in color_int_lookup.items()}
+    int_color_lookup = {val: key for key,val in color_int_lookup.items()}
+    print(int_color_lookup)
 
 def extract_spritesheet_colors(filename, sprite_size):
     """Extract the colors out of a spritesheet of sprites.
