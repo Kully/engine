@@ -10,6 +10,10 @@ import {
 } from "./boundaries.js";
 
 import {
+	ENABLE_SHOOTING_WHILE_RUNNING,
+} from "./constants.js";
+
+import {
 	SPRITES,
 	PROTAGONIST,
 } from "./data/sprites.js"
