@@ -45,6 +45,28 @@ export const SPRITE_LOOKUP = {
 		name: "outofbounds",
 		hitbox: false,
 	},
+	301: {
+		sprite: [
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+			5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+		],
+		name: "editor-outofbounds",
+		hitbox: false,
+	},
 	4: {
 		sprite: [
 			4,4,5,3,3,3,4,3,0,3,1,3,3,3,2,0,
@@ -276,6 +298,13 @@ export const SPRITE_LOOKUP = {
 	},
 };
 
+let oobName;
+if(window.location.href.endsWith("editor.html"))
+	oobName = "editor-outofbounds";
+else
+if(window.location.href.endsWith("index.html"))
+	oobName = "outofbounds"
+
 export let INVISIBLE_SPIRTE_IDX;
 export let OUTOFBOUNDS_SPIRTE_IDX;
 export let PLAYER_SPIRTE_IDX;
@@ -284,7 +313,7 @@ for(let ptr in SPRITE_LOOKUP)
 	if(SPRITE_LOOKUP[ptr]["name"] == "player")
 		PLAYER_SPIRTE_IDX = ptr;
 	else
-	if(SPRITE_LOOKUP[ptr]["name"] == "outofbounds")
+	if(SPRITE_LOOKUP[ptr]["name"] == oobName)
 		OUTOFBOUNDS_SPIRTE_IDX = ptr;
 	else
 	if(SPRITE_LOOKUP[ptr]["name"] == "invisible")
