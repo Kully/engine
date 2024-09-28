@@ -130,6 +130,24 @@ canvas#hover-canvas {
 	padding: 0.5rem;
 }
 
+.instructions {
+	margin-top: 20px;
+	background-color: #111;
+	color: #A4A4A4;
+	z-index: 1;
+	position: absolute;
+	top: calc(50vh + var(--screen-height) / 2);
+	left: calc(50% - var(--screen-width) / 2);
+	width: calc(960px);
+	text-align: center;
+	padding: 0.5rem 0;
+}
+.instructions code {
+	color: #EEE;
+	background-color: #222;
+	padding: 0.25rem;
+}
+
 
 /* Animations */
 
