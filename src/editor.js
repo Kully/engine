@@ -47,7 +47,7 @@ let MOUSEDOWN = false;
 let CANVAS_XLEVEL = 0;
 let CANVAS_YLEVEL = 0;
 
-const EMPTY_LEVEL = [
+let EMPTY_LEVEL = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -70,6 +70,23 @@ function getPlayerSpriteIdx() {
 const PLAYER_SPRITE_IDX = getPlayerSpriteIdx(SPRITE_LOOKUP);
 
 
+function appendStringToLevel(stringyLevel, label, levelData)
+{
+	stringyLevel += `"` + label + `": [\r`;
+	for (let y = 0; y < levelData.length; y += 1) {
+		stringyLevel += "    [";
+		for (let x = 0; x < levelData[y].length; x += 1) {
+			stringyLevel += levelData[y][x];
+			if (x != levelData[y].length - 1)
+				stringyLevel += ", ";
+		}
+		stringyLevel += "],";
+		stringyLevel += "\r";
+	}
+	stringyLevel += "],\r";
+	return stringyLevel;
+}
+
 function copyLevelToClipboard(e) {
 	// Extract out where the position's initial spawn point is
 	let playerX;
@@ -86,19 +103,10 @@ function copyLevelToClipboard(e) {
 	let stringyLevel = "";
 	stringyLevel += `"playerX": ${playerX},\r`;
 	stringyLevel += `"playerY": ${playerY},\r`;
-	stringyLevel += `"level": [\r`;
 
-	for (let y = 0; y < TEMP_LEVEL.length; y += 1) {
-		stringyLevel += "    [";
-		for (let x = 0; x < TEMP_LEVEL[y].length; x += 1) {
-			stringyLevel += TEMP_LEVEL[y][x];
-			if (x != TEMP_LEVEL[y].length - 1)
-				stringyLevel += ", ";
-		}
-		stringyLevel += "],";
-		stringyLevel += "\r";
-	}
-	stringyLevel += "],";
+	stringyLevel = appendStringToLevel(stringyLevel, "level", TEMP_LEVEL);
+	stringyLevel = appendStringToLevel(stringyLevel, "enemy", EMPTY_LEVEL);
+	stringyLevel = appendStringToLevel(stringyLevel, "items", EMPTY_LEVEL);
 	navigator.clipboard.writeText(stringyLevel);
 
 	// indicate to user that copying was successful
@@ -275,13 +283,17 @@ heightSelector.addEventListener("change", function(e) {
 			{
 				row.push(0)
 			}
-			TEMP_LEVEL.push(row)
+			TEMP_LEVEL.push(row);
+			EMPTY_LEVEL.push(row);
 		}
 	}
 	else
 	{
 		for(let i=0; i < currentHeight - newHeight; i+=1)
-			TEMP_LEVEL.pop()
+		{
+			TEMP_LEVEL.pop();
+			EMPTY_LEVEL.pop();
+		}
 	}
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
 })
@@ -297,7 +309,10 @@ widthSelector.addEventListener("change", function(e) {
 		for(let y=0; y < currentHeight; y+=1)
 		{
 			for(let i=0; i<newWidth - currentWidth; i+=1)
-				TEMP_LEVEL[y].push(0)
+			{
+				TEMP_LEVEL[y].push(0);
+				EMPTY_LEVEL[y].push(0);
+			}
 		}
 	}
 	else
@@ -305,7 +320,10 @@ widthSelector.addEventListener("change", function(e) {
 		for(let y=0; y < currentHeight; y+=1)
 		{
 			for(let i=0; i<currentWidth - newWidth; i+=1)
-				TEMP_LEVEL[y].pop()
+			{
+				TEMP_LEVEL[y].pop();
+				EMPTY_LEVEL[y].pop();
+			}
 		}
 	}
 	drawLevelLayer(ctx, spritesCtx, TEMP_LEVEL, spriteSlotLookup);
