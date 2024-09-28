@@ -416,7 +416,6 @@ export function drawAnimatingEnemy(playerLayerCtx, enemyObject, doesWobble, FRAM
 		}
 }
 
-// export function drawPlayerLayer(playerLayerCtx, animationArray, enemyAnimationArray, FRAME) {
 export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 	let spriteArray = animationArray[PLAYER["spritePtr"]]["sprite"];
 	let spriteWidth = animationArray[PLAYER["spritePtr"]]["width"];
