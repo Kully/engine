@@ -263,7 +263,6 @@ function getSpriteCount(spritesCanvas) {
 let resetBtn = document.getElementById("reset-btn");
 let copyBtn = document.getElementById("copy-to-clipboard");
 const canvas = document.getElementById("canvas");
-const hoverCanvas = document.getElementById("hover-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 const selection = document.getElementById("selection");
 const previewOutline = document.getElementById("preview-outline");
