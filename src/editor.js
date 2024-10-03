@@ -273,14 +273,10 @@ const widthSelector = document.getElementById("tile-width");
 const heightSelector = document.getElementById("tile-height");
 
 const ctx = canvas.getContext("2d", {willReadFrequently: true});
-const hoverCtx = hoverCanvas.getContext("2d", {willReadFrequently: true});
 const spritesCtx = spritesCanvas.getContext("2d", {willReadFrequently: true});
 
 canvas.width = CAMERA["width"];
 canvas.height = CAMERA["height"];
-
-hoverCanvas.width = CAMERA["width"];
-hoverCanvas.height = CAMERA["height"];
 
 let lookups = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 let spriteSlotLookup = lookups[0];
