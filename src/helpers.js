@@ -34,7 +34,6 @@ import {
 	SPRITES,
 	INVISIBLE_SPIRTE_IDX,
 	OUTOFBOUNDS_SPIRTE_IDX,
-	PLAYER_SPIRTE_IDX,
 } from "./data/sprites.js";
 
 import {
@@ -209,19 +208,6 @@ export function drawLevelLayer(
 			// don't show anything
 			if (spritePtr === undefined) {
 				spritePtr = OUTOFBOUNDS_SPIRTE_IDX;
-			}
-
-			// show spawn tile in edit mode but hide during gameplay
-			if (SPRITE_LOOKUP[spritePtr]["name"] === "player") {
-				if(window.location.href.endsWith("editor.html"))
-				{
-					spritePtr = PLAYER_SPIRTE_IDX;
-				}
-				else
-				if(window.location.href.endsWith("index.html"))
-				{
-					spritePtr = INVISIBLE_SPIRTE_IDX;
-				}
 			}
 
 			let savedData = getSpriteFromHiddenCanvas(

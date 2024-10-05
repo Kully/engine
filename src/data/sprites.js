@@ -329,12 +329,8 @@ if(window.location.href.endsWith("index.html"))
 
 export let INVISIBLE_SPIRTE_IDX;
 export let OUTOFBOUNDS_SPIRTE_IDX;
-export let PLAYER_SPIRTE_IDX;
 for(let ptr in SPRITE_LOOKUP)
 {
-	if(SPRITE_LOOKUP[ptr]["name"] == "player")
-		PLAYER_SPIRTE_IDX = ptr;
-	else
 	if(SPRITE_LOOKUP[ptr]["name"] == oobName)
 		OUTOFBOUNDS_SPIRTE_IDX = ptr;
 	else
