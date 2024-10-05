@@ -320,12 +320,27 @@ export const SPRITE_LOOKUP = {
 	},
 };
 
+function getPage() {
+	if(
+		window.location.href.endsWith("/") ||
+		window.location.href.endsWith("/index") ||
+		window.location.href.endsWith("/index.html")
+	)
+		return "game"
+	else
+	if(
+		window.location.href.endsWith("/editor") ||
+		window.location.href.endsWith("/editor.html")
+	)
+		return "editor"
+}
+
 let oobName;
-if(window.location.href.endsWith("editor.html"))
-	oobName = "editor-outofbounds";
-else
-if(window.location.href.endsWith("index.html"))
+if(getPage() === "game")
 	oobName = "outofbounds"
+else
+if(getPage() === "editor")
+	oobName = "editor-outofbounds";
 
 export let INVISIBLE_SPIRTE_IDX;
 export let OUTOFBOUNDS_SPIRTE_IDX;
