@@ -16,6 +16,7 @@ import {
 
 import {
 	ACTIVE_BULLETS,
+	ACTIVE_ENEMIES,
 	PLAYER,
 	CAMERA,
 	STATE,
@@ -202,5 +203,25 @@ export function handleBulletCollision(level)
 		{
 			ACTIVE_BULLETS.splice(idx, 1);
 		}
+	}
+}
+
+export function handleEnemyCollision(level)
+{
+	for(let idx = ACTIVE_ENEMIES.length - 1; idx >= 0; idx -= 1)
+	{
+		let thisEnemy = ACTIVE_ENEMIES[idx];
+
+		let xTileCurrent = Math.round(thisEnemy["x"] / GRID_WIDTH_PX);
+		let yTileCurrent = Math.round(thisEnemy["y"] / GRID_WIDTH_PX);
+
+		let playerGridX = PLAYER["x"] / GRID_WIDTH_PX;
+		let playerGridY = PLAYER["y"] / GRID_WIDTH_PX;
+		playerGridX += CAMERA["xOffset"] / GRID_WIDTH_PX;
+		playerGridY += CAMERA["yOffset"] / GRID_WIDTH_PX;
+
+		let playerXTileCurrent = Math.round(playerGridX);
+		let playerYTileCurrent = Math.round(playerGridY);
+
 	}
 }

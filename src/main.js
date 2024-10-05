@@ -10,6 +10,7 @@ import {
 	handleBoundaryCollision,
 	handleItemCollision,
 	handleBulletCollision,
+	handleEnemyCollision,
 	isPlayerStanding,
 } from "./boundaries.js";
 
@@ -19,6 +20,10 @@ import {
 	ENABLE_SHOOTING_WHILE_RUNNING,
 	GRID_WIDTH_PX,
 } from "./constants.js";
+
+import {
+	updateEnemyPositions,
+} from "./enemy.js";
 
 import {
 	createHiddenSpriteLookups,
@@ -187,6 +192,9 @@ function gameLoop(e) {
 	for(let enemyObject of ACTIVE_ENEMIES)
 		updateCyclePointers(enemyObject);
 
+	// update enemy speeds and positions
+	updateEnemyPositions(PLAYER, ACTIVE_ENEMIES, FRAME);
+
 	updateHorizontalSpeed();
 	updateVerticalSpeed(LEVEL);
 	translatePlayer();
@@ -197,6 +205,7 @@ function gameLoop(e) {
 
 	handleBoundaryCollision(LEVEL);
 	handleItemCollision(ITEM_LEVEL);
+	handleEnemyCollision(LEVEL);
 
 	if(SHOW_BACKGROUND_LAYER)
 	{
