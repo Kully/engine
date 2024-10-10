@@ -369,20 +369,20 @@ export function drawAnimatingBkgdLayer(bkgdLayerCtx, FRAME) {
 export function drawAnimatingEnemy(playerLayerCtx, enemyObject, doesWobble, FRAME)
 {
 	let thisEnemyData = ENEMY_LOOKUP[enemyObject["ptr"]];
+	let enemyFacingLeft = enemyObject["isFacingLeft"];
 	let thisCycle = thisEnemyData[enemyObject["animationCycleName"]];
 	let spriteArray = thisCycle[enemyObject["spritePtr"]]["sprite"];
 	let spriteWidth = thisCycle[enemyObject["spritePtr"]]["width"];
 	let spriteHeight = thisCycle[enemyObject["spritePtr"]]["height"];
 
-	let enemyFacingRight = true;
 	for (let i = 0; i < spriteWidth; i += 1)
 		for (let j = 0; j < spriteHeight; j += 1) {
 			let colorPtr;
 
-			if(enemyFacingRight)
-				colorPtr = spriteArray[i + j * spriteWidth];
-			else
+			if(enemyFacingLeft)
 				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+			else
+				colorPtr = spriteArray[i + j * spriteWidth];
 
 			let colorMap = enemyObject["colorMap"];
 			let pixelColor = colorMap[colorPtr];

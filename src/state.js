@@ -94,6 +94,7 @@ for(let colIndex=0; colIndex < LEVEL_LOOKUP[levelName]["enemy"].length; colIndex
 			animationCycleName: "STAND_CYCLE",
 			spritePtr: 0,
 			colorMap: COLOR_MAP_LOOKUP[enemyName],
+			isFacingLeft: true,
 		}
 		ACTIVE_ENEMIES.push(enemyObject);
 	}
