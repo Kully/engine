@@ -388,7 +388,7 @@ export function drawAnimatingEnemy(playerLayerCtx, enemyObject, doesWobble, FRAM
 			let pixelColor = colorMap[colorPtr];
 
 			let x = enemyObject["x"] + i * SCALE;
-			let y = enemyObject["y"] + (j - spriteHeight) * SCALE;
+			let y = enemyObject["y"] + j * SCALE;
 			if(doesWobble)
 				x += Math.floor( amp * Math.sin(wobble * j + FRAME/period) );
 
