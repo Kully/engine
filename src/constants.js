@@ -14,6 +14,7 @@ export const VALID_CONTROLLER_KEYS = [
 	"ArrowDown",
 	"KeyZ",
 	"KeyX",
+	"KeyK",
 	"ShiftLeft",
 	"ShiftRight",
 ];

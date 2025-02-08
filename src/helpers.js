@@ -411,10 +411,11 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 		for (let j = 0; j < spriteHeight; j += 1) {
 			let colorPtr;
 
-			if(playerFacingLeft())
-				colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
-			else
-				colorPtr = spriteArray[i + j * spriteWidth];
+			colorPtr = spriteArray[i + j * spriteWidth];
+			// if(playerFacingLeft())
+			// 	colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+			// else
+			// 	colorPtr = spriteArray[i + j * spriteWidth];
 
 			let pixelColor;
 			if (DRAW_SPRITES_WITH_COLOR)

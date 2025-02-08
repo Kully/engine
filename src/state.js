@@ -69,6 +69,7 @@ export const PLAYER = {
 	maxSpeedUserValue: 3,  // can remove since obsolete
 	items: { gold: 0, },
 	healthPoints: 1,
+	holdingEnemies: [],
 };
 
 export const ACTIVE_ENEMIES = [];

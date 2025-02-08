@@ -31,6 +31,22 @@ export function findAnimationCycle(LEVEL) {
 	let animationArray;
 	let animationCycle;
 
+	animationCycle = "STAND_CYCLE";
+	animationArray = SPRITES[PROTAGONIST][animationCycle];
+
+	// manage state
+	if(PLAYER["lastAnimationCycle"] !== animationCycle)
+		PLAYER["lastAnimationCycleCount"] = 0
+	PLAYER["lastAnimationCycle"] = animationCycle;
+	PLAYER["lastAnimationCycleCount"] += 1;
+	PLAYER["wasFacingLeftLastFrame"] = playerFacingLeft();
+	return animationArray;
+}
+
+export function oldFindAnimationCycle(LEVEL) {
+	let animationArray;
+	let animationCycle;
+
 	if (!isPlayerStanding(LEVEL)) {
 		animationArray = SPRITES[PROTAGONIST]["JUMP_CYCLE"];
 		animationCycle = "JUMP_CYCLE";

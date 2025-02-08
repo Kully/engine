@@ -12,6 +12,8 @@ import {
 	handleBulletCollision,
 	handleEnemyCollision,
 	isPlayerStanding,
+	getPlayerGridX,
+	getPlayerGridY,
 } from "./boundaries.js";
 
 import {
@@ -40,6 +42,7 @@ import {
 import {
 	LEVEL,
 	ITEM_LEVEL,
+	ENEMY_LEVEL,
 } from "./data/levels.js";
 import {
 	SPRITES,
@@ -68,6 +71,10 @@ import {
 	ACTIVE_BULLETS,
 	ACTIVE_ENEMIES,
 } from "./state.js";
+
+import {
+	getValueFrom2DArray
+} from "./pure.js";
 
 
 document.addEventListener("keydown", handleKeyDown);
@@ -171,6 +178,18 @@ let calcFpsValue = document.getElementById("fps");
 // drawBkgdLayer(bkgdLayerCtx, true);
 
 
+document.addEventListener("keydown", function(e) {
+	if (e.code == "KeyA")
+		PLAYER["x"] -= GRID_WIDTH_PX;
+	if (e.code == "KeyD")
+		PLAYER["x"] += GRID_WIDTH_PX;
+	if (e.code == "KeyW")
+		PLAYER["y"] -= GRID_WIDTH_PX;
+	if (e.code == "KeyS")
+		PLAYER["y"] += GRID_WIDTH_PX;
+})
+
+
 let FRAME = 0;
 let COUNTER = 0;
 let startTime;
@@ -182,30 +201,55 @@ function gameLoop(e) {
 		STATE["resetGame"] = false;
 	}
 
-	moveCamera(PLAYER, ACTIVE_ENEMIES);
+	// moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 	// update player cycles
 	let animationArray = findAnimationCycle(LEVEL);
 	updatePlayerPointers(animationArray, PLAYER);
 
-	// update enemy cycles
-	for(let enemyObject of ACTIVE_ENEMIES)
-		updateCyclePointers(enemyObject);
+	// // update enemy cycles
+	// for(let enemyObject of ACTIVE_ENEMIES)
+	// 	updateCyclePointers(enemyObject);
 
-	// update enemy speeds and positions
-	updateEnemyPositions(PLAYER, ACTIVE_ENEMIES, FRAME);
+	// // update enemy speeds and positions
+	// updateEnemyPositions(PLAYER, ACTIVE_ENEMIES, FRAME);
 
-	updateHorizontalSpeed();
-	updateVerticalSpeed(LEVEL);
-	translatePlayer();
+
+
+	// mechanics of the game: pick up and drop off enemies
+	if(CONTROLLER["KeyK"] === 1 && PLAYER["holdingEnemies"].length === 0)
+	{
+		let playerX = getPlayerGridX(PLAYER["x"]);
+		let playerY = getPlayerGridY(PLAYER["y"]) - 1;
+		console.log(
+			getValueFrom2DArray(ENEMY_LEVEL, playerX, playerY)
+		);
+	}
+
+
+
+
+
+
+
+
+	// updateHorizontalSpeed();
+	// updateVerticalSpeed(LEVEL);
+	// translatePlayer();
 
 	addBulletsToScene();
 	updateBulletPositions();
 	handleBulletCollision(LEVEL);
 
-	handleBoundaryCollision(LEVEL);
-	handleItemCollision(ITEM_LEVEL);
-	handleEnemyCollision(LEVEL);
+	// make sure the cursor stays within the arena
+	if(PLAYER["x"] / GRID_WIDTH_PX === 0)
+		PLAYER["x"] = GRID_WIDTH_PX * 1;
+	if(PLAYER["x"] / GRID_WIDTH_PX === 13)
+		PLAYER["x"] = GRID_WIDTH_PX * 12;
+	if(PLAYER["y"] / GRID_WIDTH_PX === 1)
+		PLAYER["y"] = GRID_WIDTH_PX * 2;
+	if(PLAYER["y"] / GRID_WIDTH_PX === 8)
+		PLAYER["y"] = GRID_WIDTH_PX * 7;
 
 	if(SHOW_BACKGROUND_LAYER)
 	{
@@ -217,16 +261,9 @@ function gameLoop(e) {
 	clearCanvas(levelLayerCanvas, levelLayerCtx);
 	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup, false, FRAME);
 
-	// draw colletible items
-	clearCanvas(itemLayerCanvas, itemLayerCtx);
-	drawItemLayer(itemLayerCtx, spritesCtx, ITEM_LEVEL, spriteSlotLookup, FRAME);
-
 	// draw players and enemies
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
-
-	// draw active bullets
-	drawBullets(playerLayerCtx, FRAME);
 
 	FRAME += 1;
 
