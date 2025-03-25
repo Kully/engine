@@ -35,11 +35,13 @@ import {
 	drawAnimatingBkgdLayer,
 	drawLevelLayer,
 	drawPlayerLayer,
+	drawEnemyLayer,
 	drawItemLayer,
 	drawBullets,
 } from "./helpers.js";
 
 import {
+	LEVEL_LOOKUP,
 	LEVEL,
 	ITEM_LEVEL,
 	ENEMY_LEVEL,
@@ -74,7 +76,8 @@ import {
 } from "./state.js";
 
 import {
-	getValueFrom2DArray
+	getValueFrom2DArray,
+	putValueTo2DArray,
 } from "./pure.js";
 
 
@@ -226,9 +229,11 @@ function gameLoop(e) {
 		let enemyIndex = getValueFrom2DArray(ENEMY_LEVEL, playerX, playerY);
 		if(enemyIndex !== 0)
 		{
-			PLAYER["pickedUpItemInitCoords"] = (playerX, playerY);
-			// move the enemy to the other layer
-			ENEMY_LEVEL;
+			PLAYER["pickedUpItemInitCoords"] = [playerX, playerY];
+			// swap enemy from enemy layer to grab layer
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, 0);
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, enemyIndex);
+			PLAYER["pickedUpItemPtr"] = enemyIndex;
 		}
 	}
 	else
@@ -238,14 +243,43 @@ function gameLoop(e) {
 		&& PLAYER["pickedUpItemInitCoords"][1] !== -1
 	)
 	{
-		// If you are already holding an enemy
+		let playerX = getPlayerGridX(PLAYER["x"]);
+		let playerY = getPlayerGridY(PLAYER["y"]) - 1;
+
+		if(
+			   playerX !== PLAYER["pickedUpItemInitCoords"][0]
+			|| playerY !== PLAYER["pickedUpItemInitCoords"][1]
+		)
+		{
+			putValueTo2DArray(
+				LEVEL_LOOKUP["level"]["grab"],
+				PLAYER["pickedUpItemInitCoords"][0],
+				PLAYER["pickedUpItemInitCoords"][1],
+				0
+			);
+			putValueTo2DArray(
+				LEVEL_LOOKUP["level"]["grab"],
+				playerX,
+				playerY,
+				PLAYER["pickedUpItemPtr"],
+			);
+			PLAYER["pickedUpItemInitCoords"] = [playerX, playerY];
+		}
 	}
 	else
 	if(
 		CONTROLLER["KeyK"] === 0
+		&& PLAYER["pickedUpItemPtr"] !== -1
 	)
 	{
+		// decide if we can place the enemy back on the enemy layer
+		let playerX = getPlayerGridX(PLAYER["x"]);
+		let playerY = getPlayerGridY(PLAYER["y"]) - 1;
+		putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
+		putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
+
 		PLAYER["pickedUpItemInitCoords"] = [-1, -1];
+		PLAYER["pickedUpItemPtr"] = -1;
 	}
 
 	addBulletsToScene();
@@ -272,8 +306,10 @@ function gameLoop(e) {
 	clearCanvas(levelLayerCanvas, levelLayerCtx);
 	drawLevelLayer(levelLayerCtx, spritesCtx, LEVEL, spriteSlotLookup, false, FRAME);
 
-	// draw players and enemies
+	// draw players, playfield, and held objects
 	clearCanvas(playerLayerCanvas, playerLayerCtx);
+	drawEnemyLayer(playerLayerCtx, ENEMY_LEVEL, FRAME);
+	drawEnemyLayer(playerLayerCtx, GRAB_LEVEL, FRAME);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
 
 	FRAME += 1;

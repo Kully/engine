@@ -70,6 +70,7 @@ export const PLAYER = {
 	items: { gold: 0, },
 	healthPoints: 1,
 	pickedUpItemInitCoords: [-1, -1],
+	pickedUpItemPtr: 0,
 };
 
 export const ACTIVE_ENEMIES = [];

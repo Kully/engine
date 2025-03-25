@@ -7,6 +7,7 @@ import {
 	GOLD_COIN_COLOR_MAP,
 	GREYSCALE_COLORS,
 	COLOR_MAP_LOOKUP,
+	TRIANGLE_COLOR_MAP,
 } from "./colors.js";
 
 import {
@@ -413,10 +414,6 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 			let colorPtr;
 
 			colorPtr = spriteArray[i + j * spriteWidth];
-			// if(playerFacingLeft())
-			// 	colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
-			// else
-			// 	colorPtr = spriteArray[i + j * spriteWidth];
 
 			let pixelColor;
 			if (DRAW_SPRITES_WITH_COLOR)
@@ -459,24 +456,63 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 				SCALE,
 			);
 		}
+}
 
-	for(let enemyObject of ACTIVE_ENEMIES) {
-		drawAnimatingEnemy(
-			playerLayerCtx,
-			enemyObject,
-			false,
-			FRAME,
-		);
-	}
-	console.log("THE HELD ENEMIES");
-	for(let enemyObject of HELD_ENEMIES) {
-		console.log("hit");
-		drawAnimatingEnemy(
-			playerLayerCtx,
-			enemyObject,
-			false,
-			FRAME,
-		);
+
+
+export function drawEnemyLayer(playerLayerCtx, level, FRAME) {
+	let xTiles = SCREEN_WIDTH_PX / GRID_WIDTH_PX;
+	let yTiles = SCREEN_HEIGHT_PX / GRID_WIDTH_PX;
+	for (let x = 0; x < xTiles + 1; x += 1)
+	for (let y = 0; y < yTiles + 1; y += 1)
+	{
+			let shiftXPtr = getShiftPtr("x");
+			let shiftYPtr = getShiftPtr("y");
+			let spritePtr = getValueFrom2DArray(
+				level,
+				x + shiftXPtr,
+				y + shiftYPtr,
+			);
+			// don't show anything
+			if (spritePtr === undefined || spritePtr === 0) {
+				spritePtr = OUTOFBOUNDS_SPIRTE_IDX;
+				continue;
+			}
+
+			let enemyName = "triangle_left";
+			let enemyX = x * GRID_WIDTH_PX;
+			let enemyY = y * GRID_WIDTH_PX;
+
+			// draw animating enemy
+			let enemyObject = ENEMY_LOOKUP[spritePtr];
+
+			let enemyFacingLeft = false;
+			let thisCycle = enemyObject["STAND_CYCLE"];
+			let spriteArray = thisCycle[0]["sprite"];
+			let spriteWidth = thisCycle[0]["width"];
+			let spriteHeight = thisCycle[0]["height"];
+
+			for (let i = 0; i < spriteWidth; i += 1)
+			for (let j = 0; j < spriteHeight; j += 1)
+			{
+				let colorPtr;
+				colorPtr = spriteArray[i + j * spriteWidth];
+				if(enemyFacingLeft)
+					colorPtr = spriteArray[(spriteWidth - 1 - i) + j * spriteWidth];
+				else
+					colorPtr = spriteArray[i + j * spriteWidth];
+
+				let colorMap = COLOR_MAP_LOOKUP[enemyName];
+				let pixelColor = colorMap[colorPtr];
+	
+				playerLayerCtx.fillStyle = pixelColor;
+				playerLayerCtx.fillRect(
+					enemyX + i * SCALE,
+					enemyY + j * SCALE,
+					SCALE,
+					SCALE,
+				);
+			}
 	}
 }
 
