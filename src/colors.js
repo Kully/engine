@@ -177,19 +177,29 @@ const CYBERPUNK_PLAYER_COLOR_MAP = {
 	7: "#ebcd46ff",  // fire 1
     8: "#e1622bff",  // fire 2
 }
-const METROID_PLAYER_COLOR_MAP = {
+const OG_METROID_PLAYER_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: "#000000FF",
 	2: "#3F7F00FF",
 	3: "#FF301FFF",
 	4: "#FF905FFF",
-
 	5: "#b5179eFF",
 	6: "#f72585FF",
 	7: "#ebcd46ff",  // fire 1
     8: "#e1622bff",  // fire 2
 }
 
+const METROID_PLAYER_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: "#FF3D7FFF", 
+	2: "#00B140FF",
+	3: "#9B4DFFFF",
+	4: "#FFB830FF",
+	5: "#1FDED3FF",
+	6: "#FC2E97FF",
+	7: "#ebcd46ff",
+    8: "#e1622bff",
+};
 
 /* ENEMY SPRITES
 ========================= */
