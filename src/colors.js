@@ -228,6 +228,16 @@ export const OG_SLOTH_COLOR_MAP = {0: '#00000000', 1: '#421B1BFF', 2: '#771717ff
 // 	7: '#f3c612ff',
 // }
 
+export let TRIANGLE_COLOR_MAP;
+export const PINK_COLOR_MAP = {
+	0: GREYSCALE_COLORS[0],
+	1: '#F878F8FF',
+	2: '#F878F9FF',
+	3: '#F978F8FF',
+	4: '#F879F8FF',
+	5: '#F879F9FF',
+}
+
 
 /* OBJECT THEMES
 ========================= */
@@ -269,9 +279,12 @@ else
 	ENEMY2_COLOR_MAP = OG_ENEMY2_COLOR_MAP;
 	SLOTH_COLOR_MAP = OG_SLOTH_COLOR_MAP;
 	BKGD_COLOR_MAP = NIGHT_BKGD_COLOR_MAP;
+	TRIANGLE_COLOR_MAP = PINK_COLOR_MAP;
 
 	COLOR_MAP_LOOKUP = {
 		"enemy2": ENEMY2_COLOR_MAP,
 		"sloth": SLOTH_COLOR_MAP,
+		"triangle_left": TRIANGLE_COLOR_MAP,
+		"triangle_right": TRIANGLE_COLOR_MAP,
 	}
 }
