@@ -31,7 +31,17 @@ export function findAnimationCycle(LEVEL) {
 	let animationArray;
 	let animationCycle;
 
-	animationCycle = "STAND_CYCLE";
+	if(
+		   PLAYER["pickedUpItemInitCoords"][0] !== -1
+		&& PLAYER["pickedUpItemInitCoords"][1] !== -1
+	)
+	{
+		animationCycle = "HOLD_CYCLE";
+	}
+	else
+	{
+		animationCycle = "STAND_CYCLE";
+	}
 	animationArray = SPRITES[PROTAGONIST][animationCycle];
 
 	// manage state

@@ -43,6 +43,7 @@ import {
 	LEVEL,
 	ITEM_LEVEL,
 	ENEMY_LEVEL,
+	GRAB_LEVEL,
 } from "./data/levels.js";
 import {
 	SPRITES,
@@ -201,41 +202,51 @@ function gameLoop(e) {
 		STATE["resetGame"] = false;
 	}
 
-	// moveCamera(PLAYER, ACTIVE_ENEMIES);
+	if(false)
+		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 	// update player cycles
 	let animationArray = findAnimationCycle(LEVEL);
 	updatePlayerPointers(animationArray, PLAYER);
 
-	// // update enemy cycles
-	// for(let enemyObject of ACTIVE_ENEMIES)
-	// 	updateCyclePointers(enemyObject);
+	// update enemy cycles
+	for(let enemyObject of ACTIVE_ENEMIES)
+		updateCyclePointers(enemyObject);
 
-	// // update enemy speeds and positions
-	// updateEnemyPositions(PLAYER, ACTIVE_ENEMIES, FRAME);
-
-
-
-	// mechanics of the game: pick up and drop off enemies
-	if(CONTROLLER["KeyK"] === 1 && PLAYER["holdingEnemies"].length === 0)
+	// Mechanics of the game are presented here
+	if(
+		   CONTROLLER["KeyK"] === 1
+		&& PLAYER["pickedUpItemInitCoords"][0] === -1
+		&& PLAYER["pickedUpItemInitCoords"][1] === -1
+	)
 	{
+		// If you are trying to hold a new enemy
 		let playerX = getPlayerGridX(PLAYER["x"]);
 		let playerY = getPlayerGridY(PLAYER["y"]) - 1;
-		console.log(
-			getValueFrom2DArray(ENEMY_LEVEL, playerX, playerY)
-		);
+		let enemyIndex = getValueFrom2DArray(ENEMY_LEVEL, playerX, playerY);
+		if(enemyIndex !== 0)
+		{
+			PLAYER["pickedUpItemInitCoords"] = (playerX, playerY);
+			// move the enemy to the other layer
+			ENEMY_LEVEL;
+		}
 	}
-
-
-
-
-
-
-
-
-	// updateHorizontalSpeed();
-	// updateVerticalSpeed(LEVEL);
-	// translatePlayer();
+	else
+	if(
+		CONTROLLER["KeyK"] === 1
+		&& PLAYER["pickedUpItemInitCoords"][0] !== -1
+		&& PLAYER["pickedUpItemInitCoords"][1] !== -1
+	)
+	{
+		// If you are already holding an enemy
+	}
+	else
+	if(
+		CONTROLLER["KeyK"] === 0
+	)
+	{
+		PLAYER["pickedUpItemInitCoords"] = [-1, -1];
+	}
 
 	addBulletsToScene();
 	updateBulletPositions();

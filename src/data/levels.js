@@ -25,6 +25,16 @@ export const LEVEL_LOOKUP = {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ],
+        "grab": [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ],
         "items": [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -43,4 +53,5 @@ export const PLAYER_TILE_X = LEVEL_LOOKUP[levelName]["playerX"];
 export const PLAYER_TILE_Y = LEVEL_LOOKUP[levelName]["playerY"];
 export const LEVEL = LEVEL_LOOKUP[levelName]["level"];
 export const ENEMY_LEVEL = LEVEL_LOOKUP[levelName]["enemy"];
+export const GRAB_LEVEL = LEVEL_LOOKUP[levelName]["grab"];
 export const ITEM_LEVEL = LEVEL_LOOKUP[levelName]["items"];

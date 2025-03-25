@@ -69,10 +69,11 @@ export const PLAYER = {
 	maxSpeedUserValue: 3,  // can remove since obsolete
 	items: { gold: 0, },
 	healthPoints: 1,
-	holdingEnemies: [],
+	pickedUpItemInitCoords: [-1, -1],
 };
 
 export const ACTIVE_ENEMIES = [];
+export const HELD_ENEMIES = [];
 let enemyMap = LEVEL_LOOKUP[levelName]["enemy"];
 for(let rowIndex=0; rowIndex < LEVEL_LOOKUP[levelName]["enemy"][0].length; rowIndex += 1)
 for(let colIndex=0; colIndex < LEVEL_LOOKUP[levelName]["enemy"].length; colIndex += 1)

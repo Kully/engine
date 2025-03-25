@@ -27,6 +27,7 @@ import {
 	PLAYER,
 	ACTIVE_BULLETS,
 	ACTIVE_ENEMIES,
+	HELD_ENEMIES,
 } from "./state.js";
 
 import {
@@ -467,7 +468,18 @@ export function drawPlayerLayer(playerLayerCtx, animationArray, FRAME) {
 			FRAME,
 		);
 	}
+	console.log("THE HELD ENEMIES");
+	for(let enemyObject of HELD_ENEMIES) {
+		console.log("hit");
+		drawAnimatingEnemy(
+			playerLayerCtx,
+			enemyObject,
+			false,
+			FRAME,
+		);
+	}
 }
+
 
 export function drawBullets(playerLayerCtx, FRAME)
 {
