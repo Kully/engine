@@ -182,7 +182,7 @@ const METROID_PLAYER_COLOR_MAP = {
 	1: "#000000FF",
 	2: "#3F7F00FF",
 	3: "#FF301FFF",
-	4: "#FF905FFF",
+	4: "#FFE100FF",  // yellow cursor
 
 	5: "#b5179eFF",
 	6: "#f72585FF",
