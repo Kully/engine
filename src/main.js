@@ -24,10 +24,6 @@ import {
 } from "./constants.js";
 
 import {
-	updateEnemyPositions,
-} from "./enemy.js";
-
-import {
 	createHiddenSpriteLookups,
 	clearCanvas,
 	playerFacingLeft,
