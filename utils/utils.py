@@ -442,4 +442,4 @@ def generate_sprites(path_base, color_int_lookup=None):
 
 
 if __name__ == "__main__":
-    pass
+    generate_sprites(path_base="media/enemy")
