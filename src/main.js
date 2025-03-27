@@ -74,6 +74,7 @@ import {
 import {
 	getValueFrom2DArray,
 	putValueTo2DArray,
+	areEnemiesValidPair,
 } from "./pure.js";
 
 
@@ -284,9 +285,37 @@ function gameLoop(e) {
 		// decide if we can place the enemy back on the enemy layer
 		let playerX = getPlayerGridX(PLAYER["x"]);
 		let playerY = getPlayerGridY(PLAYER["y"]) - 1;
-		putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
-		putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
 
+		let itemAbovePtr = getValueFrom2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY)
+		let itemBelowPtr = getValueFrom2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY)
+		if(areEnemiesValidPair(itemBelowPtr, itemAbovePtr))
+		{
+			// remove both items, trigger SFX, and increment score
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, 0);
+
+			// manage score state
+			STATE["currentSquaresCompleted"] += 1;
+			STATE["squaresCompletedStreak"] += 1;
+			if(STATE["currentSquaresCompleted"] > STATE["mostSquaresCompleted"])
+				STATE["mostSquaresCompleted"] += 1;
+		}
+		else
+		if(itemBelowPtr === 0)
+		{
+			// simply drop the piece
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
+		}
+		else
+		{
+			// TODO: return piece to its original spawned location (or somewhere else)
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
+			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
+			STATE["squaresCompletedStreak"] = 0;
+		}
+
+		// reset params to tell us that we are not holding anything
 		PLAYER["pickedUpItemInitCoords"] = [-1, -1];
 		PLAYER["pickedUpItemPtr"] = -1;
 	}

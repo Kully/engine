@@ -46,3 +46,12 @@ export function isValidIndex(array_2d, x, y) {
 		return false;
 	return true;
 }
+
+// Thus function is used to determine if two shapes on the board
+// match. When this is done, we remove both from the board.
+export function areEnemiesValidPair(ptr_a, ptr_b)
+{
+	if(Math.abs(ptr_a - ptr_b) === 1)
+		return 1;
+	return 0;
+}
