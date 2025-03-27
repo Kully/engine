@@ -27,7 +27,12 @@ import {
 } from "./data/enemy.js"
 
 
-export const STATE = {resetGame: false};
+export const STATE = {
+	resetGame: false,
+	currentSquaresCompleted: 0,
+	squaresCompletedStreak: 0,
+	mostSquaresCompleted: 0,
+};
 
 export const CONTROLLER = {};
 for (let key of VALID_CONTROLLER_KEYS)

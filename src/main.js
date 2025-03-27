@@ -212,6 +212,9 @@ function gameLoop(e) {
 		FRAME = 0;
 		COUNTER = 0;
 		STATE["resetGame"] = false;
+		STATE["currentSquaresCompleted"] = 0;
+		STATE["mostSquaresCompleted"] = 0;
+		STATE["squaresCompletedStreak"] = 0;
 	}
 
 	if(false)
