@@ -177,6 +177,19 @@ function updateBulletPositions() {
 	}
 }
 
+function isPlayerOutOfBounds()
+{
+	if(PLAYER["x"] / GRID_WIDTH_PX === 0)
+		return 1;
+	if(PLAYER["x"] / GRID_WIDTH_PX === 13)
+		return 1;
+	if(PLAYER["y"] / GRID_WIDTH_PX === 1)
+		return 1;
+	if(PLAYER["y"] / GRID_WIDTH_PX === 8)
+		return 1;
+	return 0;
+}
+
 
 let calcFpsValue = document.getElementById("fps");
 // drawBkgdLayer(bkgdLayerCtx, true);
@@ -246,10 +259,7 @@ function gameLoop(e) {
 		let playerX = getPlayerGridX(PLAYER["x"]);
 		let playerY = getPlayerGridY(PLAYER["y"]) - 1;
 
-		if(
-			   playerX !== PLAYER["pickedUpItemInitCoords"][0]
-			|| playerY !== PLAYER["pickedUpItemInitCoords"][1]
-		)
+		if(PLAYER["pickedUpItemPtr"] !== -1 && !isPlayerOutOfBounds())
 		{
 			putValueTo2DArray(
 				LEVEL_LOOKUP["level"]["grab"],
