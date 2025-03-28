@@ -78,6 +78,10 @@ import {
 } from "./pure.js";
 
 
+// grab hud elements
+const currentScoreValue = document.getElementById("score-value");
+currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
+
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
 
@@ -303,6 +307,7 @@ function gameLoop(e) {
 			STATE["squaresCompletedStreak"] += 1;
 			if(STATE["currentSquaresCompleted"] > STATE["mostSquaresCompleted"])
 				STATE["mostSquaresCompleted"] += 1;
+			currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
 		}
 		else
 		if(itemBelowPtr === 0)
