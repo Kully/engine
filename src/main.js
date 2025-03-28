@@ -85,6 +85,7 @@ const bkgdLayerCanvas = document.getElementById("bkgd-layer-canvas");
 const levelLayerCanvas = document.getElementById("level-layer-canvas");
 const playerLayerCanvas = document.getElementById("player-layer-canvas");
 const itemLayerCanvas = document.getElementById("item-layer-canvas");
+const hudCanvas = document.getElementById("hud-layer-canvas");
 const spritesCanvas = document.getElementById("prerender-sprites-canvas");
 
 const bkgdLayerCtx = bkgdLayerCanvas.getContext("2d", {willReadFrequently: true});
@@ -92,10 +93,13 @@ const levelLayerCtx = levelLayerCanvas.getContext("2d", {willReadFrequently: tru
 const playerLayerCtx = playerLayerCanvas.getContext("2d", {willReadFrequently: true});
 const itemLayerCtx = itemLayerCanvas.getContext("2d", {willReadFrequently: true});
 const spritesCtx = spritesCanvas.getContext("2d", {willReadFrequently: true});
+const hudLayerCtx = hudCanvas.getContext("2d", {willReadFrequently: true});
 
 levelLayerCanvas.width = CAMERA["width"];
 levelLayerCanvas.height = CAMERA["height"];
 
+hudLayerCtx.width = levelLayerCanvas.width;
+hudLayerCtx.height = levelLayerCanvas.height;
 playerLayerCanvas.width = levelLayerCanvas.width;
 playerLayerCanvas.height = levelLayerCanvas.height;
 itemLayerCanvas.width = levelLayerCanvas.width;

@@ -3,7 +3,22 @@
 	--screen-height: 540px;
 }
 
+@font-face {
+	font-family: "Silkscreen";
+	src: url("./fonts/Silkscreen-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Silkscreen";
+	src: url("./fonts/Silkscreen-Bold.ttf") format("truetype");
+	font-weight: bold;
+	font-style: normal;
+}
+
 body {
+	font-family: "Silkscreen" !important;
 	background-color: #0A0A0A;
 	margin: 0;
 	padding: 0;
@@ -37,7 +52,6 @@ button.copy-to-clipboard {
 .instructions {
 	background-color: #111;
 	color: #A4A4A4;
-	font-family: Courier;
 	z-index: 1;
 	position: absolute;
 	top: calc(50vh + var(--screen-height) / 2);
@@ -53,7 +67,6 @@ button.copy-to-clipboard {
 }
 
 .text {
-	font-family: Courier;
 	color: #FFF;
 }
 .control {
