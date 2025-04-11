@@ -212,6 +212,11 @@ document.addEventListener("keydown", function(e) {
 })
 
 
+// spawn variables
+let spawnInterval = 300;
+let initSpawnWait = 100;
+
+
 let FRAME = 0;
 let COUNTER = 0;
 let startTime;
@@ -228,6 +233,24 @@ function gameLoop(e) {
 
 	if(false)
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
+
+
+	// spawn new items into the board
+	if(FRAME >= initSpawnWait && FRAME % spawnInterval === 0)
+	{
+		// Find a random empty spot
+		const emptySpot = findRandomEmptySpot();
+		if (emptySpot) {
+			const [x, y] = emptySpot;
+
+			// get a random item type
+			const enemyTypes = [3, 4];
+			const randomEnemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+
+			// place the item in the level
+			putValueTo2DArray(ENEMY_LEVEL, x, y, randomEnemyType);
+		}
+	}
 
 	// update player cycles
 	let animationArray = findAnimationCycle(LEVEL);
@@ -386,3 +409,23 @@ function gameLoop(e) {
 }
 
 setInterval(gameLoop, 1000 / FPS);
+
+function findRandomEmptySpot() {
+	const maxAttempts = 100; // Prevent infinite loops
+	let attempts = 0;
+	
+	while (attempts < maxAttempts) {
+		// Generate random coordinates within the level bounds, excluding edges
+		const x = Math.floor(Math.random() * (ENEMY_LEVEL[0].length - 2)) + 1; // Exclude x=0 and x=13
+		const y = Math.floor(Math.random() * (ENEMY_LEVEL.length - 2)) + 1; // Exclude y=0 and y=7
+		
+		// Check if the spot is empty
+		if (getValueFrom2DArray(ENEMY_LEVEL, x, y) === 0) {
+			return [x, y];
+		}
+		attempts++;
+	}
+	
+	// If no empty spot found, return null
+	return null;
+}
