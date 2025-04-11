@@ -212,10 +212,24 @@ document.addEventListener("keydown", function(e) {
 })
 
 
+// count occupied slots
+function getPercentageSlotsFilled() {
+	let occupiedSlots = 0;
+	let totalSlots = (ENEMY_LEVEL[0].length - 2) * (ENEMY_LEVEL.length - 2); // Exclude edges
+	for(let y = 1; y < ENEMY_LEVEL.length - 1; y++) {
+		for(let x = 1; x < ENEMY_LEVEL[0].length - 1; x++) {
+			if(ENEMY_LEVEL[y][x] !== 0) {
+				occupiedSlots++;
+			}
+		}
+	}
+	return occupiedSlots / totalSlots;
+}
+
+
 // spawn variables
 let spawnInterval = 300;
 let initSpawnWait = 100;
-
 
 let FRAME = 0;
 let COUNTER = 0;
@@ -235,8 +249,18 @@ function gameLoop(e) {
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 
+	// scale the spawn interval based on how many squares have been completed
+	spawnInterval = 500 - Math.min(100, Math.floor(FRAME/1000) * 10 + (STATE["currentSquaresCompleted"] * 2))
+
+	// end the game if there are no more empty slots
+	if(getPercentageSlotsFilled() === 1)
+	{
+		STATE["resetGame"] = true;
+		STATE["gameOver"] = true;
+	}
+
 	// spawn new items into the board
-	if(FRAME >= initSpawnWait && FRAME % spawnInterval === 0)
+	if(FRAME >= initSpawnWait && Math.floor(FRAME / spawnInterval) <= 2)
 	{
 		// Find a random empty spot
 		const emptySpot = findRandomEmptySpot();

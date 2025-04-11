@@ -29,6 +29,7 @@ import {
 
 export const STATE = {
 	resetGame: false,
+	gameOver: false,
 	currentSquaresCompleted: 0,
 	squaresCompletedStreak: 0,
 	mostSquaresCompleted: 0,
