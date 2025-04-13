@@ -255,7 +255,6 @@ function gameLoop(e) {
 	// increase the spawn every wave (every 10 points)
 	if(STATE["lastFrameSquaresCompleted"] !== STATE["currentSquaresCompleted"])
 	{
-		// spawnFrameCounter = 0;
 		if(STATE["currentSquaresCompleted"] > 0 && STATE["currentSquaresCompleted"] % spawnBoostPerItemsMatched === 0)
 		{
 			spawnInterval = Math.max(spawnIntervalMinimum, spawnInterval - spawnIntervalDecrement);
