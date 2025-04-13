@@ -228,8 +228,11 @@ function getPercentageSlotsFilled() {
 
 
 // spawn variables
-let spawnInterval = 300;
-let initSpawnWait = 100;
+let spawnInterval = 100;
+let spawnBoostPerItemsMatched = 10;
+let spawnIntervalDecrement = 10;
+let spawnIntervalMinimum = 20;
+let spawnFrameCounter = 0;
 
 let FRAME = 0;
 let COUNTER = 0;
@@ -241,6 +244,7 @@ function gameLoop(e) {
 		COUNTER = 0;
 		STATE["resetGame"] = false;
 		STATE["currentSquaresCompleted"] = 0;
+		STATE["lastFrameSquaresCompleted"] = 0;
 		STATE["mostSquaresCompleted"] = 0;
 		STATE["squaresCompletedStreak"] = 0;
 	}
@@ -248,9 +252,18 @@ function gameLoop(e) {
 	if(false)
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
+	// increase the spawn every wave (every 10 points)
+	if(STATE["lastFrameSquaresCompleted"] !== STATE["currentSquaresCompleted"])
+	{
+		// spawnFrameCounter = 0;
+		if(STATE["currentSquaresCompleted"] > 0 && STATE["currentSquaresCompleted"] % spawnBoostPerItemsMatched === 0)
+		{
+			spawnInterval = Math.max(spawnIntervalMinimum, spawnInterval - spawnIntervalDecrement);
+		}
+	}
 
-	// scale the spawn interval based on how many squares have been completed
-	spawnInterval = 500 - Math.min(100, Math.floor(FRAME/1000) * 10 + (STATE["currentSquaresCompleted"] * 2))
+	// keep track of the last frame's squares completed
+	STATE["lastFrameSquaresCompleted"] = STATE["currentSquaresCompleted"];
 
 	// end the game if there are no more empty slots
 	if(getPercentageSlotsFilled() === 1)
@@ -260,7 +273,7 @@ function gameLoop(e) {
 	}
 
 	// spawn new items into the board
-	if(FRAME >= initSpawnWait && Math.floor(FRAME / spawnInterval) <= 2)
+	if(STATE["currentSquaresCompleted"] > 0 && spawnFrameCounter === 1) // add an arbitrary 5-frame spawn buffer
 	{
 		// Find a random empty spot
 		const emptySpot = findRandomEmptySpot();
@@ -406,7 +419,16 @@ function gameLoop(e) {
 	drawEnemyLayer(playerLayerCtx, GRAB_LEVEL, FRAME);
 	drawPlayerLayer(playerLayerCtx, animationArray, FRAME);
 
+
+	// increment the global frame counter
 	FRAME += 1;
+
+	// increment the spawn frame counter
+	spawnFrameCounter += 1;
+	if(spawnFrameCounter >= spawnInterval)
+	{
+		spawnFrameCounter = 0;
+	}
 
 	// calculate and update the approximate FPS
 	let iterPerCalc = 2;
