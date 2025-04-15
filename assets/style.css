@@ -96,3 +96,26 @@ button.copy-to-clipboard {
 	color: #b36200;
 	text-decoration: underline;
 }
+
+/* Game Over Text Display */
+#game-over-text {
+	position: absolute;
+	visibility: hidden;
+	top: calc(50vh - 2rem);
+	left: calc(0%);
+	width: 100%;
+	text-align: center;
+	font-weight: 900;
+	pointer-events: none;
+	z-index: 99999;
+}
+.game-over-text-title {
+	font-size: 3rem;
+	font-weight: 900
+}
+.game-over-text-subtitle {
+	font-size: 1.5rem;
+}
+.keyboard-keys {
+	color: #FFE100;
+}

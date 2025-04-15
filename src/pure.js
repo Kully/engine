@@ -20,6 +20,15 @@ export function hexToRgb(hex) {
 	return null;
 }
 
+export function copy2DArray(source, target) {
+    for (let y = 0; y < source.length; y++) {
+        for (let x = 0; x < source[y].length; x++) {
+            target[y][x] = source[y][x];
+        }
+    }
+    return target;
+}
+
 export function getValueFrom2DArray(array_2d, x, y) {
 	if (x < 0 || x >= array_2d[0].length || y < 0 || y >= array_2d.length)
 		return undefined;

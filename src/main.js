@@ -41,6 +41,9 @@ import {
 	LEVEL,
 	ITEM_LEVEL,
 	ENEMY_LEVEL,
+	INIT_ENEMY_LEVEL,
+	INIT_PLAYER_X,
+	INIT_PLAYER_Y,
 	GRAB_LEVEL,
 } from "./data/levels.js";
 import {
@@ -75,6 +78,7 @@ import {
 	getValueFrom2DArray,
 	putValueTo2DArray,
 	areEnemiesValidPair,
+	copy2DArray,
 } from "./pure.js";
 
 
@@ -92,6 +96,8 @@ const AUDIO = {
 // grab hud elements
 const currentScoreValue = document.getElementById("score-value");
 currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
+
+const gameOverText = document.getElementById("game-over-text");
 
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
@@ -239,20 +245,17 @@ document.addEventListener("keydown", function(e) {
 })
 
 
-// count occupied slots
-function getPercentageSlotsFilled() {
-	let occupiedSlots = 0;
-	let totalSlots = (ENEMY_LEVEL[0].length - 2) * (ENEMY_LEVEL.length - 2); // Exclude edges
+function findNumberOfEmptySpots() {
+	let emptySpots = 0;
 	for(let y = 1; y < ENEMY_LEVEL.length - 1; y++) {
 		for(let x = 1; x < ENEMY_LEVEL[0].length - 1; x++) {
-			if(ENEMY_LEVEL[y][x] !== 0) {
-				occupiedSlots++;
+			if(getValueFrom2DArray(ENEMY_LEVEL, x, y) === 0) {
+				emptySpots++;
 			}
 		}
 	}
-	return occupiedSlots / totalSlots;
+	return emptySpots;
 }
-
 
 // spawn variables
 let spawnInterval = 100;
@@ -265,21 +268,49 @@ let FRAME = 0;
 let COUNTER = 0;
 let startTime;
 function gameLoop(e) {
-	if(STATE["resetGame"] === true)
+	if(STATE["gameOver"] === true)
 	{
 		FRAME = 0;
 		COUNTER = 0;
-		STATE["resetGame"] = false;
 		STATE["currentSquaresCompleted"] = 0;
 		STATE["lastFrameSquaresCompleted"] = 0;
 		STATE["mostSquaresCompleted"] = 0;
 		STATE["squaresCompletedStreak"] = 0;
+
+		// make the level empty
+		for(let y = 1; y < ENEMY_LEVEL.length - 1; y++) {
+			for(let x = 1; x < ENEMY_LEVEL[0].length - 1; x++) {
+				putValueTo2DArray(ENEMY_LEVEL, x, y, 0);
+			}
+		}
+
+		// escape the game over loop only once you press Enter
+		console.log(CONTROLLER["Enter"])
+		if(CONTROLLER["Enter"] === 1)
+		{
+			// clear the board
+			copy2DArray(INIT_ENEMY_LEVEL, ENEMY_LEVEL);
+			PLAYER["x"] = INIT_PLAYER_X * GRID_WIDTH_PX;
+			PLAYER["y"] = INIT_PLAYER_Y * GRID_WIDTH_PX;
+
+			// reset the HUD elements
+			gameOverText.style.visibility = "hidden";
+			currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
+
+			// clear the level and player layers
+			clearCanvas(levelLayerCanvas, levelLayerCtx);
+			clearCanvas(playerLayerCanvas, playerLayerCtx);
+
+			STATE["gameOver"] = false;
+		}
+		return;
 	}
 
 	if(false)
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 	// increase the spawn every wave (every 10 points)
+	spawnInterval = 2;
 	if(STATE["lastFrameSquaresCompleted"] !== STATE["currentSquaresCompleted"])
 	{
 		if(STATE["currentSquaresCompleted"] > 0 && STATE["currentSquaresCompleted"] % spawnBoostPerItemsMatched === 0)
@@ -292,10 +323,13 @@ function gameLoop(e) {
 	STATE["lastFrameSquaresCompleted"] = STATE["currentSquaresCompleted"];
 
 	// end the game if there are no more empty slots
-	if(getPercentageSlotsFilled() === 1)
+	if(findNumberOfEmptySpots() <= 1)
 	{
-		STATE["resetGame"] = true;
 		STATE["gameOver"] = true;
+		gameOverText.style.visibility = "visible";
+
+		// clearCanvas(levelLayerCanvas, levelLayerCtx);
+		// clearCanvas(playerLayerCanvas, playerLayerCtx);
 	}
 
 	// spawn new items into the board
