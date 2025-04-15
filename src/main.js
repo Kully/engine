@@ -84,12 +84,14 @@ import {
 
 // setup audio pieces
 const AUDIO = {
-	// "step": new Audio("assets/audio/sfx/glass_click.mp3"),
 	"step": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
 	"grab": new Audio("assets/audio/sfx/grab.mp3"),
 	"shapeMatch": new Audio("assets/audio/sfx/earn_a_point1.mp3"),
 	"dropFail": new Audio("assets/audio/sfx/dropFail.mp3"),
 	"bell": new Audio("assets/audio/sfx/final_bell.mp3"),
+	"gameOver": new Audio("assets/audio/sfx/game_over.mp3"),
+	"gameStart": new Audio("assets/audio/sfx/game_start.mp3"),
+	"shapeAppear": new Audio("assets/audio/sfx/shape_appear.mp3"),
 };
 
 
@@ -318,6 +320,10 @@ function gameLoop(e) {
 			clearCanvas(playerLayerCanvas, playerLayerCtx);
 
 			STATE["gameOver"] = false;
+
+			// Play Game Start Sound
+			AUDIO["gameStart"].currentTime = 0;
+			AUDIO["gameStart"].play();
 		}
 		return;
 	}
@@ -326,7 +332,6 @@ function gameLoop(e) {
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 	// increase the spawn every wave (every 10 points)
-	spawnInterval = 2;
 	if(STATE["lastFrameSquaresCompleted"] !== STATE["currentSquaresCompleted"])
 	{
 		if(STATE["currentSquaresCompleted"] > 0 && STATE["currentSquaresCompleted"] % spawnBoostPerItemsMatched === 0)
@@ -343,6 +348,8 @@ function gameLoop(e) {
 	{
 		STATE["gameOver"] = true;
 		gameOverText.style.visibility = "visible";
+		AUDIO["gameOver"].currentTime = 0;
+		AUDIO["gameOver"].play();
 		blurAllLayers();
 	}
 
@@ -353,6 +360,10 @@ function gameLoop(e) {
 		const emptySpot = findRandomEmptySpot();
 		if (emptySpot) {
 			const [x, y] = emptySpot;
+
+			// Play Shape Appear Sound
+			AUDIO["shapeAppear"].currentTime = 0;
+			AUDIO["shapeAppear"].play();
 
 			// get a random item type
 			const enemyTypes = [3, 4];
