@@ -285,7 +285,6 @@ function gameLoop(e) {
 		}
 
 		// escape the game over loop only once you press Enter
-		console.log(CONTROLLER["Enter"])
 		if(CONTROLLER["Enter"] === 1)
 		{
 			// clear the board
