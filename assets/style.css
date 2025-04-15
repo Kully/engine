@@ -77,3 +77,21 @@ button.copy-to-clipboard {
 	position: absolute;
 	visibility: hidden;
 }
+
+.credits {
+	position: absolute;
+	top: calc(50vh + var(--screen-height) / 2 - 20px);
+	width: 100%;
+	text-align: center;
+}
+
+.credits p {
+	font-weight: 100;
+	margin: 0.5rem 0;
+	padding: 0;
+}
+
+.credits a {
+	color: #ffa500cc;
+	text-decoration: underline;
+}
