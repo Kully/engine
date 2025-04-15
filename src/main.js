@@ -87,7 +87,7 @@ const AUDIO = {
 	// "step": new Audio("assets/audio/sfx/glass_click.mp3"),
 	"step": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
 	"grab": new Audio("assets/audio/sfx/grab.mp3"),
-	"drop": new Audio("assets/audio/sfx/drop.mp3"),
+	"shapeMatch": new Audio("assets/audio/sfx/earn_a_point1.mp3"),
 	"dropFail": new Audio("assets/audio/sfx/dropFail.mp3"),
 	"bell": new Audio("assets/audio/sfx/final_bell.mp3"),
 };
@@ -429,8 +429,8 @@ function gameLoop(e) {
 			if(STATE["currentSquaresCompleted"] > STATE["mostSquaresCompleted"])
 				STATE["mostSquaresCompleted"] += 1;
 			currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
-			AUDIO["drop"].currentTime = 0;
-			AUDIO["drop"].play();
+			AUDIO["shapeMatch"].currentTime = 0;
+			AUDIO["shapeMatch"].play();
 
 			// chime a bell one level X9
 			if(STATE["currentSquaresCompleted"] % 10 === 0)
