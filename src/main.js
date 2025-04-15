@@ -85,6 +85,7 @@ const AUDIO = {
 	"grab": new Audio("assets/audio/sfx/grab.mp3"),
 	"drop": new Audio("assets/audio/sfx/drop.mp3"),
 	"dropFail": new Audio("assets/audio/sfx/dropFail.mp3"),
+	"bell": new Audio("assets/audio/sfx/final_bell.mp3"),
 };
 
 
@@ -397,6 +398,13 @@ function gameLoop(e) {
 			currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
 			AUDIO["drop"].currentTime = 0;
 			AUDIO["drop"].play();
+
+			// chime a bell one level X9
+			if(STATE["currentSquaresCompleted"] % 10 === 0)
+			{
+				AUDIO["bell"].currentTime = 0;
+				AUDIO["bell"].play();
+			}
 		}
 		else
 		if(itemBelowPtr === 0)
