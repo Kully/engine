@@ -1,7 +1,6 @@
 .DS_Store
-TODO.md
+*.md
 ignore/
 .ipynb_checkpoints/
 media/
-IDEAS.md
 __pycache__/
