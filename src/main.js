@@ -310,7 +310,6 @@ function gameLoop(e) {
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 	// increase the spawn every wave (every 10 points)
-	spawnInterval = 2;
 	if(STATE["lastFrameSquaresCompleted"] !== STATE["currentSquaresCompleted"])
 	{
 		if(STATE["currentSquaresCompleted"] > 0 && STATE["currentSquaresCompleted"] % spawnBoostPerItemsMatched === 0)
