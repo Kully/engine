@@ -89,9 +89,10 @@ button.copy-to-clipboard {
 	font-weight: 100;
 	margin: 0.5rem 0;
 	padding: 0;
+	color: #444;
 }
 
 .credits a {
-	color: #ffa500cc;
+	color: #b36200;
 	text-decoration: underline;
 }
