@@ -78,6 +78,16 @@ import {
 } from "./pure.js";
 
 
+// setup audio pieces
+const AUDIO = {
+	// "step": new Audio("assets/audio/sfx/glass_click.mp3"),
+	"step": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
+	"grab": new Audio("assets/audio/sfx/grab.mp3"),
+	"drop": new Audio("assets/audio/sfx/drop.mp3"),
+	"dropFail": new Audio("assets/audio/sfx/dropFail.mp3"),
+};
+
+
 // grab hud elements
 const currentScoreValue = document.getElementById("score-value");
 currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
@@ -202,13 +212,29 @@ let calcFpsValue = document.getElementById("fps");
 
 document.addEventListener("keydown", function(e) {
 	if (e.code == "KeyA")
+	{
 		PLAYER["x"] -= GRID_WIDTH_PX;
+		AUDIO["step"].currentTime = 0;
+		AUDIO["step"].play();
+	}
 	if (e.code == "KeyD")
+	{
 		PLAYER["x"] += GRID_WIDTH_PX;
+		AUDIO["step"].currentTime = 0;
+		AUDIO["step"].play();
+	}
 	if (e.code == "KeyW")
+	{
 		PLAYER["y"] -= GRID_WIDTH_PX;
+		AUDIO["step"].currentTime = 0;
+		AUDIO["step"].play();
+	}
 	if (e.code == "KeyS")
+	{
 		PLAYER["y"] += GRID_WIDTH_PX;
+		AUDIO["step"].currentTime = 0;
+		AUDIO["step"].play();
+	}
 })
 
 
@@ -314,6 +340,8 @@ function gameLoop(e) {
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, 0);
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, enemyIndex);
 			PLAYER["pickedUpItemPtr"] = enemyIndex;
+			AUDIO["grab"].currentTime = 0;
+			AUDIO["grab"].play();
 		}
 	}
 	else
@@ -367,6 +395,8 @@ function gameLoop(e) {
 			if(STATE["currentSquaresCompleted"] > STATE["mostSquaresCompleted"])
 				STATE["mostSquaresCompleted"] += 1;
 			currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
+			AUDIO["drop"].currentTime = 0;
+			AUDIO["drop"].play();
 		}
 		else
 		if(itemBelowPtr === 0)
@@ -381,6 +411,8 @@ function gameLoop(e) {
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
 			STATE["squaresCompletedStreak"] = 0;
+			AUDIO["dropFail"].currentTime = 0;
+			AUDIO["dropFail"].play();
 		}
 
 		// reset params to tell us that we are not holding anything
