@@ -30,6 +30,7 @@ canvas {
 	position: absolute;
 	top: calc(50vh - var(--screen-height) / 2);
 	left: calc(50% - var(--screen-width) / 2);
+	filter: blur(0);
 }
 
 canvas#prerender-sprites-canvas {

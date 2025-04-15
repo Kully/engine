@@ -257,6 +257,22 @@ function findNumberOfEmptySpots() {
 	return emptySpots;
 }
 
+let BLUR_AMOUNT = 3;
+
+function blurAllLayers() {
+	bkgdLayerCanvas.style.filter = `blur(${BLUR_AMOUNT}px)`;
+	levelLayerCanvas.style.filter = `blur(${BLUR_AMOUNT}px)`;
+	playerLayerCanvas.style.filter = `blur(${BLUR_AMOUNT}px)`;
+	itemLayerCanvas.style.filter = `blur(${BLUR_AMOUNT}px)`;
+}
+
+function unblurAllLayers() {
+	bkgdLayerCanvas.style.filter = "blur(0px)";
+	levelLayerCanvas.style.filter = "blur(0px)";
+	playerLayerCanvas.style.filter = "blur(0px)";
+	itemLayerCanvas.style.filter = "blur(0px)";
+}
+
 // spawn variables
 let spawnInterval = 100;
 let spawnBoostPerItemsMatched = 10;
@@ -270,6 +286,7 @@ let startTime;
 function gameLoop(e) {
 	if(STATE["gameOver"] === true)
 	{
+		// reset the game state and restart
 		FRAME = 0;
 		COUNTER = 0;
 		STATE["currentSquaresCompleted"] = 0;
@@ -295,7 +312,7 @@ function gameLoop(e) {
 			// reset the HUD elements
 			gameOverText.style.visibility = "hidden";
 			currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
-
+			unblurAllLayers();
 			// clear the level and player layers
 			clearCanvas(levelLayerCanvas, levelLayerCtx);
 			clearCanvas(playerLayerCanvas, playerLayerCtx);
@@ -309,6 +326,7 @@ function gameLoop(e) {
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
 	// increase the spawn every wave (every 10 points)
+	spawnInterval = 2;
 	if(STATE["lastFrameSquaresCompleted"] !== STATE["currentSquaresCompleted"])
 	{
 		if(STATE["currentSquaresCompleted"] > 0 && STATE["currentSquaresCompleted"] % spawnBoostPerItemsMatched === 0)
@@ -320,14 +338,12 @@ function gameLoop(e) {
 	// keep track of the last frame's squares completed
 	STATE["lastFrameSquaresCompleted"] = STATE["currentSquaresCompleted"];
 
-	// end the game if there are no more empty slots
+	// Activate Game Over Mode
 	if(findNumberOfEmptySpots() <= 1)
 	{
 		STATE["gameOver"] = true;
 		gameOverText.style.visibility = "visible";
-
-		// clearCanvas(levelLayerCanvas, levelLayerCtx);
-		// clearCanvas(playerLayerCanvas, playerLayerCtx);
+		blurAllLayers();
 	}
 
 	// spawn new items into the board
