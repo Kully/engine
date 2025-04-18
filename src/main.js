@@ -366,7 +366,7 @@ function gameLoop(e) {
 			AUDIO["shapeAppear"].play();
 
 			// get a random item type
-			const enemyTypes = [3, 4];
+			const enemyTypes = Object.keys(ENEMY_LOOKUP);
 			const randomEnemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
 
 			// place the item in the level
