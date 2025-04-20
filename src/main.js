@@ -94,6 +94,17 @@ const AUDIO = {
 	"shapeAppear": new Audio("assets/audio/sfx/shape_appear.mp3"),
 };
 
+const MUSIC_INTERFACE = {
+	ptr: 0,
+	tracks: {
+		"track_0": new Audio("assets/audio/music/track_0.mp3"),
+		"track_1": new Audio("assets/audio/music/track_1.mp3"),
+		"track_2": new Audio("assets/audio/music/track_2.mp3"),
+		"track_3": new Audio("assets/audio/music/track_3.mp3"),
+		"track_4": new Audio("assets/audio/music/track_4.mp3"),
+		"track_5": new Audio("assets/audio/music/track_5.mp3"),
+	},
+}
 
 // grab hud elements
 const currentScoreValue = document.getElementById("score-value");
