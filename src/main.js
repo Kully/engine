@@ -393,12 +393,17 @@ function gameLoop(e) {
 			AUDIO["shapeAppear"].currentTime = 0;
 			AUDIO["shapeAppear"].play();
 
-			// get a random item type
+			// Get a random item type
 			const enemyTypes = Object.keys(ENEMY_LOOKUP);
 			const randomEnemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
 
 			// place the item in the level
 			putValueTo2DArray(ENEMY_LEVEL, x, y, randomEnemyType);
+
+			// Always keep that last few pieces placed on the board
+			STATE["spawnPieceHistory"].push(randomEnemyType);
+			if(STATE["spawnPieceHistory"].length > STATE["spawnPieceHistoryMax"])
+				STATE["spawnPieceHistory"].shift();
 		}
 	}
 

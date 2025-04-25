@@ -34,6 +34,8 @@ export const STATE = {
 	currentSquaresCompleted: 0,
 	squaresCompletedStreak: 0,
 	mostSquaresCompleted: 0,
+	spawnPieceHistory: [],
+	spawnPieceHistoryMax: 4,
 };
 
 export const CONTROLLER = {};
