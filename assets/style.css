@@ -1,6 +1,8 @@
 :root {
 	--screen-width: 960px;
 	--screen-height: 540px;
+	--true-canvas-width: 896px;
+	--true-canvas-height: 512px;
 }
 
 html {
@@ -43,8 +45,8 @@ canvas {
 	outline: 0px solid #333;
 	z-index: 0;
 	position: absolute;
-	top: calc(50vh - var(--screen-height) / 2);
-	left: calc(50% - var(--screen-width) / 2);
+	top: calc(50vh - var(--true-canvas-height) / 2);
+	left: calc(50% - var(--true-canvas-width) / 2);
 	filter: blur(0);
 }
 
