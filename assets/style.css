@@ -88,6 +88,14 @@ button.copy-to-clipboard {
 	width: 40px;
 }
 
+#fps.text {
+	position: absolute;
+	bottom: 8px;
+	right: 8px;
+	pointer-events: none;
+	z-index: 99999;
+}
+
 .control-panel {
 	position: absolute;
 	visibility: hidden;
