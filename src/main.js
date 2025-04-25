@@ -352,6 +352,22 @@ function gameLoop(e) {
 		}
 	}
 
+	// load in new background images based on the current score
+	if(STATE["currentSquaresCompleted"] === 1)
+	{
+		const newBackground = `assets/images/space${STATE["currentSquaresCompleted"]}.jpg`;
+		document.documentElement.style.backgroundImage = `url(${newBackground})`;
+	}
+	else
+	if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] >= 10)
+	{
+		let imgIndex = Math.floor(STATE["currentSquaresCompleted"] / 10);
+		if(imgIndex >= 9)
+			imgIndex = 9;
+		const newBackground = `assets/images/space${imgIndex}.jpg`;
+		document.documentElement.style.backgroundImage = `url(${newBackground})`;
+	}
+
 	// keep track of the last frame's squares completed
 	STATE["lastFrameSquaresCompleted"] = STATE["currentSquaresCompleted"];
 
