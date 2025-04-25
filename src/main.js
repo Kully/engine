@@ -288,7 +288,7 @@ function unblurAllLayers() {
 }
 
 // spawn variables
-let spawnInterval = 100;
+let spawnInterval = 80;
 let spawnBoostPerItemsMatched = 10;
 let spawnIntervalDecrement = 10;
 let spawnIntervalMinimum = 20;
