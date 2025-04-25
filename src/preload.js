@@ -4,8 +4,7 @@ export function preloadImages() {
             {
                 src: 'assets/images/space0.jpg',
                 type: 'background'
-            }
-            // Add any other images you want to preload here
+            },
         ];
 
         let loadedImages = 0;
