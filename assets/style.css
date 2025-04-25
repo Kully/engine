@@ -2,6 +2,20 @@
 	--screen-width: 960px;
 	--screen-height: 540px;
 }
+html {
+	background-color: #000;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	min-height: 100vh;
+	transition: background-image 1s ease-in-out;
+	opacity: 0;
+}
+
+html.loaded {
+	opacity: 1;
+}
 
 @font-face {
 	font-family: "Silkscreen";
@@ -19,7 +33,6 @@
 
 body {
 	font-family: "Silkscreen" !important;
-	background-color: #0A0A0A;
 	margin: 0;
 	padding: 0;
 }

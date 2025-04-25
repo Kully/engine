@@ -81,6 +81,7 @@ import {
 	copy2DArray,
 } from "./pure.js";
 
+import { preloadImages } from "./preload.js";
 
 // setup audio pieces
 const AUDIO = {
@@ -563,7 +564,15 @@ function gameLoop(e) {
 	COUNTER += 1;
 }
 
-setInterval(gameLoop, 1000 / FPS);
+// Initialize the game after preloading
+preloadImages().then(() => {
+    // Start the game loop after images are loaded
+    setInterval(gameLoop, 1000 / FPS);
+}).catch(error => {
+    console.error('Error preloading images:', error);
+    // Still start the game even if preloading fails
+    setInterval(gameLoop, 1000 / FPS);
+});
 
 function findRandomEmptySpot() {
 	const maxAttempts = 100; // Prevent infinite loops
