@@ -12,6 +12,7 @@ html {
 	min-height: 100vh;
 	transition: background-image 1s ease-in-out;
 	opacity: 0;
+	cursor: none;
 }
 html.loaded {
 	opacity: 1;
