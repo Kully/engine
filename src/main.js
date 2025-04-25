@@ -24,6 +24,10 @@ import {
 } from "./constants.js";
 
 import {
+	LEVEL_COLOR_MAP,
+} from "./colors.js";
+
+import {
 	createHiddenSpriteLookups,
 	clearCanvas,
 	playerFacingLeft,
@@ -352,11 +356,16 @@ function gameLoop(e) {
 		}
 	}
 
-	// load in new background images based on the current score
+	// load in new assets based on your matches
 	if(STATE["currentSquaresCompleted"] === 1)
 	{
+		// load in new background image
 		const newBackground = `assets/images/space${STATE["currentSquaresCompleted"]}.jpg`;
 		document.documentElement.style.backgroundImage = `url(${newBackground})`;
+
+		// regenerate new sprites for palette swap
+		LEVEL_COLOR_MAP[1] = "#f72585FF";
+		let [spriteSlotLookup, slotSpriteLookup] = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 	}
 	else
 	if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] > 5)
