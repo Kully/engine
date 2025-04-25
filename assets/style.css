@@ -98,6 +98,8 @@ button.copy-to-clipboard {
 	top: calc(50vh + var(--screen-height) / 2 - 20px);
 	width: 100%;
 	text-align: center;
+	opacity: 0;
+	pointer-events: none;
 }
 
 .credits p {
