@@ -359,9 +359,9 @@ function gameLoop(e) {
 		document.documentElement.style.backgroundImage = `url(${newBackground})`;
 	}
 	else
-	if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] >= 10)
+	if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] > 5)
 	{
-		let imgIndex = Math.floor(STATE["currentSquaresCompleted"] / 10);
+		let imgIndex = Math.floor(STATE["currentSquaresCompleted"] / 10) + 1;
 		if(imgIndex >= 9)
 			imgIndex = 9;
 		const newBackground = `assets/images/space${imgIndex}.jpg`;
