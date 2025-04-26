@@ -291,6 +291,11 @@ function unblurAllLayers() {
 	itemLayerCanvas.style.filter = "blur(0px)";
 }
 
+
+// Play Game Start Sound
+AUDIO["gameStart"].currentTime = 0;
+AUDIO["gameStart"].play();
+
 // spawn variables
 let spawnInterval = 80;
 let spawnBoostPerItemsMatched = 10;
