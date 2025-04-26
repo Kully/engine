@@ -556,12 +556,38 @@ function gameLoop(e) {
 		}
 		else
 		{
-			// TODO: return piece to its original spawned location (or somewhere else)
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
 			STATE["squaresCompletedStreak"] = 0;
 			AUDIO["dropFail"].currentTime = 0;
 			AUDIO["dropFail"].play();
+
+			// Screen shake effect when dropping incorrectly
+			let shakeAmount = 8;
+			let shakeDuration = 8;
+			let shakeDecay = 0.8;
+
+			// Apply shake to all canvas layers
+			[levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas].forEach(canvas => {
+				let originalTransform = canvas.style.transform;
+				let frame = 0;
+				
+				let shake = () => {
+					if (frame >= shakeDuration) {
+						canvas.style.transform = originalTransform;
+						return;
+					}
+
+					let xShake = (Math.random() * 2 - 1) * shakeAmount * Math.pow(shakeDecay, frame);
+					let yShake = (Math.random() * 2 - 1) * shakeAmount * Math.pow(shakeDecay, frame);
+					
+					canvas.style.transform = `translate(${xShake}px, ${yShake}px)`;
+					frame++;
+					requestAnimationFrame(shake);
+				};
+
+				shake();
+			});
 		}
 
 		// reset params to tell us that we are not holding anything
