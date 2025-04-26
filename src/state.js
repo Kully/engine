@@ -77,7 +77,7 @@ export const PLAYER = {
 	accelUserValue: 0.2,   // can remove since obsolete
 	maxSpeedUserValue: 3,  // can remove since obsolete
 	items: { gold: 0, },
-	healthPoints: 1,
+	healthPoints: 3,
 	pickedUpItemInitCoords: [-1, -1],
 	pickedUpItemPtr: 0,
 	hasPickedUpItemBefore: 0,

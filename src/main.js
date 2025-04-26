@@ -319,6 +319,7 @@ function gameLoop(e) {
 		STATE["lastFrameSquaresCompleted"] = 0;
 		STATE["mostSquaresCompleted"] = 0;
 		STATE["squaresCompletedStreak"] = 0;
+		PLAYER["healthPoints"] = 3;
 
 		// make the level empty
 		for(let y = 1; y < ENEMY_LEVEL.length - 1; y++) {
@@ -420,7 +421,7 @@ function gameLoop(e) {
 	STATE["lastFrameSquaresCompleted"] = STATE["currentSquaresCompleted"];
 
 	// Activate Game Over Mode
-	if(findNumberOfEmptySpots() <= 1)
+	if(findNumberOfEmptySpots() <= 1 || PLAYER["healthPoints"] <= 0)
 	{
 		STATE["gameOver"] = true;
 		gameOverText.style.visibility = "visible";
@@ -559,6 +560,7 @@ function gameLoop(e) {
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
 			STATE["squaresCompletedStreak"] = 0;
+			PLAYER["healthPoints"] -= 1;
 			AUDIO["dropFail"].currentTime = 0;
 			AUDIO["dropFail"].play();
 
