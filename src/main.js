@@ -112,6 +112,9 @@ const MUSIC_INTERFACE = {
 }
 
 // grab hud elements
+const tutorial = document.getElementById("tutorial");
+const tutorialText = document.getElementById("tutorial-text");
+const tutorialCode = document.getElementById("tutorial-code");
 const currentScoreValue = document.getElementById("score-value");
 currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
 
@@ -361,6 +364,37 @@ function gameLoop(e) {
 		}
 	}
 
+	// always make sure the tutorial is on top of the cursor
+	let tutorialMargin = 10;
+	let left = PLAYER["x"];
+	let top = PLAYER["y"] - 64;  // bump up by one tile's height (64px) to put text on top of cursor
+	top -= tutorialMargin;
+	tutorial.style.transform = `translate(${left}px, ${top}px)`;
+
+	if(STATE["currentSquaresCompleted"] === 0)
+	{
+		if(FRAME > 250)
+		{
+			tutorial.style.opacity = 1;
+		}
+		if(FRAME > 800 && PLAYER["hasPickedUpItemBefore"] === 0)
+		{
+			tutorialText.innerHTML = "Press and Hold a Shape with ";
+			tutorialCode.innerHTML = "K";
+		}
+		else
+		if(FRAME > 2000 && PLAYER["hasPickedUpItemBefore"] === 1)
+		{
+			tutorialText.innerHTML = "Carry to the other shape and drop with ";
+			tutorialCode.innerHTML = "K";
+		}
+	}
+	else
+	{
+		tutorialText.innerHTML = "";
+		tutorialCode.innerHTML = "";
+	}
+
 	// load in new assets based on your matches
 	if(STATE["currentSquaresCompleted"] === 1)
 	{
@@ -447,6 +481,7 @@ function gameLoop(e) {
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, 0);
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, enemyIndex);
 			PLAYER["pickedUpItemPtr"] = enemyIndex;
+			PLAYER["hasPickedUpItemBefore"] = 1;
 			AUDIO["grab"].currentTime = 0;
 			AUDIO["grab"].play();
 		}

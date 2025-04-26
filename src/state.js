@@ -80,6 +80,7 @@ export const PLAYER = {
 	healthPoints: 1,
 	pickedUpItemInitCoords: [-1, -1],
 	pickedUpItemPtr: 0,
+	hasPickedUpItemBefore: 0,
 };
 
 export const ACTIVE_ENEMIES = [];
