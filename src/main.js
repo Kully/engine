@@ -85,8 +85,6 @@ import {
 	copy2DArray,
 } from "./pure.js";
 
-import { preloadImages } from "./preload.js";
-
 // setup audio pieces
 const AUDIO = {
 	"step": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
@@ -397,24 +395,23 @@ function gameLoop(e) {
 	}
 
 	// load in new assets based on your matches
-	if(STATE["currentSquaresCompleted"] === 1)
+	if(STATE["currentSquaresCompleted"] === 0)
 	{
-		// load in new background image
-		const newBackground = `assets/images/space${STATE["currentSquaresCompleted"]}.jpg`;
-		document.documentElement.style.backgroundImage = `url(${newBackground})`;
-
+		document.documentElement.className = 'bg-0';
+	}
+	else if(STATE["currentSquaresCompleted"] === 1)
+	{
 		// regenerate new sprites for palette swap
 		LEVEL_COLOR_MAP[1] = "#f72585FF";
 		let [spriteSlotLookup, slotSpriteLookup] = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
+		document.documentElement.className = 'bg-1';
 	}
-	else
-	if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] > 5)
+	else if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] > 5)
 	{
 		let imgIndex = Math.floor(STATE["currentSquaresCompleted"] / 10) + 1;
 		if(imgIndex >= 9)
 			imgIndex = 9;
-		const newBackground = `assets/images/space${imgIndex}.jpg`;
-		document.documentElement.style.backgroundImage = `url(${newBackground})`;
+		document.documentElement.className = `bg-${imgIndex}`;
 	}
 
 	// keep track of the last frame's squares completed
@@ -662,15 +659,8 @@ function gameLoop(e) {
 	COUNTER += 1;
 }
 
-// Initialize the game after preloading
-preloadImages().then(() => {
-    // Start the game loop after images are loaded
-    setInterval(gameLoop, 1000 / FPS);
-}).catch(error => {
-    console.error('Error preloading images:', error);
-    // Still start the game even if preloading fails
-    setInterval(gameLoop, 1000 / FPS);
-});
+
+setInterval(gameLoop, 1000 / FPS);
 
 function findRandomEmptySpot() {
 	const maxAttempts = 100; // Prevent infinite loops

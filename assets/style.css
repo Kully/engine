@@ -3,23 +3,84 @@
 	--screen-height: 540px;
 	--true-canvas-width: 896px;
 	--true-canvas-height: 512px;
+	--gradient-speed: 25s;
 }
 
 html {
-	background-color: #000;
-	background-size: cover;
+	background: #020102;
 	background-repeat: no-repeat;
-	background-position: center;
-	background-attachment: fixed;
 	min-height: 100vh;
-	transition: background-image 1s ease-in-out;
-	opacity: 0;
-	cursor: none;
-	max-width: 1000px;
-}
-html.loaded {
 	opacity: 1;
-	transition: opacity 0.45s ease-in-out;
+	cursor: none;
+	background-size: 400% 400%;
+	height: 100vh;
+	transition: 0.3s;
+}
+
+html.bg-0 {
+	background: #020102;
+}
+html.bg-1 {
+	background: linear-gradient(-45deg, #0f0606, #200b0b, #2f0000, #490000);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-2 {
+	background: linear-gradient(-45deg, #0f0b06, #20170b, #2f1c00, #492b00);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-3 {
+	background: linear-gradient(-45deg, #0d0f06, #1b200b, #252f00, #3a4900);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-4 {
+	background: linear-gradient(-45deg, #070f06, #0f200b, #092f00, #0e4900);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-5 {
+	background: linear-gradient(-45deg, #060f09, #0b2013, #002f12, #00491d);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-6 {
+	background: linear-gradient(-45deg, #060e0f, #0b2020, #002e2f, #004849);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-7 {
+	background: linear-gradient(-45deg, #06090f, #0b1320, #00122f, #001d49);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-8 {
+	background: linear-gradient(-45deg, #07060f, #0f0b20, #09002f, #0e0049);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-9 {
+	background: linear-gradient(-45deg, #0d060f, #1b0b20, #25002f, #3a0049);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+html.bg-10 {
+	background: linear-gradient(-45deg, #0f060b, #200b17, #2f001c, #49002b);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient-speed, 15s) ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 @font-face {
