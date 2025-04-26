@@ -441,7 +441,22 @@ function gameLoop(e) {
 
 			// Get a random item type
 			const enemyTypes = Object.keys(ENEMY_LOOKUP);
-			const randomEnemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+			
+			// Get opposite piece 90% of the time compared to last piece
+			let randomEnemyType;
+			if (STATE["spawnPieceHistory"].length > 0) {
+				const lastPiece = STATE["spawnPieceHistory"][STATE["spawnPieceHistory"].length - 1];
+				const oppositeIndex = lastPiece === enemyTypes[0] ? 1 : 0;
+
+				if (Math.random() < 0.9) {
+					randomEnemyType = enemyTypes[oppositeIndex];
+				} else {
+					randomEnemyType = lastPiece;
+				}
+			} else {
+				// For first piece, randomly choose
+				randomEnemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+			}
 
 			// place the item in the level
 			putValueTo2DArray(ENEMY_LEVEL, x, y, randomEnemyType);
