@@ -1,8 +1,8 @@
 /* Levels */
 
 
-export const INIT_PLAYER_X = 6;
-export const INIT_PLAYER_Y = 5;
+export const INIT_PLAYER_X = 2;
+export const INIT_PLAYER_Y = 3;
 export const INIT_ENEMY_LEVEL = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
