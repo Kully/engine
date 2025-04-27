@@ -248,6 +248,7 @@ export const TRIANGLE_LEFT_SPRITES = {
 	],
 }
 
+
 export const TRIANGLE_RIGHT_SPRITES = {
 	name: "triangle_right",
 	STAND_CYCLE: [

@@ -242,26 +242,18 @@ document.addEventListener("keydown", function(e) {
 	if (e.code == "KeyA")
 	{
 		PLAYER["x"] -= GRID_WIDTH_PX;
-		AUDIO["step"].currentTime = 0;
-		AUDIO["step"].play();
 	}
 	if (e.code == "KeyD")
 	{
 		PLAYER["x"] += GRID_WIDTH_PX;
-		AUDIO["step"].currentTime = 0;
-		AUDIO["step"].play();
 	}
 	if (e.code == "KeyW")
 	{
 		PLAYER["y"] -= GRID_WIDTH_PX;
-		AUDIO["step"].currentTime = 0;
-		AUDIO["step"].play();
 	}
 	if (e.code == "KeyS")
 	{
 		PLAYER["y"] += GRID_WIDTH_PX;
-		AUDIO["step"].currentTime = 0;
-		AUDIO["step"].play();
 	}
 })
 
