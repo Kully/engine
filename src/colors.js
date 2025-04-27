@@ -232,7 +232,7 @@ export let TRIANGLE_COLOR_MAP;
 export const PINK_COLOR_MAP = {
 	0: GREYSCALE_COLORS[0],
 	1: '#F878F8FF',
-	2: '#F878F9FF',
+	2: '#FFFFFFFF',
 	3: '#F978F8FF',
 	4: '#F879F8FF',
 	5: '#F879F9FF',
