@@ -115,6 +115,8 @@ const tutorialText = document.getElementById("tutorial-text");
 const tutorialCode = document.getElementById("tutorial-code");
 const currentScoreValue = document.getElementById("score-value");
 currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
+const hitPointsValue = document.getElementById("hit-points-value");
+hitPointsValue.innerHTML = PLAYER["healthPoints"];
 
 const gameOverText = document.getElementById("game-over-text");
 
@@ -317,7 +319,9 @@ function gameLoop(e) {
 		STATE["lastFrameSquaresCompleted"] = 0;
 		STATE["mostSquaresCompleted"] = 0;
 		STATE["squaresCompletedStreak"] = 0;
-		PLAYER["healthPoints"] = 3;
+
+		PLAYER["healthPoints"] = 0;
+		hitPointsValue.innerHTML = PLAYER["healthPoints"];
 
 		// make the level empty
 		for(let y = 1; y < ENEMY_LEVEL.length - 1; y++) {
@@ -347,6 +351,9 @@ function gameLoop(e) {
 			// Play Game Start Sound
 			AUDIO["gameStart"].currentTime = 0;
 			AUDIO["gameStart"].play();
+
+			PLAYER["healthPoints"] = 3;
+			hitPointsValue.innerHTML = PLAYER["healthPoints"];
 		}
 		return;
 	}
@@ -572,7 +579,12 @@ function gameLoop(e) {
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["grab"], playerX, playerY, 0);
 			putValueTo2DArray(LEVEL_LOOKUP["level"]["enemy"], playerX, playerY, PLAYER["pickedUpItemPtr"]);
 			STATE["squaresCompletedStreak"] = 0;
+			
+			// Decrease players health points and display
 			PLAYER["healthPoints"] -= 1;
+			hitPointsValue.innerHTML = PLAYER["healthPoints"];
+
+			// Play the audio
 			AUDIO["dropFail"].currentTime = 0;
 			AUDIO["dropFail"].play();
 
