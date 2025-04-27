@@ -89,11 +89,11 @@ import {
 const AUDIO = {
 	"step": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
 	"grab": new Audio("assets/audio/sfx/grab.mp3"),
-	"shapeMatch": new Audio("assets/audio/sfx/earn_a_point1.mp3"),
-	"dropFail": new Audio("assets/audio/sfx/dropFail.mp3"),
-	"bell": new Audio("assets/audio/sfx/final_bell.mp3"),
+	"shapeMatch": new Audio("assets/audio/sfx/square_arp.mp3"),
+	"dropFail": new Audio("assets/audio/sfx/error.mp3"),
+	"bell": new Audio("assets/audio/sfx/new_wave.mp3"),
 	"gameOver": new Audio("assets/audio/sfx/game_over.mp3"),
-	"gameStart": new Audio("assets/audio/sfx/game_start.mp3"),
+	"gameStart": new Audio("assets/audio/sfx/game_start_new.mp3"),
 	"shapeAppear": new Audio("assets/audio/sfx/shape_appear.mp3"),
 };
 
