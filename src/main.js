@@ -292,10 +292,7 @@ AUDIO["gameStart"].currentTime = 0;
 AUDIO["gameStart"].play();
 
 // spawn variables
-let spawnInterval = 80;
-let spawnBoostPerItemsMatched = 10;
-let spawnIntervalDecrement = 10;
-let spawnIntervalMinimum = 20;
+let spawnInterval;
 let spawnFrameCounter = 0;
 
 let FRAME = 0;
@@ -353,12 +350,65 @@ function gameLoop(e) {
 	if(false)
 		moveCamera(PLAYER, ACTIVE_ENEMIES);
 
-	// increase the spawn every wave (every 10 points)
 	if(STATE["lastFrameSquaresCompleted"] !== STATE["currentSquaresCompleted"])
 	{
-		if(STATE["currentSquaresCompleted"] > 0 && STATE["currentSquaresCompleted"] % spawnBoostPerItemsMatched === 0)
+		if(STATE["currentSquaresCompleted"] === 1)
+			spawnInterval = 80;
+		else
+		if(STATE["currentSquaresCompleted"] === 10)
+			spawnInterval = 70;
+		else
+		if(STATE["currentSquaresCompleted"] === 20)
+			spawnInterval = 50;
+		else
+		if(STATE["currentSquaresCompleted"] === 30)
+			spawnInterval = 40;
+		else
+		if(STATE["currentSquaresCompleted"] === 40)
+			spawnInterval = 28;
+		else
+		if(STATE["currentSquaresCompleted"] === 50)
+			spawnInterval = 110;
+		else
+		if(STATE["currentSquaresCompleted"] >= 51 && STATE["currentSquaresCompleted"] < 80)
 		{
-			spawnInterval = Math.max(spawnIntervalMinimum, spawnInterval - spawnIntervalDecrement);
+			spawnInterval = Math.max(spawnInterval - 3, 23);
+		}
+		else
+		if(STATE["currentSquaresCompleted"] >= 80 && STATE["currentSquaresCompleted"] < 90)
+		{
+			spawnInterval = 23;
+		}
+		else
+		if(STATE["currentSquaresCompleted"] >= 90 && STATE["currentSquaresCompleted"] < 100)
+		{
+			spawnInterval = 18;
+		}
+		else
+		if(STATE["currentSquaresCompleted"] === 100)
+		{
+			spawnInterval = 100;
+		}
+		else
+		if(STATE["currentSquaresCompleted"] > 100 && STATE["currentSquaresCompleted"] <= 150)
+		{
+			let thisMinInterval = 21;
+			let progress = (STATE["currentSquaresCompleted"] - 100) / 50;
+			let curve = Math.log(progress * 9 + 1) / Math.log(10);
+			spawnInterval = Math.round(100 - (curve * (100 - thisMinInterval)));
+		}
+		else
+		if(STATE["currentSquaresCompleted"] > 150 && STATE["currentSquaresCompleted"] <= 200)
+		{
+			let thisMinInterval = 19;
+			let progress = (STATE["currentSquaresCompleted"] - 150) / 50;
+			let curve = Math.log(progress * 9 + 1) / Math.log(10);
+			spawnInterval = Math.round(100 - (curve * (100 - thisMinInterval)));
+		}
+		else
+		if(STATE["currentSquaresCompleted"] > 200)
+		{
+			spawnInterval = 18;
 		}
 	}
 
