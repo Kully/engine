@@ -117,6 +117,8 @@ const currentScoreValue = document.getElementById("score-value");
 currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
 const hitPointsValue = document.getElementById("hit-points-value");
 hitPointsValue.innerHTML = PLAYER["healthPoints"];
+const maxScoreValue = document.getElementById("score-value-max");
+maxScoreValue.innerHTML = "/ 100";
 
 const gameOverText = document.getElementById("game-over-text");
 
@@ -343,6 +345,10 @@ function gameLoop(e) {
 
 			PLAYER["healthPoints"] = 3;
 			hitPointsValue.innerHTML = PLAYER["healthPoints"];
+
+			// reset the max score in the HUD
+			maxScoreValue.innerHTML = "/ 100";
+
 		}
 		return;
 	}
@@ -411,6 +417,11 @@ function gameLoop(e) {
 			spawnInterval = 18;
 		}
 	}
+
+	if (STATE["currentSquaresCompleted"] >= 100)
+		maxScoreValue.innerHTML = "/ ???";
+	else
+		maxScoreValue.innerHTML = "/ 100";
 
 	// always make sure the tutorial is on top of the cursor
 	let tutorialMargin = 10;
