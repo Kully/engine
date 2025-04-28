@@ -206,6 +206,7 @@ button.copy-to-clipboard {
 
 .text {
 	color: #FFF;
+	pointer-events: none;
 }
 .control {
 	width: 40px;
