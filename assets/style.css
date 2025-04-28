@@ -256,6 +256,9 @@ button.copy-to-clipboard {
 	font-weight: 900;
 	pointer-events: none;
 	z-index: 99999;
+	background-color: #000;
+	padding: 1rem 0 !important;
+	box-shadow: 0 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .game-over-text-title {
 	font-size: 3rem;
