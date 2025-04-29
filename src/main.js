@@ -290,8 +290,8 @@ function unblurAllLayers() {
 
 
 // Play Game Start Sound
-AUDIO["gameStart"].currentTime = 0;
-AUDIO["gameStart"].play();
+// AUDIO["gameStart"].currentTime = 0;
+// AUDIO["gameStart"].play();
 
 // spawn variables
 let spawnInterval;
