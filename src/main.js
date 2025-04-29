@@ -448,13 +448,6 @@ function gameLoop(e) {
 	else
 		maxScoreValue.innerHTML = "/ 100";
 
-	// always make sure the tutorial is on top of the cursor
-	let tutorialMargin = 10;
-	let left = PLAYER["x"];
-	let top = PLAYER["y"] - 64;  // bump up by one tile's height (64px) to put text on top of cursor
-	top -= tutorialMargin;
-	tutorial.style.transform = `translate(${left}px, ${top}px)`;
-
 	if(STATE["currentSquaresCompleted"] === 0)
 	{
 		if(FRAME > 250)
@@ -696,6 +689,13 @@ function gameLoop(e) {
 		PLAYER["y"] = GRID_WIDTH_PX * 2;
 	if(PLAYER["y"] / GRID_WIDTH_PX === 8)
 		PLAYER["y"] = GRID_WIDTH_PX * 7;
+
+	// always make sure the tutorial is on top of the cursor
+	let tutorialMargin = 10;
+	let left = PLAYER["x"];
+	let top = PLAYER["y"] - 64;  // bump up by one tile's height (64px) to put text on top of cursor
+	top -= tutorialMargin;
+	tutorial.style.transform = `translate(${left}px, ${top}px)`;
 
 	if(SHOW_BACKGROUND_LAYER)
 	{
