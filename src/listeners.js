@@ -9,8 +9,9 @@ import {
 
 export function handleKeyDown(e) {
 	for (let key of VALID_CONTROLLER_KEYS) {
-		if (e.code === key)
+		if (e.code === key) {
 			CONTROLLER[key] = 1;
+		}
 	}
 }
 

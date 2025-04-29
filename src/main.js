@@ -21,6 +21,8 @@ import {
 	SHOW_BACKGROUND_LAYER,
 	ENABLE_SHOOTING_WHILE_RUNNING,
 	GRID_WIDTH_PX,
+	AUTO_REPEAT_DELAY_FRAMES,
+	AUTO_REPEAT_RATE_FRAMES,
 } from "./constants.js";
 
 import {
@@ -240,24 +242,24 @@ let calcFpsValue = document.getElementById("fps");
 // drawBkgdLayer(bkgdLayerCtx, true);
 
 
-document.addEventListener("keydown", function(e) {
-	if (e.code == "KeyA")
-	{
-		PLAYER["x"] -= GRID_WIDTH_PX;
-	}
-	if (e.code == "KeyD")
-	{
-		PLAYER["x"] += GRID_WIDTH_PX;
-	}
-	if (e.code == "KeyW")
-	{
-		PLAYER["y"] -= GRID_WIDTH_PX;
-	}
-	if (e.code == "KeyS")
-	{
-		PLAYER["y"] += GRID_WIDTH_PX;
-	}
-})
+// document.addEventListener("keydown", function(e) {
+// 	if (e.code == "KeyA")
+// 	{
+// 		PLAYER["x"] -= GRID_WIDTH_PX;
+// 	}
+// 	if (e.code == "KeyD")
+// 	{
+// 		PLAYER["x"] += GRID_WIDTH_PX;
+// 	}
+// 	if (e.code == "KeyW")
+// 	{
+// 		PLAYER["y"] -= GRID_WIDTH_PX;
+// 	}
+// 	if (e.code == "KeyS")
+// 	{
+// 		PLAYER["y"] += GRID_WIDTH_PX;
+// 	}
+// })
 
 
 function findNumberOfEmptySpots() {
@@ -325,7 +327,54 @@ function screenShake(canvases, amount = 8, duration = 8, decay = 0.8) {
     });
 }
 
+let AUTO_REPEAT_FRAME_COUNTER = 0;
 function gameLoop(e) {
+	// Manually increase the frames down for keys outside the EventListener
+	// The reason for this is to by pass the DAS of the operating system
+	const movementKeys = ["KeyA", "KeyD", "KeyW", "KeyS"];
+	for (const key of movementKeys) {
+		CONTROLLER[`${key}_framesDown`] = CONTROLLER[key] === 1 ? CONTROLLER[`${key}_framesDown`] + 1 : 0;
+	}
+
+	// Begin Auto-Repeat mode if any of the movement keys have been held down for long enough
+	let isAutoRepeat = false;
+	for (const key of movementKeys)
+	{
+		if(CONTROLLER[`${key}_framesDown`] >= AUTO_REPEAT_DELAY_FRAMES)
+		{
+			isAutoRepeat = true;
+			break;
+		}
+	}
+
+	if(isAutoRepeat)
+	{
+		if(AUTO_REPEAT_FRAME_COUNTER % AUTO_REPEAT_RATE_FRAMES === 0)
+		{
+			if (CONTROLLER["KeyA_framesDown"] > 0)
+				PLAYER["x"] -= GRID_WIDTH_PX;
+			if (CONTROLLER["KeyD_framesDown"] > 0)
+				PLAYER["x"] += GRID_WIDTH_PX;
+			if (CONTROLLER["KeyW_framesDown"] > 0)
+				PLAYER["y"] -= GRID_WIDTH_PX;
+			if (CONTROLLER["KeyS_framesDown"] > 0)
+				PLAYER["y"] += GRID_WIDTH_PX;
+		}
+		AUTO_REPEAT_FRAME_COUNTER += 1;
+	}
+	else
+	{
+		if (CONTROLLER["KeyA_framesDown"] === 1)
+			PLAYER["x"] -= GRID_WIDTH_PX;
+		if (CONTROLLER["KeyD_framesDown"] === 1)
+			PLAYER["x"] += GRID_WIDTH_PX;
+		if (CONTROLLER["KeyW_framesDown"] === 1)
+			PLAYER["y"] -= GRID_WIDTH_PX;
+		if (CONTROLLER["KeyS_framesDown"] === 1)
+			PLAYER["y"] += GRID_WIDTH_PX;
+		AUTO_REPEAT_FRAME_COUNTER = 0;
+	}
+
 	if(STATE["gameOver"] === true)
 	{
 		// reset the game state and restart

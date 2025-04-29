@@ -41,6 +41,8 @@ export const STATE = {
 export const CONTROLLER = {};
 for (let key of VALID_CONTROLLER_KEYS)
 	CONTROLLER[key] = 0;
+for (let key of VALID_CONTROLLER_KEYS)
+	CONTROLLER[`${key}_framesDown`] = 0;
 CONTROLLER["lastKeyUp"] = "ArrowRight";
 CONTROLLER["lastLeftOrRight"] = "ArrowRight";
 

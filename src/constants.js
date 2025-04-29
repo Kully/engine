@@ -7,6 +7,8 @@ export const GRID_WIDTH_PX = SCALE * SCALE2 * SPRITE_WIDTH;
 
 export const FPS = 60;
 
+export const AUTO_REPEAT_DELAY_FRAMES = 14;
+export const AUTO_REPEAT_RATE_FRAMES = 4;
 export const VALID_CONTROLLER_KEYS = [
 	"ArrowLeft",
 	"ArrowRight",
@@ -18,7 +20,12 @@ export const VALID_CONTROLLER_KEYS = [
 	"ShiftLeft",
 	"ShiftRight",
 	"Enter",
+	"KeyA",
+	"KeyD",
+	"KeyW",
+	"KeyS",
 ];
+
 export const SCREEN_WIDTH_PX = 960;
 export const SCREEN_HEIGHT_PX = 540;
 
