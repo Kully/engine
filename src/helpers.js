@@ -488,9 +488,12 @@ export function drawEnemyLayer(playerLayerCtx, level, FRAME) {
 
 			let enemyFacingLeft = false;
 			let thisCycle = enemyObject["STAND_CYCLE"];
-			let spriteArray = thisCycle[0]["sprite"];
-			let spriteWidth = thisCycle[0]["width"];
-			let spriteHeight = thisCycle[0]["height"];
+			
+			// Alternate the frames of animations of the triangles
+			let frameIndex = Math.floor(FRAME / 40) % 2;
+			let spriteArray = thisCycle[frameIndex]["sprite"];
+			let spriteWidth = thisCycle[frameIndex]["width"];
+			let spriteHeight = thisCycle[frameIndex]["height"];
 
 			for (let i = 0; i < spriteWidth; i += 1)
 			for (let j = 0; j < spriteHeight; j += 1)
