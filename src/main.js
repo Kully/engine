@@ -91,12 +91,23 @@ import {
 const AUDIO = {
 	"step": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
 	"grab": new Audio("assets/audio/sfx/grab.mp3"),
-	"shapeMatch": new Audio("assets/audio/sfx/correct_shape_match.mp3"),
 	"dropFail": new Audio("assets/audio/sfx/error.mp3"),
 	"bell": new Audio("assets/audio/sfx/new_wave.mp3"),
 	"gameOver": new Audio("assets/audio/sfx/game_over.mp3"),
-	"gameStart": new Audio("assets/audio/sfx/game_start_new.mp3"),
-	"shapeAppear": new Audio("assets/audio/sfx/shape_appear.mp3"),
+	"gameStart": new Audio("assets/audio/sfx/nazca_stereo.mp3"),
+	"shapeAppear": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
+	"shapeMatch0": new Audio("assets/audio/sfx/correct_shape_match0.mp3"),
+	"shapeMatch1": new Audio("assets/audio/sfx/correct_shape_match1.mp3"),
+	"shapeMatch2": new Audio("assets/audio/sfx/correct_shape_match2.mp3"),
+	"shapeMatch3": new Audio("assets/audio/sfx/correct_shape_match3.mp3"),
+	"shapeMatch4": new Audio("assets/audio/sfx/correct_shape_match4.mp3"),
+	"shapeMatch5": new Audio("assets/audio/sfx/correct_shape_match5.mp3"),
+	"shapeMatch6": new Audio("assets/audio/sfx/correct_shape_match6.mp3"),
+	"shapeMatch7": new Audio("assets/audio/sfx/correct_shape_match7.mp3"),
+	"shapeMatch8": new Audio("assets/audio/sfx/correct_shape_match8.mp3"),
+	"shapeMatch9": new Audio("assets/audio/sfx/correct_shape_match9.mp3"),
+	"shapeMatch10": new Audio("assets/audio/sfx/correct_shape_match10.mp3"),
+	"shapeMatch11": new Audio("assets/audio/sfx/correct_shape_match11.mp3"),
 };
 
 const MUSIC_INTERFACE = {
@@ -292,8 +303,8 @@ function unblurAllLayers() {
 
 
 // Play Game Start Sound
-// AUDIO["gameStart"].currentTime = 0;
-// AUDIO["gameStart"].play();
+AUDIO["gameStart"].currentTime = 0;
+AUDIO["gameStart"].play();
 
 // spawn variables
 let spawnInterval;
@@ -633,6 +644,7 @@ function gameLoop(e) {
 			PLAYER["pickedUpItemPtr"] = enemyIndex;
 			PLAYER["hasPickedUpItemBefore"] = 1;
 			AUDIO["grab"].currentTime = 0;
+			AUDIO["grab"].volume = 0.8;
 			AUDIO["grab"].play();
 		}
 	}
@@ -687,8 +699,15 @@ function gameLoop(e) {
 			if(STATE["currentSquaresCompleted"] > STATE["mostSquaresCompleted"])
 				STATE["mostSquaresCompleted"] += 1;
 			currentScoreValue.innerHTML = STATE["currentSquaresCompleted"];
-			AUDIO["shapeMatch"].currentTime = 0;
-			AUDIO["shapeMatch"].play();
+
+			// Play the correct shape match sound
+			let shapeMatchIndex = Math.floor((STATE["currentSquaresCompleted"] - 1) / 10) + 1;
+			shapeMatchIndex = Math.min(shapeMatchIndex, 10);  // Cap the Sound
+			if(shapeMatchIndex >= 0 && shapeMatchIndex < 10) {
+				AUDIO[`shapeMatch${shapeMatchIndex}`].currentTime = 0;
+				AUDIO[`shapeMatch${shapeMatchIndex}`].pitch = 10;
+				AUDIO[`shapeMatch${shapeMatchIndex}`].play();
+			}
 
 			// Screen shake effect when dropping correctly
 			screenShake([levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas], 4, 12, 0.9);
@@ -723,7 +742,7 @@ function gameLoop(e) {
 			AUDIO["dropFail"].play();
 
 			// Screen shake effect when dropping incorrectly
-			screenShake([levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas], 4, 8, 0.8);
+			// screenShake([levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas], 4, 8, 0.8);
 		}
 
 		// reset params to tell us that we are not holding anything
