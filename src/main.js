@@ -642,6 +642,9 @@ function gameLoop(e) {
 			AUDIO["shapeMatch"].currentTime = 0;
 			AUDIO["shapeMatch"].play();
 
+			// Screen shake effect when dropping correctly
+			screenShake([levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas], 4, 12, 0.9);
+
 			// chime a bell one level X9
 			if(STATE["currentSquaresCompleted"] % 10 === 0)
 			{
@@ -672,7 +675,7 @@ function gameLoop(e) {
 			AUDIO["dropFail"].play();
 
 			// Screen shake effect when dropping incorrectly
-			screenShake([levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas]);
+			screenShake([levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas], 4, 8, 0.8);
 		}
 
 		// reset params to tell us that we are not holding anything
