@@ -423,6 +423,12 @@ function gameLoop(e) {
 			// reset the max score in the HUD
 			maxScoreValue.innerHTML = "/ 100";
 
+			// reset other counters and state variables
+			spawnInterval = 80;
+			spawnFrameCounter = 0;
+			STATE["spawnPieceHistory"] = [];
+			FRAME = 0;
+			COUNTER = 0;
 		}
 		return;
 	}
