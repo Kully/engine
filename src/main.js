@@ -111,6 +111,7 @@ const AUDIO = {
 	"shapeMatch10": new Audio("assets/audio/sfx/correct_shape_match10.mp3"),
 	"shapeMatch11": new Audio("assets/audio/sfx/correct_shape_match11.mp3"),
 };
+AUDIO["bell"].volume = 0.5;
 AUDIO["musicSlow"].volume = 0.36;
 AUDIO["musicFast"].volume = 0.36;
 
@@ -740,10 +741,9 @@ function gameLoop(e) {
 			screenShake([levelLayerCanvas, playerLayerCanvas, bkgdLayerCanvas], 4, 12, 0.9);
 
 			// chime a bell one level X9
-			if(STATE["currentSquaresCompleted"] % 10 === 0)
+			if(STATE["currentSquaresCompleted"] % 10 === 0 || STATE["currentSquaresCompleted"] === 1)
 			{
 				AUDIO["bell"].currentTime = 0;
-				AUDIO["bell"].volume = 0.5;
 				AUDIO["bell"].play();
 			}
 		}
