@@ -111,9 +111,9 @@ const AUDIO = {
 	"shapeMatch10": new Audio("assets/audio/sfx/correct_shape_match10.mp3"),
 	"shapeMatch11": new Audio("assets/audio/sfx/correct_shape_match11.mp3"),
 };
-AUDIO["bell"].volume = 0.5;
-AUDIO["musicSlow"].volume = 0.36;
-AUDIO["musicFast"].volume = 0.36;
+AUDIO["bell"].volume = 0.3;
+AUDIO["musicSlow"].volume = 0.16;
+AUDIO["musicFast"].volume = 0.16;
 
 const MUSIC_INTERFACE = {
 	ptr: 0,
@@ -305,11 +305,6 @@ function unblurAllLayers() {
 	playerLayerCanvas.style.filter = "blur(0px)";
 	itemLayerCanvas.style.filter = "blur(0px)";
 }
-
-
-// Play Game Start Sound
-AUDIO["gameStart"].currentTime = 0;
-AUDIO["gameStart"].play();
 
 // spawn variables
 let spawnInterval;
