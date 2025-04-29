@@ -729,10 +729,10 @@ function gameLoop(e) {
 
 			// Play the correct shape match sound
 			let shapeMatchIndex = Math.floor((STATE["currentSquaresCompleted"] - 1) / 10) + 1;
-			shapeMatchIndex = Math.min(shapeMatchIndex, 10);  // Cap the Sound
-			if(shapeMatchIndex >= 0 && shapeMatchIndex < 10) {
+			let maxShapeMatchIndex = 11;
+			shapeMatchIndex = Math.min(shapeMatchIndex, maxShapeMatchIndex);
+			if(shapeMatchIndex >= 0) {
 				AUDIO[`shapeMatch${shapeMatchIndex}`].currentTime = 0;
-				AUDIO[`shapeMatch${shapeMatchIndex}`].pitch = 10;
 				AUDIO[`shapeMatch${shapeMatchIndex}`].play();
 			}
 
