@@ -621,6 +621,7 @@ function gameLoop(e) {
 			if(STATE["currentSquaresCompleted"] % 10 === 0)
 			{
 				AUDIO["bell"].currentTime = 0;
+				AUDIO["bell"].volume = 0.5;
 				AUDIO["bell"].play();
 			}
 		}
