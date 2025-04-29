@@ -237,6 +237,10 @@ button.copy-to-clipboard {
 .text {
 	color: #FFF;
 	pointer-events: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 .control {
 	width: 40px;
@@ -246,7 +250,6 @@ button.copy-to-clipboard {
 	position: absolute;
 	bottom: 8px;
 	right: 8px;
-	pointer-events: none;
 	z-index: 99999;
 }
 
