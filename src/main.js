@@ -466,12 +466,16 @@ function gameLoop(e) {
 		let [spriteSlotLookup, slotSpriteLookup] = createHiddenSpriteLookups(spritesCanvas, spritesCtx);
 		document.documentElement.className = 'bg-1';
 	}
-	else if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] > 5)
+	else if(STATE["currentSquaresCompleted"] % 10 === 0 && STATE["currentSquaresCompleted"] < 100)
 	{
 		let imgIndex = Math.floor(STATE["currentSquaresCompleted"] / 10) + 1;
 		if(imgIndex >= 9)
 			imgIndex = 9;
 		document.documentElement.className = `bg-${imgIndex}`;
+	}
+	else if(STATE["currentSquaresCompleted"] >= 100)
+	{
+		document.documentElement.className = 'bg-11';
 	}
 
 	// keep track of the last frame's squares completed
