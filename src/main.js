@@ -95,8 +95,8 @@ const AUDIO = {
 	"bell": new Audio("assets/audio/sfx/new_wave.mp3"),
 	"gameOver": new Audio("assets/audio/sfx/game_over.mp3"),
 	"gameStart": new Audio("assets/audio/sfx/nazca_stereo.mp3"),
-	"musicSlow": new Audio("assets/audio/music/easyLevel.mp3"),
-	"musicFast": new Audio("assets/audio/music/hardLevel.mp3"),
+	// "musicSlow": new Audio("assets/audio/music/easyLevel.mp3"),
+	// "musicFast": new Audio("assets/audio/music/hardLevel.mp3"),
 	"shapeAppear": new Audio("assets/audio/sfx/step_sound_delayed_start.mp3"),
 	"shapeMatch0": new Audio("assets/audio/sfx/correct_shape_match0.mp3"),
 	"shapeMatch1": new Audio("assets/audio/sfx/correct_shape_match1.mp3"),
@@ -112,8 +112,8 @@ const AUDIO = {
 	"shapeMatch11": new Audio("assets/audio/sfx/correct_shape_match11.mp3"),
 };
 AUDIO["bell"].volume = 0.3;
-AUDIO["musicSlow"].volume = 0.16;
-AUDIO["musicFast"].volume = 0.16;
+// AUDIO["musicSlow"].volume = 0.16;
+// AUDIO["musicFast"].volume = 0.16;
 
 const MUSIC_INTERFACE = {
 	ptr: 0,
@@ -407,10 +407,10 @@ function gameLoop(e) {
 		}
 
 		// reset the music
-		AUDIO["musicSlow"].pause();
-		AUDIO["musicFast"].pause();
-		AUDIO["musicSlow"].currentTime = 0;
-		AUDIO["musicFast"].currentTime = 0;
+		// AUDIO["musicSlow"].pause();
+		// AUDIO["musicFast"].pause();
+		// AUDIO["musicSlow"].currentTime = 0;
+		// AUDIO["musicFast"].currentTime = 0;
 
 		// escape the game over loop only once you press Enter
 		if(CONTROLLER["Enter"] === 1)
@@ -462,14 +462,14 @@ function gameLoop(e) {
 		else
 		if(STATE["currentSquaresCompleted"] === 76)
 		{
-			AUDIO["musicSlow"].pause();
+			// AUDIO["musicSlow"].pause();
 		}
 		else
 		if(STATE["currentSquaresCompleted"] === 80)
 		{
-			AUDIO["musicFast"].currentTime = 0;
-			AUDIO["musicFast"].play();
-			AUDIO["musicFast"].loop = true;
+			// AUDIO["musicFast"].currentTime = 0;
+			// AUDIO["musicFast"].play();
+			// AUDIO["musicFast"].loop = true;
 		}
 
 		if(STATE["currentSquaresCompleted"] === 1)
