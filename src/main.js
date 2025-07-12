@@ -115,18 +115,6 @@ AUDIO["bell"].volume = 0.3;
 // AUDIO["musicSlow"].volume = 0.16;
 // AUDIO["musicFast"].volume = 0.16;
 
-const MUSIC_INTERFACE = {
-	ptr: 0,
-	tracks: {
-		"track_0": new Audio("assets/audio/music/track_0.mp3"),
-		"track_1": new Audio("assets/audio/music/track_1.mp3"),
-		"track_2": new Audio("assets/audio/music/track_2.mp3"),
-		"track_3": new Audio("assets/audio/music/track_3.mp3"),
-		"track_4": new Audio("assets/audio/music/track_4.mp3"),
-		"track_5": new Audio("assets/audio/music/track_5.mp3"),
-	},
-}
-
 // grab hud elements
 const tutorial = document.getElementById("tutorial");
 const tutorialText = document.getElementById("tutorial-text");
