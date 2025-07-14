@@ -444,8 +444,8 @@ function gameLoop(e) {
 		// Update the Music
 		if(STATE["currentSquaresCompleted"] === 1)
 		{
-			AUDIO["musicSlow"].currentTime = 0;
-			AUDIO["musicSlow"].play();
+			// AUDIO["musicSlow"].currentTime = 0;
+			// AUDIO["musicSlow"].play();
 		}
 		else
 		if(STATE["currentSquaresCompleted"] === 76)
